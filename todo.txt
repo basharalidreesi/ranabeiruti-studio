@@ -1,0 +1,9 @@
+[x] multimediaPortableText embeds
+[x] multimediaPortableText image (preview, options, etc.)
+[x] multimediaPortableText rename `object`
+[] projectPreview
+[-] image upload limit
+[x] confirm body segment delete
+[] info for editors at the top of each doctype
+[x] portableText numbered lists
+[x] media viewer
