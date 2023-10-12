@@ -161,7 +161,7 @@ export default defineType({
 					description: "",
 					to: [{ type: "type_", }],
 					options: {
-						disableNew: true,
+						// disableNew: true,
 					},
 				}),
 			],
@@ -185,7 +185,7 @@ export default defineType({
 					description: "",
 					to: [{ type: "subject", }],
 					options: {
-						disableNew: true,
+						// disableNew: true,
 					},
 				}),
 			],
