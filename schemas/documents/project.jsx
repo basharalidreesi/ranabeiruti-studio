@@ -209,7 +209,7 @@ export default defineType({
 					description: "",
 					to: [{ type: "collection", }],
 					options: {
-						disableNew: true,
+						// disableNew: true,
 					},
 				}),
 			],
