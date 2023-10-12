@@ -2,8 +2,11 @@
 [x] multimediaPortableText image (preview, options, etc.)
 [x] multimediaPortableText rename `object`
 [] projectPreview
+[] future complexDate
+[] dateConfig.dateFormat (global)
+[] structure builder
 [-] image upload limit
-[x] confirm body segment delete
+[-] confirm body segment delete
 [] info for editors at the top of each doctype
 [x] portableText numbered lists
 [x] media viewer

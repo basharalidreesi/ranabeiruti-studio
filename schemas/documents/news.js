@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { customSlugify } from "../../util";
+import { customSlugify, imageConfig, requireSlug, requireString } from "../../util";
 import { BellIcon } from "@sanity/icons";
 
 export default defineType({
@@ -13,10 +13,7 @@ export default defineType({
 			type: "string",
 			title: "Title",
 			description: "",
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
+			validation: (Rule) => Rule.custom(requireString),
 		}),
 		defineField({
 			name: "slug",
@@ -26,55 +23,41 @@ export default defineType({
 			options: {
 				source: "title",
 				slugify: customSlugify,
-				// isUnique config
 			},
-			// initalValue config
-			// hidden config
-			// readOnly config
-			validation: (Rule) => Rule.required(),
+			validation: (Rule) => Rule.custom(requireSlug),
 		}),
 		defineField({
 			name: "date",
 			type: "date",
 			title: "Date",
 			description: "",
-			// date config
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
+			options: {
+				// dateFormat: "D MMMM YYYY",
+			},
+			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
 			name: "description",
-			type: "text",
+			type: "simplePortableText",
 			title: "Short Description",
 			description: "",
-			// text config
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
 		}),
 		defineField({
 			name: "image",
 			type: "image",
 			title: "Main Image",
 			description: "",
-			// image config
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
+			options: imageConfig.options,
+			// validation: (Rule) => Rule.custom((value) => {
+			// 	if (!value?.asset) { return "Required"; };
+			// 	return true;
+			// }),
 		}),
 		defineField({
 			name: "body",
 			type: "multimediaPortableText",
 			title: "Body",
 			description: "",
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
 		}),
 	],
 	// orderings config
