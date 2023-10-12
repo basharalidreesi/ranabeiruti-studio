@@ -1,6 +1,6 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { requireString } from "../../util";
+import { imageConfig, requireString } from "../../util";
 
 export default defineType({
 	name: "press",
