@@ -27,7 +27,7 @@ export default defineType({
 			type: "string",
 			title: "Publisher",
 			description: "",
-			// validation: (Rule) => Rule.custom(requireString),
+			validation: (Rule) => Rule.custom(requireString),
 		}),
 		defineField({
 			name: "date",
