@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { customSlugify, imageConfig, requireSlug, requireString } from "../../util";
+import { customSlugify, dateConfig, imageConfig, requireSlug, requireString } from "../../util";
 import { BellIcon } from "@sanity/icons";
 
 export default defineType({
@@ -32,7 +32,7 @@ export default defineType({
 			title: "Date",
 			description: "",
 			options: {
-				// dateFormat: "D MMMM YYYY",
+				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
 		}),

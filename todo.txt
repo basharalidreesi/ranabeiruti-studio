@@ -1,14 +1,29 @@
+---
+
+To do:
+[] projectPreview
+[] info for editors at the top of each doctype
+[] document dashboard: never published, unpublished edits, published
+[] dashboard for netlify build etc.
+[] incoming references for reference docs
+[] 11ty PageFind: https://rknight.me/using-pagefind-with-eleventy-for-search/ || https://cloudcannon.com/blog/introducing-pagefind/
+
+---
+
+Incomplete:
+[-] image upload limit
+[-] confirm body segment delete
+
+---
+
+Done:
+[x] structure builder
+[x] dateConfig.dateFormat (global)
+[x] future complexDate
+[x] portableText numbered lists
+[x] media viewer
 [x] multimediaPortableText embeds
 [x] multimediaPortableText image (preview, options, etc.)
 [x] multimediaPortableText rename `object`
-[] projectPreview
-[] future complexDate
-[] dateConfig.dateFormat (global)
-[] structure builder
-[-] image upload limit
-[-] confirm body segment delete
-[] info for editors at the top of each doctype
-[x] portableText numbered lists
-[x] media viewer
-[] publish approval
-[] dashboard
+
+---

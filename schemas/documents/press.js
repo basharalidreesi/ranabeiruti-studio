@@ -1,6 +1,6 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { imageConfig, requireString } from "../../util";
+import { dateConfig, imageConfig, requireString } from "../../util";
 
 export default defineType({
 	name: "press",
@@ -35,7 +35,7 @@ export default defineType({
 			title: "Date",
 			description: "",
 			options: {
-				// dateFormat: "D MMMM YYYY",
+				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
 		}),

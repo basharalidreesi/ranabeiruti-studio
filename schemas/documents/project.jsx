@@ -9,20 +9,20 @@ export default defineType({
 	title: "Project",
 	icon: DatabaseIcon,
 	fieldsets: [
-		{
-			name: "tags",
-			title: "Tags",
-			options: {
-				collapsible: true,
-				collapsed: true,
-			},
-		},
+		// {
+		// 	name: "tags",
+		// 	title: "Tags",
+		// 	options: {
+		// 		collapsible: true,
+		// 		collapsed: true,
+		// 	},
+		// },
 		{
 			name: "collections",
 			title: "Collections",
 			options: {
 				collapsible: true,
-				collapsed: true,
+				collapsed: false,
 			},
 		},
 		{
@@ -30,7 +30,7 @@ export default defineType({
 			title: "Relations",
 			options: {
 				collapsible: true,
-				collapsed: true,
+				collapsed: false,
 			},
 		},
 	],

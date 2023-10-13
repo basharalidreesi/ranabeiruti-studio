@@ -1,4 +1,9 @@
+import { InfoOutlineIcon } from "@sanity/icons";
+import { Card, Flex, Text } from "@sanity/ui";
 import { defineField, defineType, useFormValue } from "sanity";
+import { dateConfig } from "../../util";
+
+// when used, a complexDate object should be named as `date` in order for everything to work properly
 
 export default defineType({
 	name: "complexDate",
@@ -12,7 +17,7 @@ export default defineType({
 			title: "Start Date",
 			description: "",
 			options: {
-				// dateFormat: "D MMMM YYYY",
+				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
 			components: {
@@ -37,7 +42,7 @@ export default defineType({
 			title: "End Date",
 			description: "",
 			options: {
-				// dateFormat: "D MMMM YYYY",
+				dateFormat: dateConfig.dateFormat,
 			},
 			hidden: ({ parent }) => !parent?.hasDuration,
 			readOnly: ({ parent }) => parent?.isOngoing,
@@ -93,7 +98,12 @@ export default defineType({
 			},
 			initialValue: false,
 			hidden: ({ parent }) => !parent?.hasDuration,
-			validation: (Rule) => Rule.required(),
+			validation: (Rule) => Rule.required().custom((value, context) => {
+				if (!context.parent?.startDate) { return true; };
+				const startDate = new Date(context.parent?.startDate).setHours(0, 0, 0, 0);
+				const today = new Date().setHours(0, 0, 0, 0);
+				return startDate > today && value === true ? "A project cannot be ongoing if it starts in the future" : true; 
+			}),
 		}),
 		defineField({
 			name: "dateFormat",
@@ -153,6 +163,36 @@ export default defineType({
 					{props.renderDefault(props)}
 				</>
 			);
+		},
+		input: (props) => {
+			if (!props.value?.startDate) { return props.renderDefault(props); };
+			const startDate = new Date(props.value?.startDate).setHours(0, 0, 0, 0);
+			const today = new Date().setHours(0, 0, 0, 0);
+			const hasDuration = props.value?.hasDuration;
+			return startDate > today
+				? (<>
+					<Card
+						padding={3}
+						radius={2}
+						shadow={1}
+						tone={"caution"}
+						style={{
+							marginTop: "0.5rem",
+							marginBottom: "-1.75rem",
+						}}
+					>
+						<Flex gap={2} align={"center"} justify={"center"}>
+							<Text align={"center"} size={2} muted>
+								<InfoOutlineIcon />
+							</Text>
+							<Text align={"center"} size={2} muted>
+								{hasDuration ? "This start date is in the future." : "This date is in the future."}
+							</Text>
+						</Flex>
+					</Card>
+					{props.renderDefault(props)}
+				</>)
+				: props.renderDefault(props);
 		},
 	},
 });
