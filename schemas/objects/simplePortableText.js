@@ -3,7 +3,7 @@ import { portableTextConfig } from "../../util";
 
 const styles = [
 	portableTextConfig.styles.normal,
-	portableTextConfig.styles.blockquote,
+	// portableTextConfig.styles.blockquote,
 	portableTextConfig.styles.hidden,
 ];
 

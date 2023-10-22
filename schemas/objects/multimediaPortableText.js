@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { embedObjectConfig, imageConfig, portableTextConfig, renderPortableTextAsPlainText } from "../../util";
+import { embedObjectConfig, imageConfig, portableTextConfig } from "../../util";
 import { CubeIcon, ImageIcon } from "@sanity/icons";
 import { EmbedObjectPreview, LimitedFileInput } from "../../components";
 
@@ -7,7 +7,7 @@ const styles = [
 	portableTextConfig.styles.normal,
 	portableTextConfig.styles.h3,
 	portableTextConfig.styles.blockquote,
-	portableTextConfig.styles.footnote,
+	portableTextConfig.styles.note,
 	portableTextConfig.styles.hidden,
 ];
 
@@ -72,7 +72,7 @@ export default defineType({
 						caption
 					} = selection;
 					return {
-						title: renderPortableTextAsPlainText(caption) || null,
+						title: portableTextConfig.renderAsPlainText(caption) || null,
 						subtitle: "Image",
 						media: asset || null,
 					};

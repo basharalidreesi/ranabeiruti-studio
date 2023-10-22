@@ -9,6 +9,21 @@ export default defineType({
 	description: "",
 	fields: [
 		defineField({
+			name: "isUsedAsHero",
+			type: "boolean",
+			title: "Use as Hero?",
+			options: {
+				layout: "checkbox",
+			},
+			initialValue: false,
+			hidden: ({ parent }) => !parent?.asset,
+			validation: (Rule) => Rule.custom((value, context) => {
+				if (!context?.parent?.asset) { return true; };
+				if (context?.parent?.asset && typeof value !== "boolean") { return "Required"; };
+				return true;
+			}),
+		}),
+		defineField({
 			name: "displaySize",
 			type: "string",
 			title: "Display Size",
@@ -31,7 +46,7 @@ export default defineType({
 				direction: "horizontal",
 			},
 			initialValue: "medium",
-			hidden: ({ parent }) => !parent?.asset,
+			hidden: ({ parent }) => !parent?.asset || !parent?.isUsedAsHero,
 			validation: (Rule) => Rule.custom((value, context) => {
 				if (!context?.parent?.asset) { return true; };
 				if (context?.parent?.asset && !value) { return "Required"; };
@@ -39,19 +54,10 @@ export default defineType({
 			}),
 		}),
 		defineField({
-			name: "isUsedAsHero",
-			type: "boolean",
-			title: "Use as Hero?",
-			options: {
-				layout: "checkbox",
-			},
-			initialValue: false,
+			name: "caption",
+			type: "simplePortableText",
+			title: "Caption",
 			hidden: ({ parent }) => !parent?.asset,
-			validation: (Rule) => Rule.custom((value, context) => {
-				if (!context?.parent?.asset) { return true; };
-				if (context?.parent?.asset && typeof value !== "boolean") { return "Required"; };
-				return true;
-			}),
 		}),
 	],
 	options: imageConfig.options,
@@ -73,11 +79,14 @@ export default defineType({
 							margin-top: calc(-0.75rem - 1px);
 							margin-bottom: -0.75rem;
 						}
-						.rb-fieldset-image [data-testid="field-image.displaySize"] {
-							margin-top: -0.75rem;
+						.rb-fieldset-image > fieldset[data-level="1"] div[data-testid="image-input"] > *:first-child + div {
+							margin-top: -0.5rem;
 						}
-						.rb-fieldset-image [data-testid="field-image.displaySize"] + div {
-							margin-top: -0.75rem;
+						.rb-fieldset-image [data-testid="field-image.displaySize"] {
+							margin-top: -1rem;
+						}
+						.rb-fieldset-image [data-testid="field-image.caption"] {
+							margin-top: -1rem;
 						}
 				`}</style>
 			);

@@ -47,6 +47,7 @@ export default defineType({
 			hidden: ({ parent }) => !parent?.hasDuration,
 			readOnly: ({ parent }) => parent?.isOngoing,
 			validation: (Rule) => Rule.custom((value, context) => {
+				if (!value) { return true; };
 				const startDate = new Date(context?.parent?.startDate) || null;
 				const hasDuration = context?.parent?.hasDuration;
 				const isOngoing = context?.parent?.isOngoing;
@@ -158,6 +159,9 @@ export default defineType({
 							border: 1px solid var(--card-border-color);
 							padding: 0.75rem !important;
 							padding-top: 0.25rem !important;
+						}
+						fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
+							margin-top: -0.5rem;
 						}
 					`}</style>
 					{props.renderDefault(props)}

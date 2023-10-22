@@ -4,6 +4,7 @@ import { NumberSelect, StringSelect } from "../../components";
 import { ChevronUpIcon } from "@sanity/icons";
 import { ChevronDownIcon } from "@sanity/icons";
 import { SelectIcon } from "@sanity/icons";
+import { portableTextConfig } from "../../util";
 
 const minColumnCount = 1;
 const maxColumnCount = 3;
@@ -185,9 +186,9 @@ export default defineType({
 						col3Body,
 					} = props;
 					const title =
-						col1Body && columnCount >= 1 ? col1Body : null
-						|| col2Body && columnCount >= 2 ? col2Body : null
-						|| col3Body && columnCount >= 3 ? col3Body : null;
+						col1Body && columnCount >= 1 ? portableTextConfig.renderAsPlainText(col1Body) : null
+						|| col2Body && columnCount >= 2 ? portableTextConfig.renderAsPlainText(col2Body) : null
+						|| col3Body && columnCount >= 3 ? portableTextConfig.renderAsPlainText(col3Body) : null;
 					const ratio = columnCount === minColumnCount ? "Full Span" : [col1Ratio, col2Ratio, col3Ratio]?.slice(0, columnCount)?.join(":");
 					return (<>
 						<style>{`

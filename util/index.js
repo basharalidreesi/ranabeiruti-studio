@@ -3,8 +3,7 @@ import dateConfig from "./dateConfig";
 import embedObjectConfig from "./embedObjectConfig";
 import imageConfig from "./imageConfig";
 import portableTextConfig from "./portableTextConfig";
-import renderComplexDate from "./renderComplexDate";
-import renderPortableTextAsPlainText from "./renderPortableTextAsPlainText";
+import referenceConfig from "./referenceConfig";
 import requireSlug from "./requireSlug";
 import requireString from "./requireString";
 
@@ -14,8 +13,7 @@ export {
 	embedObjectConfig,
 	imageConfig,
 	portableTextConfig,
-	renderComplexDate,
-	renderPortableTextAsPlainText,
+	referenceConfig,
 	requireSlug,
 	requireString,
 };

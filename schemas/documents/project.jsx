@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { customSlugify, renderComplexDate, renderPortableTextAsPlainText, requireSlug, requireString } from "../../util";
+import { customSlugify, dateConfig, portableTextConfig, requireSlug, requireString } from "../../util";
 import { DatabaseIcon } from "@sanity/icons";
 import { ExposedArrayFunctions, ReferenceMultiSelect } from "../../components";
 
@@ -123,33 +123,6 @@ export default defineType({
 			},
 		}),
 		defineField({
-			name: "credits",
-			type: "simplePortableText",
-			title: "Credits",
-			description: "",
-		}),
-		defineField({
-			name: "description",
-			type: "simplePortableText",
-			title: "Short Description",
-			description: "",
-		}),
-		defineField({
-			name: "image",
-			type: "mainImage",
-			title: "Main Image",
-			description: "",
-		}),
-		defineField({
-			name: "body",
-			type: "pageBuilder",
-			title: "Body",
-			description: "",
-			components: {
-				input: ExposedArrayFunctions,
-			},
-		}),
-		defineField({
 			name: "types",
 			type: "array",
 			title: "Types",
@@ -256,6 +229,33 @@ export default defineType({
 			},
 			fieldset: "relations",
 		}),
+		defineField({
+			name: "image",
+			type: "mainImage",
+			title: "Main Image",
+			description: "",
+		}),
+		defineField({
+			name: "description",
+			type: "simplePortableText",
+			title: "Short Description",
+			description: "",
+		}),
+		defineField({
+			name: "body",
+			type: "pageBuilder",
+			title: "Body",
+			description: "",
+			components: {
+				input: ExposedArrayFunctions,
+			},
+		}),
+		defineField({
+			name: "credits",
+			type: "simplePortableText",
+			title: "Credits",
+			description: "",
+		}),
 	],
 	components: {
 		input: (props) => {
@@ -299,8 +299,8 @@ export default defineType({
 			} = selection;
 			return {
 				title: title,
-				subtitle: renderComplexDate(date, "short"),
-				description: renderPortableTextAsPlainText(description),
+				subtitle: dateConfig.renderComplexDate(date, "short"),
+				description: portableTextConfig.renderAsPlainText(description),
 				media: image,
 			};
 		},

@@ -11,7 +11,7 @@ import complexDate from "./objects/complexDate";
 import link from "./objects/link";
 import mainImage from "./objects/mainImage";
 import multimediaPortableText from "./objects/multimediaPortableText";
-import pageBuilder from "./objects/pageBuilder"
+import pageBuilder from "./objects/pageBuilder";
 import simplePortableText from "./objects/simplePortableText";
 
 export const schemaTypes = [
