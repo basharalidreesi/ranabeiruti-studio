@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { embedObjectConfig, imageConfig, portableTextConfig } from "../../util";
-import { CubeIcon, ImageIcon } from "@sanity/icons";
-import { EmbedObjectPreview, LimitedFileInput } from "../../components";
+import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, ChevronDownIcon, ChevronUpIcon, CubeIcon, DoubleChevronDownIcon, DoubleChevronLeftIcon, DoubleChevronRightIcon, DoubleChevronUpIcon, ImageIcon, InsertAboveIcon, InsertBelowIcon, SelectIcon } from "@sanity/icons";
+import { EmbedObjectPreview, LimitedFileInput, StringSelect } from "../../components";
 
 const styles = [
 	portableTextConfig.styles.normal,
@@ -55,6 +55,100 @@ export default defineType({
 					title: "Caption",
 					description: "",
 				}),
+				defineField({
+					name: "captionPlacement",
+					type: "string",
+					title: `Caption Placement`,
+					description: "",
+					options: {
+						list: [
+							{
+								value: "left",
+								title: "Place left",
+								icon: ArrowLeftIcon,
+							},
+							{
+								value: "top",
+								title: "Place above",
+								icon: ArrowUpIcon,
+							},
+							{
+								value: "right",
+								title: "Place right",
+								icon: ArrowRightIcon,
+							},
+							{
+								value: "bottom",
+								title: "Place below",
+								icon: ArrowDownIcon,
+							},
+						],
+						layout: "radio",
+						direction: "horizontal",
+					},
+					initialValue: "bottom",
+					validation: (Rule) => Rule.required(),
+					components: {
+						field: (props) => {
+							return (<>
+								<div style={{
+									marginTop: "-1.5rem",
+								}}>
+									{props.renderDefault({
+										...props,
+										title: "",
+									})}
+								</div>
+							</>);
+						},
+						input: StringSelect,
+					},
+				}),
+				// defineField({
+				// 	name: "captionVerticalAlignment",
+				// 	type: "string",
+				// 	title: `Caption Vertical Alignment`,
+				// 	description: "",
+				// 	options: {
+				// 		list: [
+				// 			{
+				// 				value: "top",
+				// 				title: "Align to top",
+				// 				icon: ChevronUpIcon,
+				// 			},
+				// 			{
+				// 				value: "middle",
+				// 				title: "Align with middle",
+				// 				icon: SelectIcon,
+				// 			},
+				// 			{
+				// 				value: "bottom",
+				// 				title: "Align to bottom",
+				// 				icon: ChevronDownIcon,
+				// 			},
+				// 		],
+				// 		layout: "radio",
+				// 		direction: "horizontal",
+				// 	},
+				// 	initialValue: "top",
+				// 	readOnly: ({ parent }) => !["left", "right"].includes(parent?.captionPlacement),
+				// 	validation: (Rule) => Rule.required(),
+				// 	components: {
+				// 		field: (props) => {
+				// 			return (<>
+				// 				<div style={{
+				// 					marginTop: "-1.5rem",
+				// 				}}>
+				// 					{props.renderDefault({
+				// 						...props,
+				// 						title: "",
+				// 					})}
+				// 				</div>
+				// 			</>);
+				// 		},
+				// 		input: StringSelect,
+				// 	},
+				// }),
 			],
 			options: imageConfig.options,
 			validation: (Rule) => Rule.custom((value) => {

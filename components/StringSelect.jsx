@@ -25,6 +25,7 @@ export default function StringSelect(props) {
 					text={item?.title}
 					icon={item?.icon}
 					fontSize={1}
+					disabled={props.readOnly}
 				/>
 			))}
 		</Grid>

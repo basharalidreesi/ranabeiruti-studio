@@ -17,22 +17,22 @@ export default defineType({
 		// 		collapsed: true,
 		// 	},
 		// },
-		{
-			name: "collections",
-			title: "Collections",
-			options: {
-				collapsible: true,
-				collapsed: false,
-			},
-		},
-		{
-			name: "relations",
-			title: "Relations",
-			options: {
-				collapsible: true,
-				collapsed: false,
-			},
-		},
+		// {
+		// 	name: "collections",
+		// 	title: "Collections",
+		// 	options: {
+		// 		collapsible: true,
+		// 		collapsed: false,
+		// 	},
+		// },
+		// {
+		// 	name: "relations",
+		// 	title: "Relations",
+		// 	options: {
+		// 		collapsible: true,
+		// 		collapsed: false,
+		// 	},
+		// },
 	],
 	fields: [
 		defineField({
@@ -191,7 +191,7 @@ export default defineType({
 					query: `*[_type == "collection"] | order(lower(name) asc) { _id }._id`,
 				}} {...props} />,
 			},
-			fieldset: "collections",
+			// fieldset: "collections",
 		}),
 		defineField({
 			name: "news",
@@ -209,7 +209,7 @@ export default defineType({
 			components: {
 				input: ExposedArrayFunctions,
 			},
-			fieldset: "relations",
+			// fieldset: "relations",
 		}),
 		defineField({
 			name: "press",
@@ -227,7 +227,7 @@ export default defineType({
 			components: {
 				input: ExposedArrayFunctions,
 			},
-			fieldset: "relations",
+			// fieldset: "relations",
 		}),
 		defineField({
 			name: "image",
@@ -261,7 +261,7 @@ export default defineType({
 		input: (props) => {
 			return (
 				<>
-					<style>{`
+					{/* <style>{`
 						fieldset[data-testid="fieldset-tags"] > *:last-child,
 						fieldset[data-testid="fieldset-relations"] > *:last-child {
 							border: 1px solid var(--card-border-color);
@@ -276,7 +276,7 @@ export default defineType({
 						fieldset[data-testid="field-collections"] > *:first-child {
 							display: none !important;
 						}
-					`}</style>
+					`}</style> */}
 					{props.renderDefault(props)}
 				</>
 			);

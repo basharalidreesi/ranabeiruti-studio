@@ -26,7 +26,7 @@ export default function ProjectPreview(props) {
 	};
 	const Header = () => {
 		return (
-			<header className="project-header">
+			<div className="project-header">
 				<div className="project-header-title">
 					<h2>
 						{data.title || "The Working Title"}
@@ -62,25 +62,20 @@ export default function ProjectPreview(props) {
 					)
 					: null
 				}
-				{(data.description && data.description?.length !== 0) || (data.credits && data.credits?.length !== 0)
-					? (<>
-						{data.description && data.description?.length !== 0
-							? (
-								<div className="project-header-description portableText">
-									<PortableText value={data.description} components={portableTextConfig.serializers} />
-								</div>
-							)
-							: null
-						}
-					</>)
+				{/* {data.description && data.description?.length !== 0
+					? (
+						<div className="project-header-description portableText">
+							<PortableText value={data.description} components={portableTextConfig.serializers} />
+						</div>
+					)
 					: null
-				}
-			</header>
+				} */}
+			</div>
 		);
 	};
 	const Body = () => {
 		return (<>
-			<section className="project-body">
+			<div className="project-body">
 				{data.body?.map((segment, index) => {
 					const columnCount = Math.max(segment.columnCount, 1) || 1;
 					const columnArray = Array.from({ length: columnCount }, (_, index) => 1 + index);
@@ -111,12 +106,12 @@ export default function ProjectPreview(props) {
 						</div>
 					</>);
 				})}
-			</section>
+			</div>
 		</>);
 	};
 	const Footer = () => {
 		return (<>
-			<footer className="project-footer">
+			<div className="project-footer">
 				{/* <div className="project-footer-info">
 					<dl>
 						{data.clients && data.clients?.length !== 0
@@ -168,7 +163,7 @@ export default function ProjectPreview(props) {
 					: null
 				}
 				<div className="project-footer-related"></div>
-			</footer>
+			</div>
 		</>);
 	};
 	return (<>
@@ -179,8 +174,8 @@ export default function ProjectPreview(props) {
 				top: 0;
 				left: 0;
 				width: 100%;
-				min-height: 100%;
-				font-size: 20px;
+				min-height: 100svh;
+				font-size: 18px;
 				font-family: var(--font-family-sans);
 				font-weight: var(--font-weight-normal);
 				font-style: normal;
@@ -257,7 +252,7 @@ export default function ProjectPreview(props) {
 				height: auto;
 			}
 			.portableText figure figcaption {
-				padding-block-start: 0.5rem;
+				margin-block-start: 0.5rem;
 				font-size: var(--font-size-small);
 				--color-text: var(--color-3);
 			}
@@ -310,7 +305,7 @@ export default function ProjectPreview(props) {
 			.portableText figure + ol,
 			.portableText ul + ol,
 			.portableText ol + ol {
-				padding-block-start: 0.5rem;
+				margin-block-start: 0.5rem;
 			}
 			.portableText strong {
 				font-weight: var(--font-weight-bold);
@@ -350,39 +345,41 @@ export default function ProjectPreview(props) {
 				display: none;
 			}
 			.mother {
-				padding-inline: 1.5rem;
+				display: flex;
+				flex-flow: column nowrap;
+				padding: 1.5rem;
 			}
 			.mother > header {
 				position: sticky;
-				top: 0;
-				padding-block: 1.5rem;
+				top: 1.5rem;
 			}
 			.project-profile {
 				font-size: var(--font-size-big);
+				margin-block-end: 1.5rem;
 			}
 			.project-profile p + p {
-				padding-block-start: 0.5rem;
+				margin-block-start: 0.5rem;
 			}
 			.project-header {}
 			.project-header-title {
 				font-size: var(--font-size-large);
-				padding-block-end: 1.25rem;
+				font-weight: var(--font-weight-bold);
 			}
 			.project-header-subtitle {
 				font-size: var(--font-size-big);
-				padding-block-end: 1.5rem;
 			}
 			.project-header-title,
 			.project-header-subtitle {
 				width: 60%;
 				margin-inline: auto;
+				margin-block-end: 1.5rem;
 			}
 			.project-header-title + .project-header-hero {
-				padding-block-start: 0.25rem;
+				margin-block-start: 0.25rem;
 			}
 			.project-header-hero {
 				margin-inline: auto;
-				padding-block-end: 1.5rem;
+				margin-block-end: 1.5rem;
 			}
 			.project-header-smallHero {
 				width: 60%;
@@ -399,14 +396,14 @@ export default function ProjectPreview(props) {
 				height: auto;
 			}
 			.project-header-hero-caption {
-				padding-block-start: 0.5rem;
+				margin-block-start: 0.5rem;
 				font-size: var(--font-size-small);
 				--color-text: var(--color-3);
 			}
 			.project-header-description {
 				width: 60%;
 				margin-inline: auto;
-				padding-block-end: 1.5rem;
+				margin-block-end: 1.5rem;
 				font-size: var(--font-size-small);
 			}
 			.project-body {}
@@ -416,7 +413,7 @@ export default function ProjectPreview(props) {
 				// gap: 1.5rem;
 			}
 			.project-body-subsegment {
-				padding-block-end: 1.5rem;
+				margin-block-end: 1.5rem;
 			}
 			@media (max-width: 768px) {
 				.project-body-segment {
@@ -454,7 +451,7 @@ export default function ProjectPreview(props) {
 				width: 60%;
 				font-size: var(--font-size-small);
 				margin-inline: auto;
-				// padding-block-end: 1.5rem;
+				// margin-block-end: 1.5rem;
 				--color-text: var(--color-3);
 			}
 			.project-footer-related {}
@@ -484,7 +481,7 @@ export default function ProjectPreview(props) {
 				html,
 				body {
 					font-size: 16px;
-					--font-size-small: var(--font-size-normal);
+					--font-size-small: 0.875rem;
 				}
 			}
 		`}</style>
@@ -499,7 +496,7 @@ export default function ProjectPreview(props) {
 					<Footer />
 				</article>
 			</main>
-			{/* <footer>Footer</footer> */}
+			<footer></footer>
 		</div>
 	</>);
 };
