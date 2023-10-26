@@ -57,7 +57,7 @@ export default defineType({
 			name: "caption",
 			type: "simplePortableText",
 			title: "Caption",
-			hidden: ({ parent }) => !parent?.asset,
+			hidden: ({ parent }) => !parent?.asset || !parent?.isUsedAsHero,
 		}),
 	],
 	options: imageConfig.options,
