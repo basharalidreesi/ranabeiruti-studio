@@ -148,26 +148,6 @@ export default defineType({
 		columns: 2,
 	},
 	components: {
-		field: (props) => {
-			return (
-				<>
-					<style>{`
-						fieldset[data-testid="field-date"] > *:first-child {
-							display: none !important;
-						}
-						fieldset[data-testid="field-date"] > *:last-child {
-							border: 1px solid var(--card-border-color);
-							padding: 0.75rem !important;
-							padding-top: 0.25rem !important;
-						}
-						fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
-							margin-top: -0.5rem;
-						}
-					`}</style>
-					{props.renderDefault(props)}
-				</>
-			);
-		},
 		input: (props) => {
 			if (!props.value?.startDate) { return props.renderDefault(props); };
 			const startDate = new Date(props.value?.startDate).setHours(0, 0, 0, 0);

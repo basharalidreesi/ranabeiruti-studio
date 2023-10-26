@@ -13,7 +13,7 @@ const hiddenTypes = new Set([
 	"collection",
 ]);
 
-export const dataDeskstructure = (S) => {
+export const structure = (S) => {
 	return S.list()
 		.title("Data")
 		.items([
@@ -115,6 +115,6 @@ export const dataDeskstructure = (S) => {
 		]);
 };
 
-export const projectsDeskStructure = (S) => {
-	return S.documentTypeList("project").title("Projects");
-};
+// export const projectsDeskStructure = (S) => {
+// 	return S.documentTypeList("project").title("Projects");
+// };

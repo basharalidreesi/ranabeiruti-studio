@@ -76,11 +76,11 @@ export default defineType({
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1).error("Required"),
-			components: {
-				input: (props) => <ReferenceMultiSelect options={{
-					query: `*[_type == "profile"] | order(lower(name) asc) { _id }._id`,
-				}} {...props} />,
-			},
+			// components: {
+			// 	input: (props) => <ReferenceMultiSelect options={{
+			// 		query: `*[_type == "profile"] | order(lower(name) asc) { _id }._id`,
+			// 	}} {...props} />,
+			// },
 		}),
 		defineField({
 			name: "date",
@@ -101,9 +101,9 @@ export default defineType({
 					to: [{ type: "location", }],
 				}),
 			],
-			components: {
-				input: ExposedArrayFunctions,
-			},
+			// components: {
+			// 	input: ExposedArrayFunctions,
+			// },
 		}),
 		defineField({
 			name: "clients",
@@ -118,9 +118,9 @@ export default defineType({
 					to: [{ type: "client", }],
 				}),
 			],
-			components: {
-				input: ExposedArrayFunctions,
-			},
+			// components: {
+			// 	input: ExposedArrayFunctions,
+			// },
 		}),
 		defineField({
 			name: "types",
@@ -139,11 +139,11 @@ export default defineType({
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1).error("Required"),
-			components: {
-				input: (props) => <ReferenceMultiSelect options={{
-					query: `*[_type == "type_"] | order(lower(name) asc) { _id }._id`,
-				}} {...props} />,
-			},
+			// components: {
+			// 	input: (props) => <ReferenceMultiSelect options={{
+			// 		query: `*[_type == "type_"] | order(lower(name) asc) { _id }._id`,
+			// 	}} {...props} />,
+			// },
 			// fieldset: "tags",
 		}),
 		defineField({
@@ -163,11 +163,11 @@ export default defineType({
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1).error("Required"),
-			components: {
-				input: (props) => <ReferenceMultiSelect options={{
-					query: `*[_type == "subject"] | order(lower(name) asc) { _id }._id`,
-				}} {...props} />,
-			},
+			// components: {
+			// 	input: (props) => <ReferenceMultiSelect options={{
+			// 		query: `*[_type == "subject"] | order(lower(name) asc) { _id }._id`,
+			// 	}} {...props} />,
+			// },
 			// fieldset: "tags",
 		}),
 		defineField({
@@ -186,11 +186,11 @@ export default defineType({
 					},
 				}),
 			],
-			components: {
-				input: (props) => <ReferenceMultiSelect options={{
-					query: `*[_type == "collection"] | order(lower(name) asc) { _id }._id`,
-				}} {...props} />,
-			},
+			// components: {
+			// 	input: (props) => <ReferenceMultiSelect options={{
+			// 		query: `*[_type == "collection"] | order(lower(name) asc) { _id }._id`,
+			// 	}} {...props} />,
+			// },
 			// fieldset: "collections",
 		}),
 		defineField({
@@ -206,9 +206,9 @@ export default defineType({
 					to: [{ type: "news", }],
 				}),
 			],
-			components: {
-				input: ExposedArrayFunctions,
-			},
+			// components: {
+			// 	input: ExposedArrayFunctions,
+			// },
 			// fieldset: "relations",
 		}),
 		defineField({
@@ -224,9 +224,9 @@ export default defineType({
 					to: [{ type: "press", }],
 				}),
 			],
-			components: {
-				input: ExposedArrayFunctions,
-			},
+			// components: {
+			// 	input: ExposedArrayFunctions,
+			// },
 			// fieldset: "relations",
 		}),
 		defineField({
@@ -238,7 +238,7 @@ export default defineType({
 		defineField({
 			name: "description",
 			type: "simplePortableText",
-			title: "Short Description",
+			title: "Blurb",
 			description: "",
 		}),
 		defineField({
@@ -246,9 +246,9 @@ export default defineType({
 			type: "pageBuilder",
 			title: "Body",
 			description: "",
-			components: {
-				input: ExposedArrayFunctions,
-			},
+			// components: {
+			// 	input: ExposedArrayFunctions,
+			// },
 		}),
 		defineField({
 			name: "credits",
@@ -257,31 +257,31 @@ export default defineType({
 			description: "",
 		}),
 	],
-	components: {
-		input: (props) => {
-			return (
-				<>
-					{/* <style>{`
-						fieldset[data-testid="fieldset-tags"] > *:last-child,
-						fieldset[data-testid="fieldset-relations"] > *:last-child {
-							border: 1px solid var(--card-border-color);
-							padding: 0.75rem !important;
-							padding-top: 0.25rem !important;
-						}
-						fieldset[data-testid="fieldset-collections"] > *:last-child {
-							margin: 0 !important;
-							padding: 0 !important;
-							border: none !important;
-						}
-						fieldset[data-testid="field-collections"] > *:first-child {
-							display: none !important;
-						}
-					`}</style> */}
-					{props.renderDefault(props)}
-				</>
-			);
-		},
-	},
+	// components: {
+	// 	input: (props) => {
+	// 		return (
+	// 			<>
+	// 				{/* <style>{`
+	// 					fieldset[data-testid="fieldset-tags"] > *:last-child,
+	// 					fieldset[data-testid="fieldset-relations"] > *:last-child {
+	// 						border: 1px solid var(--card-border-color);
+	// 						padding: 0.75rem !important;
+	// 						padding-top: 0.25rem !important;
+	// 					}
+	// 					fieldset[data-testid="fieldset-collections"] > *:last-child {
+	// 						margin: 0 !important;
+	// 						padding: 0 !important;
+	// 						border: none !important;
+	// 					}
+	// 					fieldset[data-testid="field-collections"] > *:first-child {
+	// 						display: none !important;
+	// 					}
+	// 				`}</style> */}
+	// 				{props.renderDefault(props)}
+	// 			</>
+	// 		);
+	// 	},
+	// },
 	// orderings config
 	preview: {
 		select: {

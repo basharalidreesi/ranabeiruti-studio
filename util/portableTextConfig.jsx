@@ -102,45 +102,7 @@ const portableTextConfig = {
 			title: "Link",
 		}),
 	},
-	components: {
-		field: (props) => {
-			return (<>
-				<style>{`
-					.pt-text-block[dir="rtl"] [data-testid="change-bar-wrapper"] {
-						--change-bar-offset: -4px !important;
-					}
-					.pt-text-block-style-h3.pt-list-item [data-list-prefix] {
-						margin-top: 0.5rem;
-					}
-					.pt-text-block-style-hidden.pt-list-item [data-list-prefix] {
-						margin-top: 0.75rem;
-						font-size: 0.8125rem;
-						color: var(--card-code-fg-color);
-					}
-					.pt-text-block-style-note.pt-list-item [data-list-prefix] {
-						margin-top: 0.1rem;
-						font-size: 0.8125rem;
-						color: var(--card-muted-fg-color);
-					}
-					${Array.from(Array(10)).map((_, i) => (`
-						.pt-list-item.pt-list-item-level-${i + 1} [data-testid="text-block__text"][data-list-item] > *:first-child {
-							padding: 0 !important;
-							padding-inline-start: ${32 * (i + 1)}px !important;
-						}
-					`)).join("")}
-					.pt-list-item [data-list-prefix] {
-						margin-left: 0 !important;
-						margin-inline-start: -4.5rem !important;
-						text-align: end !important;
-					}
-					.pt-object-block [data-testid="pte-block-object"][data-image-preview] {
-						padding: 0.25rem !important;
-					}
-				`}</style>
-				{props.renderDefault(props)}
-			</>);
-		},
-	},
+	components: {},
 	serializers: {
 		types: {
 			image: ({ value }) => (<>

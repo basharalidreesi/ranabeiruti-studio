@@ -8,7 +8,7 @@ const styles = [
 	portableTextConfig.styles.h3,
 	portableTextConfig.styles.blockquote,
 	portableTextConfig.styles.note,
-	portableTextConfig.styles.hidden,
+	// portableTextConfig.styles.hidden,
 ];
 
 const lists = [
@@ -58,29 +58,29 @@ export default defineType({
 				defineField({
 					name: "captionPlacement",
 					type: "string",
-					title: `Caption Placement`,
+					title: "Caption Placement",
 					description: "",
 					options: {
 						list: [
 							{
 								value: "left",
 								title: "Place left",
-								icon: ArrowLeftIcon,
+								// icon: ArrowLeftIcon,
 							},
 							{
 								value: "top",
 								title: "Place above",
-								icon: ArrowUpIcon,
+								// icon: ArrowUpIcon,
 							},
 							{
 								value: "right",
 								title: "Place right",
-								icon: ArrowRightIcon,
+								// icon: ArrowRightIcon,
 							},
 							{
 								value: "bottom",
 								title: "Place below",
-								icon: ArrowDownIcon,
+								// icon: ArrowDownIcon,
 							},
 						],
 						layout: "radio",
@@ -101,54 +101,54 @@ export default defineType({
 								</div>
 							</>);
 						},
-						input: StringSelect,
+						// input: StringSelect,
 					},
 				}),
-				// defineField({
-				// 	name: "captionVerticalAlignment",
-				// 	type: "string",
-				// 	title: `Caption Vertical Alignment`,
-				// 	description: "",
-				// 	options: {
-				// 		list: [
-				// 			{
-				// 				value: "top",
-				// 				title: "Align to top",
-				// 				icon: ChevronUpIcon,
-				// 			},
-				// 			{
-				// 				value: "middle",
-				// 				title: "Align with middle",
-				// 				icon: SelectIcon,
-				// 			},
-				// 			{
-				// 				value: "bottom",
-				// 				title: "Align to bottom",
-				// 				icon: ChevronDownIcon,
-				// 			},
-				// 		],
-				// 		layout: "radio",
-				// 		direction: "horizontal",
-				// 	},
-				// 	initialValue: "top",
-				// 	readOnly: ({ parent }) => !["left", "right"].includes(parent?.captionPlacement),
-				// 	validation: (Rule) => Rule.required(),
-				// 	components: {
-				// 		field: (props) => {
-				// 			return (<>
-				// 				<div style={{
-				// 					marginTop: "-1.5rem",
-				// 				}}>
-				// 					{props.renderDefault({
-				// 						...props,
-				// 						title: "",
-				// 					})}
-				// 				</div>
-				// 			</>);
-				// 		},
-				// 		input: StringSelect,
-				// 	},
-				// }),
+				defineField({
+					name: "captionVerticalAlignment",
+					type: "string",
+					title: "Caption Vertical Alignment",
+					description: "",
+					options: {
+						list: [
+							{
+								value: "top",
+								title: "Align to top",
+								// icon: ChevronUpIcon,
+							},
+							{
+								value: "middle",
+								title: "Align with middle",
+								// icon: SelectIcon,
+							},
+							{
+								value: "bottom",
+								title: "Align to bottom",
+								// icon: ChevronDownIcon,
+							},
+						],
+						layout: "radio",
+						direction: "horizontal",
+					},
+					initialValue: "top",
+					readOnly: ({ parent }) => !["left", "right"].includes(parent?.captionPlacement),
+					validation: (Rule) => Rule.required(),
+					components: {
+						field: (props) => {
+							return (<>
+								<div style={{
+									marginTop: "-1.5rem",
+								}}>
+									{props.renderDefault({
+										...props,
+										title: "",
+									})}
+								</div>
+							</>);
+						},
+						// input: StringSelect,
+					},
+				}),
 			],
 			options: imageConfig.options,
 			validation: (Rule) => Rule.custom((value) => {
@@ -177,11 +177,11 @@ export default defineType({
 					...props,
 					layout: "block",
 				}),
-				input: LimitedFileInput,
+				// input: LimitedFileInput,
 			},
 		}),
 		defineArrayMember({
-			name: "embedObject",
+			name: "embed",
 			type: "object",
 			title: "Object",
 			icon: CubeIcon,
@@ -206,6 +206,7 @@ export default defineType({
 						direction: "horizontal",
 					},
 					initialValue: "url",
+					hidden: true,
 					validation: (Rule) => Rule.required(),
 				}),
 				defineField({
@@ -243,7 +244,7 @@ export default defineType({
 			},
 		}),
 	],
-	components: {
-		field: portableTextConfig.components.field,
-	},
+	// components: {
+	// 	field: portableTextConfig.components.field,
+	// },
 });
