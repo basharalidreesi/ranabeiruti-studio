@@ -114,7 +114,3 @@ export const structure = (S) => {
 			...S.documentTypeListItems().filter((type) => !hiddenTypes.has(type.spec.id)),
 		]);
 };
-
-// export const projectsDeskStructure = (S) => {
-// 	return S.documentTypeList("project").title("Projects");
-// };

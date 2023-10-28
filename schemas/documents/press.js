@@ -1,6 +1,6 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, imageConfig, requireString } from "../../util";
+import { dateConfig, imageConfig, stringConfig } from "../../util";
 
 export default defineType({
 	name: "press",
@@ -13,7 +13,7 @@ export default defineType({
 			type: "string",
 			title: "Title",
 			description: "",
-			validation: (Rule) => Rule.custom(requireString),
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "url",
@@ -27,7 +27,7 @@ export default defineType({
 			type: "string",
 			title: "Publisher",
 			description: "",
-			validation: (Rule) => Rule.custom(requireString),
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "date",
@@ -42,38 +42,41 @@ export default defineType({
 		defineField({
 			name: "description",
 			type: "simplePortableText",
-			title: "Short Description",
+			title: "Blurb",
 			description: "",
 		}),
-		defineField({
-			name: "image",
-			type: "image",
-			title: "Main Image",
-			description: "",
-			options: imageConfig.options,
-			// validation: (Rule) => Rule.custom((value) => {
-			// 	if (!value?.asset) { return "Required"; };
-			// 	return true;
-			// }),
-		}),
+		// defineField({
+		// 	name: "image",
+		// 	type: "image",
+		// 	title: "Main Image",
+		// 	description: "",
+		// 	options: imageConfig.options,
+		// 	// validation: (Rule) => Rule.custom((value) => {
+		// 	// 	if (!value?.asset) { return "Required"; };
+		// 	// 	return true;
+		// 	// }),
+		// }),
 	],
 	// orderings config
 	preview: {
 		select: {
 			title: "title",
 			// date
+			// description
 			// image
 		},
 		prepare(selection) {
 			const {
 				title,
 				// date
+				// description
 				// image
 			} = selection;
 			return {
 				title: title,
 				// subtitle
 				// media
+				// description
 			};
 		},
 	},

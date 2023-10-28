@@ -1,46 +1,19 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { customSlugify, dateConfig, portableTextConfig, requireSlug, requireString } from "../../util";
+import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { DatabaseIcon } from "@sanity/icons";
-import { ExposedArrayFunctions, ReferenceMultiSelect } from "../../components";
 
 export default defineType({
 	name: "project",
 	type: "document",
 	title: "Project",
 	icon: DatabaseIcon,
-	fieldsets: [
-		// {
-		// 	name: "tags",
-		// 	title: "Tags",
-		// 	options: {
-		// 		collapsible: true,
-		// 		collapsed: true,
-		// 	},
-		// },
-		// {
-		// 	name: "collections",
-		// 	title: "Collections",
-		// 	options: {
-		// 		collapsible: true,
-		// 		collapsed: false,
-		// 	},
-		// },
-		// {
-		// 	name: "relations",
-		// 	title: "Relations",
-		// 	options: {
-		// 		collapsible: true,
-		// 		collapsed: false,
-		// 	},
-		// },
-	],
 	fields: [
 		defineField({
 			name: "title",
 			type: "string",
 			title: "Title",
 			description: "",
-			validation: (Rule) => Rule.custom(requireString),
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "subtitle",
@@ -55,9 +28,9 @@ export default defineType({
 			description: "",
 			options: {
 				source: "title",
-				slugify: customSlugify,
+				slugify: slugConfig.customSlugify,
 			},
-			validation: (Rule) => Rule.custom(requireSlug),
+			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
 		}),
 		defineField({
 			name: "profiles",
@@ -75,12 +48,7 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1).error("Required"),
-			// components: {
-			// 	input: (props) => <ReferenceMultiSelect options={{
-			// 		query: `*[_type == "profile"] | order(lower(name) asc) { _id }._id`,
-			// 	}} {...props} />,
-			// },
+			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "date",
@@ -101,9 +69,6 @@ export default defineType({
 					to: [{ type: "location", }],
 				}),
 			],
-			// components: {
-			// 	input: ExposedArrayFunctions,
-			// },
 		}),
 		defineField({
 			name: "clients",
@@ -118,9 +83,6 @@ export default defineType({
 					to: [{ type: "client", }],
 				}),
 			],
-			// components: {
-			// 	input: ExposedArrayFunctions,
-			// },
 		}),
 		defineField({
 			name: "types",
@@ -138,13 +100,7 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1).error("Required"),
-			// components: {
-			// 	input: (props) => <ReferenceMultiSelect options={{
-			// 		query: `*[_type == "type_"] | order(lower(name) asc) { _id }._id`,
-			// 	}} {...props} />,
-			// },
-			// fieldset: "tags",
+			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "subjects",
@@ -162,13 +118,7 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1).error("Required"),
-			// components: {
-			// 	input: (props) => <ReferenceMultiSelect options={{
-			// 		query: `*[_type == "subject"] | order(lower(name) asc) { _id }._id`,
-			// 	}} {...props} />,
-			// },
-			// fieldset: "tags",
+			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "collections",
@@ -186,12 +136,6 @@ export default defineType({
 					},
 				}),
 			],
-			// components: {
-			// 	input: (props) => <ReferenceMultiSelect options={{
-			// 		query: `*[_type == "collection"] | order(lower(name) asc) { _id }._id`,
-			// 	}} {...props} />,
-			// },
-			// fieldset: "collections",
 		}),
 		defineField({
 			name: "news",
@@ -206,10 +150,6 @@ export default defineType({
 					to: [{ type: "news", }],
 				}),
 			],
-			// components: {
-			// 	input: ExposedArrayFunctions,
-			// },
-			// fieldset: "relations",
 		}),
 		defineField({
 			name: "press",
@@ -224,10 +164,6 @@ export default defineType({
 					to: [{ type: "press", }],
 				}),
 			],
-			// components: {
-			// 	input: ExposedArrayFunctions,
-			// },
-			// fieldset: "relations",
 		}),
 		defineField({
 			name: "image",
@@ -246,9 +182,6 @@ export default defineType({
 			type: "pageBuilder",
 			title: "Body",
 			description: "",
-			// components: {
-			// 	input: ExposedArrayFunctions,
-			// },
 		}),
 		defineField({
 			name: "credits",
@@ -257,31 +190,6 @@ export default defineType({
 			description: "",
 		}),
 	],
-	// components: {
-	// 	input: (props) => {
-	// 		return (
-	// 			<>
-	// 				{/* <style>{`
-	// 					fieldset[data-testid="fieldset-tags"] > *:last-child,
-	// 					fieldset[data-testid="fieldset-relations"] > *:last-child {
-	// 						border: 1px solid var(--card-border-color);
-	// 						padding: 0.75rem !important;
-	// 						padding-top: 0.25rem !important;
-	// 					}
-	// 					fieldset[data-testid="fieldset-collections"] > *:last-child {
-	// 						margin: 0 !important;
-	// 						padding: 0 !important;
-	// 						border: none !important;
-	// 					}
-	// 					fieldset[data-testid="field-collections"] > *:first-child {
-	// 						display: none !important;
-	// 					}
-	// 				`}</style> */}
-	// 				{props.renderDefault(props)}
-	// 			</>
-	// 		);
-	// 	},
-	// },
 	// orderings config
 	preview: {
 		select: {

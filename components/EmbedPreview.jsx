@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { embedObjectConfig } from "../util";
+import { embedConfig } from "../util";
 import { CodeBlockIcon } from "@sanity/icons";
 
-export default function EmbedObjectPreview(props) {
+export default function EmbedPreview(props) {
 	const {
 		type,
 		url,
@@ -12,7 +12,7 @@ export default function EmbedObjectPreview(props) {
 	useEffect(() => {
 		if (type === "url") {
 			async function getData() {
-				setOEmbed(await embedObjectConfig.getOEmbed(url));
+				setOEmbed(await embedConfig.getOEmbed(url));
 			};
 			getData();
 		};

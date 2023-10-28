@@ -34,6 +34,7 @@ export const schemaTypes = [
 	simplePortableText,
 ];
 
+// template:
 // name config
 // type config
 // title config

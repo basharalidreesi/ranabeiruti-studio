@@ -11,52 +11,7 @@ fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
 	margin-top: -0.5rem;
 }
 
-/* pageBuilder preview */
-.cc-pageBuilder-segmentPreview div[data-testid="default-preview"] span[data-testid="Media"] {
-	display: none !important;
-}
-
-/* pageBuilder input */
-/* fieldset[data-testid="fieldset-columnSetup"] > *:last-child {
-	border: 1px solid var(--card-border-color);
-	padding: 0.75rem !important;
-	padding-top: 0.25rem !important;
-} */
-fieldset[data-testid="fieldset-columnSetup"] > *:last-child > *:first-child {
-	display: flex !important;
-	flex-flow: row wrap !important;
-	grid-row-gap: 1rem !important;
-	grid-column-gap: 0.25rem !important;
-}
-fieldset[data-testid="fieldset-columnSetup"] > *:last-child > *:first-child > *:first-child {
-	width: 100% !important;
-}
-fieldset[data-testid="fieldset-columnSetup"] input[type="number"]::-webkit-outer-spin-button,
-fieldset[data-testid="fieldset-columnSetup"] input[type="number"]::-webkit-inner-spin-button {
-	-webkit-appearance: none !important;
-	margin: 0 !important;
-}
-fieldset[data-testid="fieldset-columnSetup"] input[type=number] {
-	-moz-appearance: textfield !important;
-	text-align: center !important;
-}
-.rb-pageBuilder-columnRatioInput:not(:last-child) div[data-testid="change-bar"] {
-	--change-bar-offset: 1px !important;
-}
-/* fieldset[data-testid="fieldset-col1"] > *:last-child,
-fieldset[data-testid="fieldset-col2"] > *:last-child,
-fieldset[data-testid="fieldset-col3"] > *:last-child {
-	border: none !important;
-	padding: 0 !important;
-	margin: 0 !important;
-} */
-fieldset[data-testid="fieldset-col1"] > *:last-child fieldset > *:first-child,
-fieldset[data-testid="fieldset-col2"] > *:last-child fieldset > *:first-child,
-fieldset[data-testid="fieldset-col3"] > *:last-child fieldset > *:first-child {
-	display: none !important;
-}
-
-/* portableText blocks */
+/* portableText */
 .pt-text-block[dir="rtl"] [data-testid="change-bar-wrapper"] {
 	--change-bar-offset: -4px !important;
 }

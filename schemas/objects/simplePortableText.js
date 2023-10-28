@@ -4,7 +4,6 @@ import { portableTextConfig } from "../../util";
 const styles = [
 	portableTextConfig.styles.normal,
 	// portableTextConfig.styles.blockquote,
-	// portableTextConfig.styles.hidden,
 ];
 
 const lists = [
@@ -40,11 +39,4 @@ export default defineType({
 			},
 		}),
 	],
-	// initialValue config
-	// hidden config
-	// readOnly config
-	// validation config
-	// components: {
-	// 	field: portableTextConfig.components.field,
-	// }
 });

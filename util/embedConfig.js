@@ -1,4 +1,4 @@
-const embedObjectConfig = {
+const embedConfig = {
 	supportedHosts: [
 		{
 			name: "youtube.com",
@@ -44,13 +44,13 @@ const embedObjectConfig = {
 			],
 		},
 	],
-	listOfSupportedHosts: () => new Intl.ListFormat("en", { style: "long", type: "disjunction" }).format([...new Set(embedObjectConfig.supportedHosts.map((host) => host.title))]?.sort()),
+	listOfSupportedHosts: () => new Intl.ListFormat("en", { style: "long", type: "disjunction" }).format([...new Set(embedConfig.supportedHosts.map((host) => host.title))]?.sort()),
 	encodeOEmbedQuery: (url) => {
 		if (!url) { return null; };
 		try {
 			const uri = encodeURIComponent(url);
 			const hostname = new URL(url)?.hostname?.replace("www.", "");
-			const hostConfig = embedObjectConfig.supportedHosts.find((host) => host.name === hostname);
+			const hostConfig = embedConfig.supportedHosts.find((host) => host.name === hostname);
 			const uriIndexInHostOEmbedURIComponents = hostConfig?.oEmbedURIComponents?.indexOf("${uri}");
 			if (!hostConfig || uriIndexInHostOEmbedURIComponents === -1) { return null; };
 			return hostConfig.oEmbedURIComponents?.toSpliced(uriIndexInHostOEmbedURIComponents, 1, uri)?.join("");
@@ -64,7 +64,7 @@ const embedObjectConfig = {
 	},
 	getOEmbed: async (url) => {
 		try {
-			const data = await embedObjectConfig.performOEmbedQuery(embedObjectConfig.encodeOEmbedQuery(url));
+			const data = await embedConfig.performOEmbedQuery(embedConfig.encodeOEmbedQuery(url));
 			return data ? data : null;
 		} catch {
 			return null;
@@ -72,10 +72,10 @@ const embedObjectConfig = {
 	},
 	validateOEmbed: async (url) => {
 		if (!url) { return true; };
-		const data = await embedObjectConfig.getOEmbed(url);
+		const data = await embedConfig.getOEmbed(url);
 		if (data) { return true; };
-		return (`Not a valid ${embedObjectConfig.listOfSupportedHosts()} link`);
+		return (`Not a valid ${embedConfig.listOfSupportedHosts()} link`);
 	},
 };
 
-export default embedObjectConfig;
+export default embedConfig;

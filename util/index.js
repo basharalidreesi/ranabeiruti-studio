@@ -1,19 +1,17 @@
-import customSlugify from "./customSlugify";
 import dateConfig from "./dateConfig";
-import embedObjectConfig from "./embedObjectConfig";
+import embedConfig from "./embedConfig";
 import imageConfig from "./imageConfig";
 import portableTextConfig from "./portableTextConfig";
 import referenceConfig from "./referenceConfig";
-import requireSlug from "./requireSlug";
-import requireString from "./requireString";
+import slugConfig from "./slugConfig";
+import stringConfig from "./stringConfig";
 
 export {
-	customSlugify,
 	dateConfig,
-	embedObjectConfig,
+	embedConfig,
 	imageConfig,
 	portableTextConfig,
 	referenceConfig,
-	requireSlug,
-	requireString,
+	slugConfig,
+	stringConfig,
 };

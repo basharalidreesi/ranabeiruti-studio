@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { customSlugify, dateConfig, imageConfig, requireSlug, requireString } from "../../util";
+import { dateConfig, imageConfig, slugConfig, stringConfig } from "../../util";
 import { BellIcon } from "@sanity/icons";
 
 export default defineType({
@@ -13,7 +13,7 @@ export default defineType({
 			type: "string",
 			title: "Title",
 			description: "",
-			validation: (Rule) => Rule.custom(requireString),
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
@@ -22,9 +22,9 @@ export default defineType({
 			description: "",
 			options: {
 				source: "title",
-				slugify: customSlugify,
+				slugify: slugConfig.customSlugify,
 			},
-			validation: (Rule) => Rule.custom(requireSlug),
+			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
 		}),
 		defineField({
 			name: "date",
@@ -39,20 +39,20 @@ export default defineType({
 		defineField({
 			name: "description",
 			type: "simplePortableText",
-			title: "Short Description",
+			title: "Blurb",
 			description: "",
 		}),
-		defineField({
-			name: "image",
-			type: "image",
-			title: "Main Image",
-			description: "",
-			options: imageConfig.options,
-			// validation: (Rule) => Rule.custom((value) => {
-			// 	if (!value?.asset) { return "Required"; };
-			// 	return true;
-			// }),
-		}),
+		// defineField({
+		// 	name: "image",
+		// 	type: "image",
+		// 	title: "Main Image",
+		// 	description: "",
+		// 	options: imageConfig.options,
+		// 	// validation: (Rule) => Rule.custom((value) => {
+		// 	// 	if (!value?.asset) { return "Required"; };
+		// 	// 	return true;
+		// 	// }),
+		// }),
 		defineField({
 			name: "body",
 			type: "multimediaPortableText",
@@ -65,18 +65,21 @@ export default defineType({
 		select: {
 			title: "title",
 			// date
+			// description
 			// image
 		},
 		prepare(selection) {
 			const {
 				title,
 				// date
+				// description
 				// image
 			} = selection;
 			return {
 				title: title,
 				// subtitle
 				// media
+				// description
 			};
 		},
 	},

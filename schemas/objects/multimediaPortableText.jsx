@@ -1,14 +1,13 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { embedObjectConfig, imageConfig, portableTextConfig } from "../../util";
-import { ArrowDownIcon, ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon, ChevronDownIcon, ChevronUpIcon, CubeIcon, DoubleChevronDownIcon, DoubleChevronLeftIcon, DoubleChevronRightIcon, DoubleChevronUpIcon, ImageIcon, InsertAboveIcon, InsertBelowIcon, SelectIcon } from "@sanity/icons";
-import { EmbedObjectPreview, LimitedFileInput, StringSelect } from "../../components";
+import { embedConfig, imageConfig, portableTextConfig } from "../../util";
+import { CubeIcon, ImageIcon } from "@sanity/icons";
+import { EmbedPreview } from "../../components";
 
 const styles = [
 	portableTextConfig.styles.normal,
 	portableTextConfig.styles.h3,
 	portableTextConfig.styles.blockquote,
 	portableTextConfig.styles.note,
-	// portableTextConfig.styles.hidden,
 ];
 
 const lists = [
@@ -44,43 +43,46 @@ export default defineType({
 			},
 		}),
 		defineArrayMember({
-			name: "image",
+			name: "image", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 			type: "image",
 			title: "Image",
 			icon: ImageIcon,
+			fieldsets: [
+				{
+					name: "caption",
+					title: "Caption",
+				},
+			],
 			fields: [
 				defineField({
-					name: "caption",
+					name: "caption", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 					type: "simplePortableText",
-					title: "Caption",
+					title: "Text",
 					description: "",
+					fieldset: "caption",
 				}),
 				defineField({
 					name: "captionPlacement",
 					type: "string",
-					title: "Caption Placement",
+					title: "Placement",
 					description: "",
 					options: {
 						list: [
 							{
 								value: "left",
 								title: "Place left",
-								// icon: ArrowLeftIcon,
 							},
 							{
 								value: "top",
 								title: "Place above",
-								// icon: ArrowUpIcon,
 							},
 							{
 								value: "right",
 								title: "Place right",
-								// icon: ArrowRightIcon,
 							},
 							{
 								value: "bottom",
 								title: "Place below",
-								// icon: ArrowDownIcon,
 							},
 						],
 						layout: "radio",
@@ -88,43 +90,26 @@ export default defineType({
 					},
 					initialValue: "bottom",
 					validation: (Rule) => Rule.required(),
-					components: {
-						field: (props) => {
-							return (<>
-								<div style={{
-									marginTop: "-1.5rem",
-								}}>
-									{props.renderDefault({
-										...props,
-										title: "",
-									})}
-								</div>
-							</>);
-						},
-						// input: StringSelect,
-					},
+					fieldset: "caption",
 				}),
 				defineField({
 					name: "captionVerticalAlignment",
 					type: "string",
-					title: "Caption Vertical Alignment",
+					title: "Vertical Alignment",
 					description: "",
 					options: {
 						list: [
 							{
 								value: "top",
 								title: "Align to top",
-								// icon: ChevronUpIcon,
 							},
 							{
 								value: "middle",
 								title: "Align with middle",
-								// icon: SelectIcon,
 							},
 							{
 								value: "bottom",
 								title: "Align to bottom",
-								// icon: ChevronDownIcon,
 							},
 						],
 						layout: "radio",
@@ -133,21 +118,7 @@ export default defineType({
 					initialValue: "top",
 					readOnly: ({ parent }) => !["left", "right"].includes(parent?.captionPlacement),
 					validation: (Rule) => Rule.required(),
-					components: {
-						field: (props) => {
-							return (<>
-								<div style={{
-									marginTop: "-1.5rem",
-								}}>
-									{props.renderDefault({
-										...props,
-										title: "",
-									})}
-								</div>
-							</>);
-						},
-						// input: StringSelect,
-					},
+					fieldset: "caption",
 				}),
 			],
 			options: imageConfig.options,
@@ -177,28 +148,27 @@ export default defineType({
 					...props,
 					layout: "block",
 				}),
-				// input: LimitedFileInput,
 			},
 		}),
 		defineArrayMember({
-			name: "embed",
+			name: "embed", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 			type: "object",
 			title: "Object",
 			icon: CubeIcon,
 			fields: [
 				defineField({
-					name: "type",
+					name: "type", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 					type: "string",
 					title: "Type",
 					description: "",
 					options: {
 						list: [
 							{
-								value: "url",
+								value: "url", // `portableTextConfig.renderAsPlainText` will break if `value` is changed
 								title: "URL",
 							},
 							{
-								value: "code",
+								value: "code", // `portableTextConfig.renderAsPlainText` will break if `value` is changed
 								title: "Code",
 							},
 						],
@@ -206,25 +176,24 @@ export default defineType({
 						direction: "horizontal",
 					},
 					initialValue: "url",
-					hidden: true,
 					validation: (Rule) => Rule.required(),
 				}),
 				defineField({
-					name: "url",
+					name: "url", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 					type: "url",
 					title: "URL",
 					description: "",
-					placeholder: `Valid ${embedObjectConfig.listOfSupportedHosts()} link`,
+					placeholder: `Valid ${embedConfig.listOfSupportedHosts()} link`,
 					hidden: ({ parent }) => parent?.type !== "url",
 					validation: (Rule) => Rule.custom((value, context) => {
 						if (!value && context?.parent?.type === "url") { return "Required"; };
-						// return embedObjectConfig.validateOEmbed(value);
+						// return embedConfig.validateOEmbed(value);
 						return true;
 					}),
 					// components config
 				}),
 				defineField({
-					name: "code",
+					name: "code", // `portableTextConfig.renderAsPlainText` will break if `name` is changed
 					type: "text",
 					title: "Code",
 					description: "",
@@ -240,11 +209,8 @@ export default defineType({
 				},
 			},
 			components: {
-				preview: EmbedObjectPreview,
+				preview: EmbedPreview,
 			},
 		}),
 	],
-	// components: {
-	// 	field: portableTextConfig.components.field,
-	// },
 });

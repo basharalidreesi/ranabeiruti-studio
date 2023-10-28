@@ -1,4 +1,4 @@
-import { KBD, Text } from "@sanity/ui"
+import { Text } from "@sanity/ui"
 import { defineField } from "sanity";
 import imageConfig from "./imageConfig";
 import { PortableText } from "@portabletext/react";
@@ -16,7 +16,7 @@ const portableTextConfig = {
 		blockquote: {
 			value: "blockquote",
 			title: "Blockquote",
-			component: (props) => (
+			component: (props) => (<>
 				<Text>
 					<blockquote
 						style={{
@@ -29,28 +29,16 @@ const portableTextConfig = {
 						{props.children}
 					</blockquote>
 				</Text>
-			),
+			</>),
 		},
 		note: {
 			value: "note",
 			title: "Note",
-			component: (props) => (
+			component: (props) => (<>
 				<Text muted size={1}>
 					{props.children}
 				</Text>
-			),
-		},
-		hidden: {
-			value: "hidden",
-			title: "Hidden",
-			component: (props) => (
-				<KBD
-					padding={3}
-					size={1}
-				>
-					{props.children}
-				</KBD>
-			),
+			</>),
 		},
 	},
 	lists: {
@@ -83,16 +71,16 @@ const portableTextConfig = {
 		sup: {
 			value: "sup",
 			title: "Superscript",
-			icon: () => (
+			icon: () => (<>
 				<span>
 					x<sup style={{ fontSize: "0.6em" }}>2</sup>
 				</span>
-			),
-			component: (props) => (
+			</>),
+			component: (props) => (<>
 				<span style={{ fontSize: "0.8em" }}>
 					<sup>{props.children}</sup>
 				</span>
-			),
+			</>),
 		},
 	},
 	annotations: {
@@ -102,7 +90,6 @@ const portableTextConfig = {
 			title: "Link",
 		}),
 	},
-	components: {},
 	serializers: {
 		types: {
 			image: ({ value }) => (<>
@@ -148,38 +135,48 @@ const portableTextConfig = {
 			// h3
 			// blockquote
 			note: ({ children }) => (<div className="note">{children}</div>),
-			hidden: ({ children }) => null,
 		},
 		list: {
 			// bullet
 			// number
 		},
 	},
-	renderAsPlainText: (blocks, opts = {}) => {
-		// const block = (portableText || []).find((block) => block._type === "block");
-		// const references = [];
-		// return block ? block.children.filter((child) => 
-		// 	(child._type === "span" && child.text)
-		// 	|| references.includes(child._type)
-		// ).map((child) => {
-		// 	if (child._type === "span") {
-		// 		return child.text;
-		// 	};
-		// 	if (references.includes(child._type)) {
-		// 		return "[REF]";
-		// 	};
-		// }).join("") : "";
-		const defaults = {
-			nonTextBehavior: "remove",
+	renderAsPlainText: (blocks) => {
+		const isValidTextBlock = (source) => {
+			if (source._type === "block" && source.children && source.children?.[0]?.text) {
+				return true;
+			}
+			return false;
 		};
-		const options = Object.assign({}, defaults, opts)
-		if (typeof blocks === "string") { return blocks; };
-		return blocks?.map((block) => {
-			if (block._type !== "block" || !block.children) {
-				return options.nonTextBehavior === "remove" ? "" : (`[${block._type} block]`);
+		const block = (blocks || []).find((block) =>
+			(block._type === "block" && isValidTextBlock(block))
+			|| block._type === "image"
+			|| block._type === "embed"
+		);
+		if (block?._type === "block") {
+			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
+		};
+		if (block?._type === "image") {
+			return block.caption ? `[Image]: ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
+		}
+		if (block?._type === "embed") {
+			const resolveEmbedType = (source) => {
+				if (source.type === "url") {
+					return {
+						type: "URL",
+						text: source.url ? source.url : null,
+					};
+				};
+				if (source.type === "code") {
+					return {
+						type: "Code",
+						text: source.code ? source.code : null,
+					};
+				};
 			};
-			return block.children.map((child) => child.text).join("");
-		}).join("\n\n");
+			return resolveEmbedType(block)?.type ? `[${resolveEmbedType(block).type} Object]${resolveEmbedType(block)?.text ? `: ${resolveEmbedType(block)?.text}` : ""}` : "[Object]";
+		};
+		return "";
 	},
 };
 
