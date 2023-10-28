@@ -7,8 +7,8 @@ const styles = [
 ];
 
 const lists = [
-	portableTextConfig.lists.bullets,
-	portableTextConfig.lists.numbers,
+	// portableTextConfig.lists.bullets,
+	// portableTextConfig.lists.numbers,
 ];
 
 const decorators = [
