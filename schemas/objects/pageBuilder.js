@@ -1,9 +1,7 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
-import { BlockElementIcon, ChevronUpIcon, InlineElementIcon } from "@sanity/icons";
-import { ChevronDownIcon } from "@sanity/icons";
-import { SelectIcon } from "@sanity/icons";
+import { defineArrayMember, defineField, defineType, useFormValue } from "sanity";
+import { BlockElementIcon, InlineElementIcon, StarIcon } from "@sanity/icons";
 import { PageBuilderColumnItem } from "../../components";
-import { portableTextConfig } from "../../util";
+import { portableTextConfig, stringConfig } from "../../util";
 
 const DEFAULT_NUMBER_OF_COLUMNS = 3;
 
@@ -52,32 +50,9 @@ export default defineType({
 								}),
 								defineField({
 									name: "verticalAlignment",
-									type: "string",
+									type: "verticalAlignment",
 									title: "Vertical Alignment",
 									description: "",
-									options: {
-										list: [
-											{
-												value: "top",
-												title: "Align to top",
-												icon: ChevronUpIcon,
-											},
-											{
-												value: "middle",
-												title: "Align with middle",
-												icon: SelectIcon,
-											},
-											{
-												value: "bottom",
-												title: "Align to bottom",
-												icon: ChevronDownIcon,
-											},
-										],
-										layout: "radio",
-										direction: "horizontal",
-									},
-									initialValue: "top",
-									validation: (Rule) => Rule.required(),
 								}),
 							],
 							preview: {
@@ -125,6 +100,7 @@ export default defineType({
 					const colCount = [col0, col1, col2, col3, col4]?.filter(Boolean)?.length;
 					return {
 						title: colCount + (col5 ? "+" : "") + " " + (colCount === 1 ? "Column" : "Columns"),
+						subtitle: "Row",
 					};
 				},
 			},

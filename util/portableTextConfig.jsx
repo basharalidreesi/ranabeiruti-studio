@@ -1,5 +1,5 @@
 import { Text } from "@sanity/ui"
-import { defineField } from "sanity";
+import { defineField, useFormValue } from "sanity";
 import imageConfig from "./imageConfig";
 import { PortableText } from "@portabletext/react";
 
@@ -113,10 +113,10 @@ const portableTextConfig = {
 			// object
 		},
 		marks: {
-			// strong
-			// em
-			// underline
-			// strike-through
+			// strong (default)
+			// em (default)
+			// underline (default)
+			// strike-through (default)
 			sup: ({ children }) => (<sup>{children}</sup>),
 			link: ({ children, value }) => {
 				const type = value?.type;
@@ -131,34 +131,47 @@ const portableTextConfig = {
 			},
 		},
 		block: {
-			// normal
-			// h3
-			// blockquote
+			// normal (default)
+			// h3 (default)
+			// blockquote (default)
 			note: ({ children }) => (<div className="note">{children}</div>),
 		},
 		list: {
-			// bullet
-			// number
+			// bullet (default)
+			// number (default)
 		},
 	},
-	renderAsPlainText: (blocks) => {
-		const isValidTextBlock = (source) => {
-			if (source._type === "block" && source.children && source.children?.[0]?.text) {
+	renderAsPlainText: (source) => {
+		if (typeof source === "string") { return source; };
+		const isValidTextBlock = (block) => {
+			if (block._type === "block" && block.children && block.children?.[0]?.text) {
 				return true;
 			}
 			return false;
 		};
-		const block = (blocks || []).find((block) =>
+		const block = (source || [])?.find((block) =>
 			(block._type === "block" && isValidTextBlock(block))
+			|| block._type === "title"
 			|| block._type === "image"
 			|| block._type === "embed"
 		);
 		if (block?._type === "block") {
 			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
 		};
+		if (block?._type === "title") {
+			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;
+			if (isUsedAsPlaceholder) {
+				return "[Document Title]";
+			};
+			return block.title ? `[Title] ${block.title}${block.subtitle ? `: ${block.subtitle}` : ""}` : "[Untitled Title]";
+		};
 		if (block?._type === "image") {
-			return block.caption ? `[Image]: ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
-		}
+			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;
+			if (isUsedAsPlaceholder) {
+				return "[Document Image]";
+			};
+			return block.caption ? `[Image] ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
+		};
 		if (block?._type === "embed") {
 			const resolveEmbedType = (source) => {
 				if (source.type === "url") {
@@ -174,7 +187,7 @@ const portableTextConfig = {
 					};
 				};
 			};
-			return resolveEmbedType(block)?.type ? `[${resolveEmbedType(block).type} Object]${resolveEmbedType(block)?.text ? `: ${resolveEmbedType(block)?.text}` : ""}` : "[Object]";
+			return resolveEmbedType(block)?.type ? `[${resolveEmbedType(block).type} Object]${resolveEmbedType(block)?.text ? ` ${resolveEmbedType(block)?.text}` : ""}` : "[Object]";
 		};
 		return "";
 	},

@@ -2,6 +2,65 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { DatabaseIcon } from "@sanity/icons";
 
+const INITIAL_COLUMN_VALUE = [{
+	_type: "column",
+	ratio: 1,
+	verticalAlignment: "top",
+}];
+const INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE = [{
+	_type: "block",
+	markDefs: [],
+	children: [
+		{
+			_type: "span",
+			text: "",
+			marks: [],
+		},
+	],
+}];
+const INITIAL_PAGE_BUILDER_VALUE = [
+	{
+		_type: "row",
+		columns: [
+			...INITIAL_COLUMN_VALUE,
+			{
+				_type: "column",
+				ratio: 3,
+				verticalAlignment: "top",
+				content: [
+					...INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE,
+					{
+						_type: "image",
+						captionPlacement: "bottom",
+						captionVerticalAlignment: "top",
+						isUsedAsPlaceholder: true,
+					},
+				],
+			},
+			...INITIAL_COLUMN_VALUE,
+		],
+	},
+	{
+		_type: "row",
+		columns: [
+			...INITIAL_COLUMN_VALUE,
+			{
+				_type: "column",
+				ratio: 3,
+				verticalAlignment: "top",
+				content: [
+					...INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE,
+					{
+						_type: "title",
+						isUsedAsPlaceholder: true,
+					},
+				],
+			},
+			...INITIAL_COLUMN_VALUE,
+		],
+	},
+];
+
 export default defineType({
 	name: "project",
 	type: "document",
@@ -9,14 +68,14 @@ export default defineType({
 	icon: DatabaseIcon,
 	fields: [
 		defineField({
-			name: "title",
+			name: "title", // `multimediaPortableText` will break if `name` is changed
 			type: "string",
 			title: "Title",
 			description: "",
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
-			name: "subtitle",
+			name: "subtitle", // `multimediaPortableText` will break if `name` is changed
 			type: "string",
 			title: "Subtitle",
 			description: "",
@@ -51,7 +110,7 @@ export default defineType({
 			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
-			name: "date",
+			name: "date", // `dateConfig.renderComplexDate` will break if `name` is changed
 			type: "complexDate",
 			title: "Date",
 			description: "",
@@ -166,7 +225,7 @@ export default defineType({
 			],
 		}),
 		defineField({
-			name: "image",
+			name: "image", // `multimediaPortableText` will break if `name` is changed
 			type: "mainImage",
 			title: "Main Image",
 			description: "",
@@ -190,6 +249,9 @@ export default defineType({
 			description: "",
 		}),
 	],
+	initialValue: {
+		body: INITIAL_PAGE_BUILDER_VALUE,
+	},
 	// orderings config
 	preview: {
 		select: {

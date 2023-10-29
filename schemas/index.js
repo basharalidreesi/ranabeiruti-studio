@@ -13,6 +13,7 @@ import mainImage from "./objects/mainImage";
 import multimediaPortableText from "./objects/multimediaPortableText";
 import pageBuilder from "./objects/pageBuilder";
 import simplePortableText from "./objects/simplePortableText";
+import verticalAlignment from "./objects/verticalAlignment";
 
 export const schemaTypes = [
 	// documents
@@ -32,6 +33,7 @@ export const schemaTypes = [
 	multimediaPortableText,
 	pageBuilder,
 	simplePortableText,
+	verticalAlignment,
 ];
 
 // template:
@@ -55,6 +57,7 @@ export const schemaTypes = [
 // hidden config
 // readOnly config
 // validation config
+// orderings config
 // preview config
 // components config
 // fieldset config

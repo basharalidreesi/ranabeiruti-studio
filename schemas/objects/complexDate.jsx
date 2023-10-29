@@ -22,7 +22,7 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 			components: {
 				field: (props) => {
-					const hasDuration = useFormValue(["date", "hasDuration"]);
+					const hasDuration = useFormValue(["date", "hasDuration"]) || false;
 					return (
 						<div style={{
 							gridColumn: hasDuration ? "auto" : "1/-1",
@@ -58,10 +58,10 @@ export default defineType({
 			}),
 			components: {
 				input: (props) => {
-					const isOngoing = useFormValue(["date", "isOngoing"]);
+					const isOngoing = useFormValue(["date", "isOngoing"]) || false;
 					return props.renderDefault({
 						...props,
-						value: isOngoing ? "Present" : props?.value,
+						value: isOngoing ? "Present" : props?.value || "",
 					});
 				},
 			},
