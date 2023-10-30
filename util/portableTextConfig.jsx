@@ -142,7 +142,7 @@ const portableTextConfig = {
 		},
 	},
 	renderAsPlainText: (blocks) => {
-		if (typeof block === "string") { return blocks; };
+		if (typeof blocks === "string") { return blocks; };
 		const isValidTextBlock = (source) => {
 			if (source._type === "block" && source.children && source.children?.[0]?.text) {
 				return true;
