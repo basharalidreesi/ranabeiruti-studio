@@ -7,59 +7,62 @@ const INITIAL_COLUMN_VALUE = [{
 	ratio: 1,
 	verticalAlignment: "top",
 }];
-const INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE = [{
-	_type: "block",
-	markDefs: [],
-	children: [
+const INITIAL_PAGE_BUILDER_VALUE = {
+	header: [
 		{
-			_type: "span",
-			text: "",
-			marks: [],
+			_type: "row",
+			columns: [
+				...INITIAL_COLUMN_VALUE,
+				{
+					_type: "title",
+					ratio: 3,
+					verticalAlignment: "top",
+				},
+				...INITIAL_COLUMN_VALUE,
+			],
+		},
+		{
+			_type: "row",
+			columns: [
+				...INITIAL_COLUMN_VALUE,
+				{
+					_type: "image_",
+					ratio: 3,
+					verticalAlignment: "top",
+					captionPlacement: "bottom",
+					imageRatio: 1,
+					captionRatio: 1,
+					captionVerticalAlignment: "top",
+				},
+				...INITIAL_COLUMN_VALUE,
+			],
 		},
 	],
-}];
-const INITIAL_PAGE_BUILDER_VALUE = [
-	{
-		_type: "row",
-		columns: [
-			...INITIAL_COLUMN_VALUE,
-			{
-				_type: "column",
-				ratio: 3,
-				verticalAlignment: "top",
-				content: [
-					...INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE,
-					{
-						_type: "image",
-						captionPlacement: "bottom",
-						captionVerticalAlignment: "top",
-						isUsedAsPlaceholder: true,
-					},
-				],
-			},
-			...INITIAL_COLUMN_VALUE,
-		],
-	},
-	{
-		_type: "row",
-		columns: [
-			...INITIAL_COLUMN_VALUE,
-			{
-				_type: "column",
-				ratio: 3,
-				verticalAlignment: "top",
-				content: [
-					...INITIAL_MULTIMEDIA_PORTABLE_TEXT_VALUE,
-					{
-						_type: "title",
-						isUsedAsPlaceholder: true,
-					},
-				],
-			},
-			...INITIAL_COLUMN_VALUE,
-		],
-	},
-];
+	body: [
+		{
+			_type: "row",
+			columns: [
+				...INITIAL_COLUMN_VALUE,
+				...INITIAL_COLUMN_VALUE,
+				...INITIAL_COLUMN_VALUE,
+			],
+		},
+	],
+	footer: [
+		{
+			_type: "row",
+			columns: [
+				...INITIAL_COLUMN_VALUE,
+				{
+					_type: "credits",
+					ratio: 3,
+					verticalAlignment: "top",
+				},
+				...INITIAL_COLUMN_VALUE,
+			],
+		},
+	],
+};
 
 export default defineType({
 	name: "project",
@@ -68,14 +71,14 @@ export default defineType({
 	icon: DatabaseIcon,
 	fields: [
 		defineField({
-			name: "title", // `multimediaPortableText` will break if `name` is changed
+			name: "title",
 			type: "string",
 			title: "Title",
 			description: "",
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
-			name: "subtitle", // `multimediaPortableText` will break if `name` is changed
+			name: "subtitle",
 			type: "string",
 			title: "Subtitle",
 			description: "",
@@ -110,7 +113,7 @@ export default defineType({
 			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
-			name: "date", // `dateConfig.renderComplexDate` will break if `name` is changed
+			name: "date",
 			type: "complexDate",
 			title: "Date",
 			description: "",
@@ -225,7 +228,7 @@ export default defineType({
 			],
 		}),
 		defineField({
-			name: "image", // `multimediaPortableText` will break if `name` is changed
+			name: "image",
 			type: "mainImage",
 			title: "Main Image",
 			description: "",
@@ -237,20 +240,20 @@ export default defineType({
 			description: "",
 		}),
 		defineField({
-			name: "body",
-			type: "pageBuilder",
-			title: "Body",
-			description: "",
-		}),
-		defineField({
 			name: "credits",
 			type: "simplePortableText",
 			title: "Credits",
 			description: "",
 		}),
+		defineField({
+			name: "page",
+			type: "pageBuilder",
+			title: "Page",
+			description: "",
+		}),
 	],
 	initialValue: {
-		body: INITIAL_PAGE_BUILDER_VALUE,
+		page: INITIAL_PAGE_BUILDER_VALUE,
 	},
 	// orderings config
 	preview: {

@@ -3,8 +3,6 @@ import { Card, Flex, Text } from "@sanity/ui";
 import { defineField, defineType, useFormValue } from "sanity";
 import { dateConfig } from "../../util";
 
-// when used, a complexDate object should be named as `date` in order for everything to work properly
-
 export default defineType({
 	name: "complexDate",
 	type: "object",
@@ -22,7 +20,7 @@ export default defineType({
 			validation: (Rule) => Rule.required(),
 			components: {
 				field: (props) => {
-					const hasDuration = useFormValue(["date", "hasDuration"]) || false;
+					const hasDuration = useFormValue([...props.path?.slice(0, -1), "hasDuration"]) || false;
 					return (
 						<div style={{
 							gridColumn: hasDuration ? "auto" : "1/-1",
@@ -58,7 +56,7 @@ export default defineType({
 			}),
 			components: {
 				input: (props) => {
-					const isOngoing = useFormValue(["date", "isOngoing"]) || false;
+					const isOngoing = useFormValue([...props.path?.slice(0, -1), "isOngoing"]) || false;
 					return props.renderDefault({
 						...props,
 						value: isOngoing ? "Present" : props?.value || "",
@@ -162,7 +160,7 @@ export default defineType({
 						tone={"caution"}
 						style={{
 							marginTop: "0.5rem",
-							marginBottom: "-1.75rem",
+							marginBottom: "-1.45rem",
 						}}
 					>
 						<Flex gap={2} align={"center"} justify={"center"}>

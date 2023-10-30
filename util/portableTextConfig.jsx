@@ -1,5 +1,5 @@
 import { Text } from "@sanity/ui"
-import { defineField, useFormValue } from "sanity";
+import { defineField } from "sanity";
 import imageConfig from "./imageConfig";
 import { PortableText } from "@portabletext/react";
 
@@ -110,7 +110,7 @@ const portableTextConfig = {
 					: null
 				}
 			</>),
-			// object
+			// object TODO
 		},
 		marks: {
 			// strong (default)
@@ -141,37 +141,24 @@ const portableTextConfig = {
 			// number (default)
 		},
 	},
-	renderAsPlainText: (source) => {
-		if (typeof source === "string") { return source; };
-		const isValidTextBlock = (block) => {
-			if (block._type === "block" && block.children && block.children?.[0]?.text) {
+	renderAsPlainText: (blocks) => {
+		const isValidTextBlock = (source) => {
+			if (source._type === "block" && source.children && source.children?.[0]?.text) {
 				return true;
 			}
 			return false;
 		};
-		const block = (source || [])?.find((block) =>
+		const block = (blocks || [])?.find((block) =>
 			(block._type === "block" && isValidTextBlock(block))
-			|| block._type === "title"
 			|| block._type === "image"
 			|| block._type === "embed"
 		);
 		if (block?._type === "block") {
 			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
 		};
-		if (block?._type === "title") {
-			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;
-			if (isUsedAsPlaceholder) {
-				return "[Document Title]";
-			};
-			return block.title ? `[Title] ${block.title}${block.subtitle ? `: ${block.subtitle}` : ""}` : "[Untitled Title]";
-		};
 		if (block?._type === "image") {
-			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;
-			if (isUsedAsPlaceholder) {
-				return "[Document Image]";
-			};
 			return block.caption ? `[Image] ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
-		};
+		}
 		if (block?._type === "embed") {
 			const resolveEmbedType = (source) => {
 				if (source.type === "url") {

@@ -12,6 +12,8 @@ import link from "./objects/link";
 import mainImage from "./objects/mainImage";
 import multimediaPortableText from "./objects/multimediaPortableText";
 import pageBuilder from "./objects/pageBuilder";
+import placement from "./objects/placement";
+import ratio from "./objects/ratio";
 import simplePortableText from "./objects/simplePortableText";
 import verticalAlignment from "./objects/verticalAlignment";
 
@@ -32,6 +34,8 @@ export const schemaTypes = [
 	mainImage,
 	multimediaPortableText,
 	pageBuilder,
+	placement,
+	ratio,
 	simplePortableText,
 	verticalAlignment,
 ];
