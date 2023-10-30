@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { embedConfig, imageConfig, portableTextConfig } from "../../util";
-import { CubeIcon, ImageIcon } from "@sanity/icons";
+import { CubeIcon, HeartFilledIcon, ImageIcon } from "@sanity/icons";
 import { EmbedPreview } from "../../components";
 
 const styles = [
@@ -51,7 +51,7 @@ export default defineType({
 				{
 					name: "caption",
 					title: "Caption",
-					hidden: ({ parent }) => !parent?.asset,
+					hidden: ({ parent }) => !parent?.asset && !parent?.isUsedAsPlaceholder,
 				},
 			],
 			fields: [
@@ -60,6 +60,8 @@ export default defineType({
 					type: "simplePortableText",
 					title: "Text",
 					description: "",
+					hidden: ({ parent }) => parent?.isUsedAsPlaceholder,
+					readOnly: ({ parent }) => parent?.isUsedAsPlaceholder,
 					fieldset: "caption",
 				}),
 				defineField({
@@ -93,9 +95,20 @@ export default defineType({
 					hidden: ({ parent }) => !["left", "right"].includes(parent?.captionPlacement),
 					fieldset: "caption",
 				}),
+				defineField({
+					name: "isUsedAsPlaceholder",
+					type: "boolean",
+					title: "Use document main image and caption?",
+					description: "",
+					options: {
+						layout: "checkbox",
+					},
+					initialValue: false,
+				}),
 			],
 			options: imageConfig.options,
 			validation: (Rule) => Rule.custom((value) => {
+				if (value?.isUsedAsPlaceholder === true) { return true; };
 				if (!value?.asset) { return "Required"; };
 				return true;
 			}),
@@ -103,23 +116,30 @@ export default defineType({
 				select: {
 					asset: "asset",
 					caption: "caption",
+					isUsedAsPlaceholder: "isUsedAsPlaceholder",
 				},
-				prepare(selection) {
+				// `prepare()` removed for `components.preview`
+			},
+			components: {
+				input: (props) => {
+					const isUsedAsPlaceholder = props.value?.isUsedAsPlaceholder || false;
+					return props.renderDefault({
+						...props,
+						readOnly: isUsedAsPlaceholder ? true : props.readOnly,
+						members: isUsedAsPlaceholder ? [...props.members?.filter((member) => member.name !== "asset")] : props.members,
+					});
+				},
+				preview: (props) => {
 					const {
 						asset,
 						caption,
-					} = selection;
-					return {
-						title: portableTextConfig.renderAsPlainText(caption),
-						subtitle: "Image",
-						media: asset,
-					};
-				},
-			},
-			components: {
-				preview: (props) => {
+						isUsedAsPlaceholder = false,
+					} = props;
 					return props.renderDefault({
 						...props,
+						title: isUsedAsPlaceholder ? "[Document Image]" : portableTextConfig.renderAsPlainText(caption),
+						subtitle: isUsedAsPlaceholder ? "Placeholder" : "Image",
+						media: isUsedAsPlaceholder ? HeartFilledIcon : (asset ? asset : ImageIcon),
 						layout: "block",
 					});
 				},

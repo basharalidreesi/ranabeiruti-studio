@@ -142,6 +142,7 @@ const portableTextConfig = {
 		},
 	},
 	renderAsPlainText: (blocks) => {
+		if (typeof block === "string") { return blocks; };
 		const isValidTextBlock = (source) => {
 			if (source._type === "block" && source.children && source.children?.[0]?.text) {
 				return true;
@@ -157,6 +158,10 @@ const portableTextConfig = {
 			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
 		};
 		if (block?._type === "image") {
+			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;
+			if (isUsedAsPlaceholder) {
+				return "[Document Image]";
+			};
 			return block.caption ? `[Image] ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
 		}
 		if (block?._type === "embed") {
