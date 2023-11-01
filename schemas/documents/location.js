@@ -1,35 +1,49 @@
 import { RocketIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import { COUNTRIES } from "../../lib/countries";
+
+export const LOCATION_ICON = RocketIcon;
 
 export default defineType({
 	name: "location",
 	type: "document",
 	title: "Location",
-	icon: RocketIcon,
+	icon: LOCATION_ICON,
 	fields: [
 		defineField({
 			name: "name",
 			type: "string",
 			title: "Name",
 			description: "",
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
 		}),
 		defineField({
 			name: "locale",
 			type: "string",
 			title: "Locale",
 			description: "",
-			// list config
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
+			options: {
+				list: COUNTRIES,
+			},
+			validation: (Rule) => Rule.required(),
 		}),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Locale",
+			name: "localeAsc",
+			by: [
+				{ field: "locale", direction: "asc" },
+				{ field: "name", direction: "asc" },
+			],
+		},
+		{
+			title: "Name",
+			name: "nameAsc",
+			by: [
+				{ field: "name", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			name: "name",
@@ -38,10 +52,11 @@ export default defineType({
 		prepare(selection) {
 			const {
 				name,
-				locale
+				locale,
 			} = selection;
 			return {
-				title: [name, locale]?.filter(Boolean)?.join(", "),
+				title: [name, locale ? COUNTRIES.find((country) => country.value === locale)?.title : null]?.filter(Boolean)?.join(", "),
+				subtitle: locale,
 			};
 		},
 	},

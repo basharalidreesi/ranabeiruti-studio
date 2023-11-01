@@ -2,6 +2,8 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { DatabaseIcon } from "@sanity/icons";
 
+export const PROJECT_ICON = DatabaseIcon;
+
 const INITIAL_COLUMN_VALUE = [{
 	_type: "column",
 	ratio: 1,
@@ -68,7 +70,7 @@ export default defineType({
 	name: "project",
 	type: "document",
 	title: "Project",
-	icon: DatabaseIcon,
+	icon: PROJECT_ICON,
 	fields: [
 		defineField({
 			name: "title",
@@ -255,24 +257,54 @@ export default defineType({
 	initialValue: {
 		page: INITIAL_PAGE_BUILDER_VALUE,
 	},
-	// orderings config
+	orderings: [
+		{
+			title: "Start Date, newest first",
+			name: "startDateDesc",
+			by: [
+				{ field: "date.startDate", direction: "desc" },
+			],
+		},
+		{
+			title: "Start Date, oldest first",
+			name: "startDateAsc",
+			by: [
+				{ field: "date.startDate", direction: "asc" },
+			],
+		},
+		{
+			title: "Title",
+			name: "titleAsc",
+			by: [
+				{ field: "title", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			title: "title",
+			subtitle: "subtitle",
 			description: "description",
+			profile0Name: "profiles.0.name",
+			profile1Name: "profiles.1.name",
+			profile2Name: "profiles.2.name",
 			date: "date",
 			image: "image",
 		},
 		prepare(selection) {
 			const {
 				title,
+				subtitle,
 				description,
+				profile0Name,
+				profile1Name,
+				profile2Name,
 				date,
 				image,
 			} = selection;
 			return {
-				title: title,
-				subtitle: dateConfig.renderComplexDate(date, "short"),
+				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
+				subtitle: [date && date.startDate ? dateConfig.renderComplexDate(date, "short") : "No date", profile0Name || "no profile", profile1Name, profile2Name ? "..." : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 				media: image,
 			};

@@ -1,12 +1,14 @@
 import { defineField, defineType } from "sanity";
-import { dateConfig, imageConfig, slugConfig, stringConfig } from "../../util";
+import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { BellIcon } from "@sanity/icons";
+
+export const NEWS_ICON = BellIcon;
 
 export default defineType({
 	name: "news",
 	type: "document",
 	title: "News",
-	icon: BellIcon,
+	icon: NEWS_ICON,
 	fields: [
 		defineField({
 			name: "title",
@@ -42,17 +44,6 @@ export default defineType({
 			title: "Blurb",
 			description: "",
 		}),
-		// defineField({
-		// 	name: "image",
-		// 	type: "image",
-		// 	title: "Main Image",
-		// 	description: "",
-		// 	options: imageConfig.options,
-		// 	// validation: (Rule) => Rule.custom((value) => {
-		// 	// 	if (!value?.asset) { return "Required"; };
-		// 	// 	return true;
-		// 	// }),
-		// }),
 		defineField({
 			name: "body",
 			type: "multimediaPortableText",
@@ -60,26 +51,45 @@ export default defineType({
 			description: "",
 		}),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Date, newest first",
+			name: "dateDesc",
+			by: [
+				{ field: "date", direction: "desc" },
+			],
+		},
+		{
+			title: "Date, oldest first",
+			name: "dateAsc",
+			by: [
+				{ field: "date", direction: "asc" },
+			],
+		},
+		{
+			title: "Title",
+			name: "titleAsc",
+			by: [
+				{ field: "title", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			title: "title",
-			// date
-			// description
-			// image
+			date: "date",
+			description: "description",
 		},
 		prepare(selection) {
 			const {
 				title,
-				// date
-				// description
-				// image
+				date,
+				description,
 			} = selection;
 			return {
 				title: title,
-				// subtitle
-				// media
-				// description
+				subtitle: date ? dateConfig.renderAsString(date, "short") : "No date",
+				description: portableTextConfig.renderAsPlainText(description),
 			};
 		},
 	},

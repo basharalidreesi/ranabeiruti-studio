@@ -1,11 +1,13 @@
 import { UserIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
+export const PROFILE_ICON = UserIcon;
+
 export default defineType({
 	name: "profile",
 	type: "document",
 	title: "Profile",
-	icon: UserIcon,
+	icon: PROFILE_ICON,
 	fields: [
 		defineField({
 			name: "name",
@@ -18,7 +20,15 @@ export default defineType({
 			// validation config
 		}),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Name",
+			name: "nameAsc",
+			by: [
+				{ field: "name", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			name: "name",

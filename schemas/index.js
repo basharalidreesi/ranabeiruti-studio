@@ -1,12 +1,19 @@
+// documents
 import client from "./documents/client";
 import collection from "./documents/collection";
+import homepage from "./documents/homepage";
 import location from "./documents/location";
 import news from "./documents/news";
 import press from "./documents/press";
+import pressListing from "./documents/pressListing";
 import profile from "./documents/profile";
 import project from "./documents/project";
+import projectsListing from "./documents/projectsListing";
+import simplePage from "./documents/simplePage";
 import subject from "./documents/subject";
 import type_ from "./documents/type";
+
+// objects
 import complexDate from "./objects/complexDate";
 import link from "./objects/link";
 import mainImage from "./objects/mainImage";
@@ -19,15 +26,21 @@ import verticalAlignment from "./objects/verticalAlignment";
 
 export const schemaTypes = [
 	// documents
-	client,
-	collection,
-	location,
-	news,
-	press,
-	profile,
-	project,
-	subject,
-	type_,
+		// data
+		client,
+		collection,
+		location,
+		news,
+		press,
+		profile,
+		project,
+		subject,
+		type_,
+		// pages
+		homepage,
+		projectsListing,
+		pressListing,
+		simplePage,
 	// objects
 	complexDate,
 	link,
@@ -38,6 +51,14 @@ export const schemaTypes = [
 	ratio,
 	simplePortableText,
 	verticalAlignment,
+	// {
+	// 	name: "temp",
+	// 	type: "document",
+	// 	fields: [{
+	// 		name: "temp",
+	// 		type: "string",
+	// 	}],
+	// },
 ];
 
 // template:

@@ -1,5 +1,12 @@
 const dateConfig = {
 	dateFormat: "YYYY-MM-DD",
+	renderAsString: (date, length = "long") => {
+		return new Date(date).toLocaleDateString("en-gb", {
+			day: "numeric",
+			month: length,
+			year: "numeric",
+		});
+	},
 	renderComplexDate: (complexDate, length = "long") => {
 		if (!complexDate || !complexDate?.startDate || !complexDate?.dateFormat) { return null; };
 		const startDate = complexDate.startDate;

@@ -1,12 +1,14 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, imageConfig, stringConfig } from "../../util";
+import { dateConfig, portableTextConfig, stringConfig } from "../../util";
+
+export const PRESS_ICON = BillIcon;
 
 export default defineType({
 	name: "press",
 	type: "document",
 	title: "Press",
-	icon: BillIcon,
+	icon: PRESS_ICON,
 	fields: [
 		defineField({
 			name: "title",
@@ -45,38 +47,55 @@ export default defineType({
 			title: "Blurb",
 			description: "",
 		}),
-		// defineField({
-		// 	name: "image",
-		// 	type: "image",
-		// 	title: "Main Image",
-		// 	description: "",
-		// 	options: imageConfig.options,
-		// 	// validation: (Rule) => Rule.custom((value) => {
-		// 	// 	if (!value?.asset) { return "Required"; };
-		// 	// 	return true;
-		// 	// }),
-		// }),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Date, newest first",
+			name: "dateDesc",
+			by: [
+				{ field: "date", direction: "desc" },
+			],
+		},
+		{
+			title: "Date, oldest first",
+			name: "dateAsc",
+			by: [
+				{ field: "date", direction: "asc" },
+			],
+		},
+		{
+			title: "Title",
+			name: "titleAsc",
+			by: [
+				{ field: "title", direction: "asc" },
+			],
+		},
+		{
+			title: "Publisher",
+			name: "publisherAsc",
+			by: [
+				{ field: "publisher", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			title: "title",
-			// date
-			// description
-			// image
+			publisher: "publisher",
+			date: "date",
+			description: "description",
 		},
 		prepare(selection) {
 			const {
 				title,
-				// date
-				// description
-				// image
+				publisher,
+				date,
+				description,
 			} = selection;
 			return {
 				title: title,
-				// subtitle
-				// media
-				// description
+				subtitle: [date ? dateConfig.renderAsString(date, "short") : "No date", publisher || "no publisher"]?.filter(Boolean)?.join(", "),
+				description: portableTextConfig.renderAsPlainText(description),
 			};
 		},
 	},

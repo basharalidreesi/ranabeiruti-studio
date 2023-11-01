@@ -1,11 +1,13 @@
 import { TagIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
+export const TYPE_ICON = TagIcon;
+
 export default defineType({
 	name: "type_",
 	type: "document",
 	title: "Type",
-	icon: TagIcon,
+	icon: TYPE_ICON,
 	fields: [
 		defineField({
 			name: "name",
@@ -18,7 +20,15 @@ export default defineType({
 			// validation config
 		}),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Name",
+			name: "nameAsc",
+			by: [
+				{ field: "name", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			name: "name",

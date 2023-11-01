@@ -1,116 +1,164 @@
-import { BellIcon, BillIcon, BottleIcon, BulbOutlineIcon, CaseIcon, DatabaseIcon, RocketIcon, TagIcon, UserIcon } from "@sanity/icons";
+import { FolderIcon } from "@sanity/icons";
+import { PROJECT_ICON } from "./schemas/documents/project";
+import { NEWS_ICON } from "./schemas/documents/news";
+import { PRESS_ICON } from "./schemas/documents/press";
+import { CLIENT_ICON } from "./schemas/documents/client";
+import { PROFILE_ICON } from "./schemas/documents/profile";
+import { LOCATION_ICON } from "./schemas/documents/location";
+import { TYPE_ICON } from "./schemas/documents/type";
+import { SUBJECT_ICON } from "./schemas/documents/subject";
+import { COLLECTION_ICON } from "./schemas/documents/collection";
 
 const hiddenTypes = new Set([
-	"media.tag",
+	// data
 	"project",
+	"news",
+	"press",
 	"client",
 	"profile",
 	"location",
-	"news",
-	"press",
 	"type_",
 	"subject",
 	"collection",
+	// pages
+	"homepage",
+	"projectsListing",
+	"pressListing",
+	"simplePage",
+	// misc
+	"media.tag",
 ]);
 
-export const structure = (S) => {
+const hiddenSortItems = new Set([
+	"Sort by Created",
+	"Sort by Last edited",
+]);
+
+export const singletonTypes = new Set([
+	// pages
+	"homepage",
+	"projectsListing",
+	"pressListing",
+	// misc
+	"media.tag",
+]);
+
+export const singletonActions = new Set([
+	"publish",
+	"discardChanges",
+	"restore",
+]);
+
+export const dataDeskStructure = (S) => {
 	return S.list()
 		.title("Data")
 		.items([
 			S.listItem()
 				.title("Projects")
-				.icon(DatabaseIcon)
+				.icon(PROJECT_ICON)
 				.child(
 					S.documentTypeList("project")
 						.title("Projects")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
-				),
-			S.divider(),
-			S.listItem()
-				.title("Clients")
-				.icon(CaseIcon)
-				.child(
-					S.documentTypeList("client")
-						.title("Clients")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
-				),
-			S.listItem()
-				.title("Profiles")
-				.icon(UserIcon)
-				.child(
-					S.documentTypeList("profile")
-						.title("Profiles")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
-				),
-			S.listItem()
-				.title("Locations")
-				.icon(RocketIcon)
-				.child(
-					S.documentTypeList("location")
-						.title("Locations")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("project").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "date.startDate", direction: "desc" }])
 				),
 			S.divider(),
 			S.listItem()
 				.title("News")
-				.icon(BellIcon)
+				.icon(NEWS_ICON)
 				.child(
 					S.documentTypeList("news")
 						.title("News")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("news").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "date", direction: "desc" }])
 				),
 			S.listItem()
 				.title("Press")
-				.icon(BillIcon)
+				.icon(PRESS_ICON)
 				.child(
 					S.documentTypeList("press")
 						.title("Press")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("press").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "date", direction: "desc" }])
+				),
+			S.divider(),
+			S.listItem()
+				.title("Clients")
+				.icon(CLIENT_ICON)
+				.child(
+					S.documentTypeList("client")
+						.title("Clients")
+						.menuItems(S.documentTypeList("client").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "name", direction: "asc" }])
+				),
+			S.listItem()
+				.title("Profiles")
+				.icon(PROFILE_ICON)
+				.child(
+					S.documentTypeList("profile")
+						.title("Profiles")
+						.menuItems(S.documentTypeList("profile").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "name", direction: "asc" }])
+				),
+			S.listItem()
+				.title("Locations")
+				.icon(LOCATION_ICON)
+				.child(
+					S.documentTypeList("location")
+						.title("Locations")
+						.menuItems(S.documentTypeList("location").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "locale", direction: "asc" }, { field: "name", direction: "asc" }])
 				),
 			S.divider(),
 			S.listItem()
 				.title("Types")
-				.icon(TagIcon)
+				.icon(TYPE_ICON)
 				.child(
 					S.documentTypeList("type_")
 						.title("Types")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("type_").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "name", direction: "asc" }])
 				),
 			S.listItem()
 				.title("Subjects")
-				.icon(BulbOutlineIcon)
+				.icon(SUBJECT_ICON)
 				.child(
 					S.documentTypeList("subject")
 						.title("Subjects")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("subject").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "name", direction: "asc" }])
 				),
 			S.listItem()
 				.title("Collections")
-				.icon(BottleIcon)
+				.icon(COLLECTION_ICON)
 				.child(
 					S.documentTypeList("collection")
 						.title("Collections")
-						// .menuItems([])
-						// .defaultLayout("detail")
-						// .defaultOrdering([{ field: "title", direction: "asc" }])
+						.menuItems(S.documentTypeList("collection").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "name", direction: "asc" }])
 				),
 			S.divider(),
 			...S.documentTypeListItems().filter((type) => !hiddenTypes.has(type.spec.id)),
+		]);
+};
+
+export const pageDeskStructure = (S) => {
+	return S.list()
+		.title("Pages")
+		.items([
+			S.documentListItem().title("Homepage").schemaType("homepage").id("homepage"),
+			S.documentListItem().title("Projects Listing").schemaType("projectsListing").id("projectsListing"),
+			S.documentListItem().title("Press Listing").schemaType("pressListing").id("pressListing"),
+			S.divider(),
+			S.listItem()
+				.title("Pages")
+				.icon(FolderIcon)
+				.child(
+					S.documentTypeList("simplePage")
+						.title("Pages")
+						.menuItems(S.documentTypeList("subject").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "title", direction: "asc" }])
+				),
+			S.divider(),
 		]);
 };

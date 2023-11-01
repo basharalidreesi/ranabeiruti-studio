@@ -1,11 +1,13 @@
 import { CaseIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
+export const CLIENT_ICON = CaseIcon;
+
 export default defineType({
 	name: "client",
 	type: "document",
 	title: "Client",
-	icon: CaseIcon,
+	icon: CLIENT_ICON,
 	fields: [
 		defineField({
 			name: "name",
@@ -18,7 +20,15 @@ export default defineType({
 			// validation config
 		}),
 	],
-	// orderings config
+	orderings: [
+		{
+			title: "Name",
+			name: "nameAsc",
+			by: [
+				{ field: "name", direction: "asc" },
+			],
+		},
+	],
 	preview: {
 		select: {
 			name: "name",
