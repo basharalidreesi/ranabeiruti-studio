@@ -21,9 +21,8 @@ const hiddenTypes = new Set([
 	"subject",
 	"collection",
 	// pages
-	"homepage",
-	"projectsListing",
-	"pressListing",
+	"listing",
+	"settings",
 	"simplePage",
 	// misc
 	"media.tag",
@@ -36,9 +35,8 @@ const hiddenSortItems = new Set([
 
 export const singletonTypes = new Set([
 	// pages
-	"homepage",
-	"projectsListing",
-	"pressListing",
+	"listing",
+	"settings",
 	// misc
 	"media.tag",
 ]);
@@ -146,9 +144,9 @@ export const pageDeskStructure = (S) => {
 	return S.list()
 		.title("Pages")
 		.items([
-			S.documentListItem().title("Homepage").schemaType("homepage").id("homepage"),
-			S.documentListItem().title("Projects Listing").schemaType("projectsListing").id("projectsListing"),
-			S.documentListItem().title("Press Listing").schemaType("pressListing").id("pressListing"),
+			S.documentListItem().schemaType("listing").id("homepage"),
+			S.documentListItem().schemaType("listing").id("projectsListing"),
+			S.documentListItem().schemaType("listing").id("pressListing"),
 			S.divider(),
 			S.listItem()
 				.title("Pages")
@@ -159,6 +157,8 @@ export const pageDeskStructure = (S) => {
 						.menuItems(S.documentTypeList("subject").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
 						.defaultOrdering([{ field: "title", direction: "asc" }])
 				),
+			S.divider(),
+			S.documentListItem().title("Settings").schemaType("settings").id("settings"),
 			S.divider(),
 		]);
 };

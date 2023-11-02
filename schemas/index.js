@@ -1,14 +1,13 @@
 // documents
 import client from "./documents/client";
 import collection from "./documents/collection";
-import homepage from "./documents/homepage";
+import listing from "./documents/listing";
 import location from "./documents/location";
 import news from "./documents/news";
 import press from "./documents/press";
-import pressListing from "./documents/pressListing";
 import profile from "./documents/profile";
 import project from "./documents/project";
-import projectsListing from "./documents/projectsListing";
+import settings from "./documents/settings";
 import simplePage from "./documents/simplePage";
 import subject from "./documents/subject";
 import type_ from "./documents/type";
@@ -37,9 +36,8 @@ export const schemaTypes = [
 		subject,
 		type_,
 		// pages
-		homepage,
-		projectsListing,
-		pressListing,
+		listing,
+		settings,
 		simplePage,
 	// objects
 	complexDate,
