@@ -15,7 +15,7 @@ const imageConfig = {
 		const imageBuilder = imageUrlBuilder(client);
 		useEffect(() => {
 			async function getData() {
-				const data = imageBuilder.image(imageObject);
+				const data = imageBuilder.image(imageObject).width(500);
 				setData(data);
 			};
 			getData();

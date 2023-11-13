@@ -1,8 +1,8 @@
-import { HomeIcon, UlistIcon } from "@sanity/icons";
+import { BoltIcon, CalendarIcon, FilterIcon, HomeIcon, LinkIcon, OkHandIcon, UlistIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { slugConfig, stringConfig } from "../../util";
 import { PROJECT_ICON } from "./project";
 import { PRESS_ICON } from "./press";
-import { slugConfig, stringConfig } from "../../util";
 
 export default defineType({
 	name: "listing",
@@ -15,9 +15,6 @@ export default defineType({
 			type: "string",
 			title: "Title",
 			description: "",
-			// initalValue config
-			// hidden config
-			// readOnly config
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
@@ -37,93 +34,116 @@ export default defineType({
 				return slugConfig.requireSlug(value);
 			}),
 		}),
-		// defineField({
-		// 	name: "categories",
-		// 	type: "array",
-		// 	title: "Categories",
-		// 	of: [
-		// 		defineArrayMember({
-		// 			name: "category",
-		// 			type: "object",
-		// 			title: "Category",
-		// 			fields: [
-		// 				defineField({
-		// 					name: "title",
-		// 					type: "string",
-		// 					title: "Title",
-		// 				}),
-		// 				defineField({
-		// 					name: "contents",
-		// 					type: "array",
-		// 					title: "Contents",
-		// 					of: [
-		// 						defineArrayMember({
-		// 							name: "item",
-		// 							type: "reference",
-		// 							title: "Specific item",
-		// 							to: [
-		// 								{ type: "project" },
-		// 								{ type: "press" },
-		// 								{ type: "news" },
-		// 								{ type: "type_" },
-		// 								{ type: "subject" },
-		// 								{ type: "collection" },
-		// 							],
-		// 						}),
-		// 						defineArrayMember({
-		// 							name: "collectionsP",
-		// 							type: "object",
-		// 							title: "All Collections",
-		// 							fields: [
-		// 								defineField({
-		// 									name: "title",
-		// 									type: "string",
-		// 									title: "Title",
-		// 								}),
-		// 							],
-		// 						}),
-		// 						defineArrayMember({
-		// 							name: "projectsP",
-		// 							type: "object",
-		// 							title: "All Projects",
-		// 							fields: [
-		// 								defineField({
-		// 									name: "title",
-		// 									type: "string",
-		// 									title: "Title",
-		// 								}),
-		// 							],
-		// 						}),
-		// 						defineArrayMember({
-		// 							name: "typesP",
-		// 							type: "object",
-		// 							title: "All Types",
-		// 							fields: [
-		// 								defineField({
-		// 									name: "title",
-		// 									type: "string",
-		// 									title: "Title",
-		// 								}),
-		// 							],
-		// 						}),
-		// 						defineArrayMember({
-		// 							name: "subjectsP",
-		// 							type: "object",
-		// 							title: "All Subjects",
-		// 							fields: [
-		// 								defineField({
-		// 									name: "title",
-		// 									type: "string",
-		// 									title: "Title",
-		// 								}),
-		// 							],
-		// 						}),
-		// 					],
-		// 				}),
-		// 			],
-		// 		}),
-		// 	],
-		// }),
+		defineField({
+			name: "quicklinks",
+			type: "array",
+			title: "QuickLinks",
+			description: "",
+			of: [
+				defineArrayMember({
+					name: "quicklinkGroup",
+					type: "object",
+					title: "QuickLink Group",
+					icon: BoltIcon,
+					fields: [
+						defineField({
+							name: "title",
+							type: "string",
+							title: "Title",
+							description: "",
+							validation: (Rule) => Rule.custom(stringConfig.requireString),
+						}),
+						defineField({
+							name: "items",
+							type: "array",
+							title: "Items",
+							description: "",
+							of: [
+								defineArrayMember({
+									name: "linkToItem",
+									type: "reference",
+									title: "Link to Item",
+									icon: LinkIcon,
+									to: [
+										{ type: "project" },
+										{ type: "news" },
+										{ type: "press" },
+									],
+									options: {
+										disableNew: true,
+									},
+								}),
+								defineArrayMember({
+									name: "filterByTag",
+									type: "reference",
+									title: "Filter by Tag",
+									icon: FilterIcon,
+									to: [
+										{ type: "client" },
+										{ type: "location" },
+										{ type: "type_" },
+										{ type: "subject" },
+										{ type: "collection" },
+									],
+									options: {
+										disableNew: true,
+									},
+								}),
+								defineArrayMember({
+									name: "filterByDate",
+									type: "object",
+									title: "Filter by Date",
+									icon: CalendarIcon,
+									fields: [
+										defineField({
+											name: "year",
+											type: "number",
+											title: "Year",
+											description: "",
+											validation: (Rule) => Rule.required().integer(),
+										}),
+									],
+								}),
+								defineArrayMember({
+									name: "customFilter",
+									type: "object",
+									title: "Custom Filter",
+									icon: OkHandIcon,
+									fields: [
+										defineField({
+											name: "label",
+											type: "string",
+											title: "Label",
+											description: "",
+											validation: (Rule) => Rule.custom(stringConfig.requireString),
+										}),
+										defineField({
+											name: "tags",
+											type: "array",
+											title: "Tags",
+											of: [
+												defineArrayMember({
+													name: "tag",
+													type: "reference",
+													title: "Tag",
+													to: [
+														{ type: "client" },
+														{ type: "location" },
+														{ type: "type_" },
+														{ type: "subject" },
+														{ type: "collection" },
+													],
+												}),
+											],
+										}),
+									],
+								}),
+							],
+						}),
+					],
+				}),
+			],
+		}),
 	],
 	preview: {
 		select: {

@@ -22,46 +22,15 @@ export default defineType({
 			description: "",
 			of: [
 				defineArrayMember({
-					name: "simplePage",
 					type: "reference",
-					title: "Page",
-					to: [{ type: "simplePage", }],
+					title: "Navigation Item",
+					to: [
+						{ type: "simplePage" },
+						{ type: "listing" },
+					],
 				}),
-				defineArrayMember({
-					name: "listing",
-					type: "reference",
-					title: "Listing",
-					to: [{ type: "listing", }],
-				}),
-				// defineArrayMember({
-				// 	name: "searchFunction",
-				// 	type: "object",
-				// 	title: "Search",
-				// 	icon: SearchIcon,
-				// 	fields: [
-				// 		defineField({
-				// 			name: "title",
-				// 			type: "string",
-				// 			title: "Label",
-				// 			description: "",
-				// 			initialValue: "Search",
-				// 			validation: (Rule) => Rule.custom(stringConfig.requireString),
-				// 		}),
-				// 	],
-				// 	preview: {
-				// 		select: {
-				// 			title: "title",
-				// 		},
-				// 		prepare(selection) {
-				// 			const { title } = selection;
-				// 			return {
-				// 				title: title,
-				// 				subtitle: "Search Function",
-				// 			}
-				// 		},
-				// 	},
-				// }),
 			],
+			validation: (Rule) => Rule.required().min(1),
 		}),
 	],
 });

@@ -67,13 +67,13 @@ export default defineConfig([
 		subtitle: "Production",
 		icon: SunIcon, 
 	}),
-	createConfig({
-		name: "staging",
-		projectId: PROJECT_ID,
-		dataset: "staging",
-		basePath: "/staging",
-		title: PROJECT_TITLE,
-		subtitle: "Staging",
-		icon: MoonIcon, 
-	}),
+	// createConfig({
+	// 	name: "staging",
+	// 	projectId: PROJECT_ID,
+	// 	dataset: "staging",
+	// 	basePath: "/staging",
+	// 	title: PROJECT_TITLE,
+	// 	subtitle: "Staging",
+	// 	icon: MoonIcon, 
+	// }),
 ]);

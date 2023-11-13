@@ -94,7 +94,7 @@ export default defineType({
 			} = selection;
 			return {
 				title: title,
-				subtitle: [date ? dateConfig.renderAsString(date, "short") : "No date", publisher || "no publisher"]?.filter(Boolean)?.join(", "),
+				subtitle: [publisher, date ? dateConfig.renderAsString(date, "short") : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 			};
 		},

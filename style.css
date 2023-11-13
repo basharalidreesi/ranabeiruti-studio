@@ -15,7 +15,7 @@ fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
 .pt-text-block[dir="rtl"] [data-testid="change-bar-wrapper"] {
 	--change-bar-offset: -4px !important;
 }
-.pt-text-block-style-h3.pt-list-item [data-list-prefix] {
+.pt-text-block-style-h2.pt-list-item [data-list-prefix] {
 	margin-top: 0.5rem;
 }
 .pt-text-block-style-hidden.pt-list-item [data-list-prefix] {

@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { BlockElementIcon, BlockquoteIcon, HeartFilledIcon, InlineElementIcon, UsersIcon } from "@sanity/icons";
+import { BlockElementIcon, BlockquoteIcon, HeartFilledIcon, InlineElementIcon, UlistIcon, UsersIcon } from "@sanity/icons";
 import { PageBuilderColumnItem, StarFilledIcon } from "../../components";
 import { portableTextConfig } from "../../util";
 
@@ -275,6 +275,7 @@ export default defineType({
 					preview: HOW_MANY_COLUMNS("Body"),
 				}),
 			],
+			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "hasBodyFooterBorder",
@@ -317,6 +318,87 @@ export default defineType({
 										prepare() {
 											return {
 												title: "[Credits]",
+												subtitle: "Placeholder",
+											};
+										},
+									},
+									components: {
+										item: PageBuilderColumnItem,
+									},
+								}),
+								defineArrayMember({
+									name: "relatedContent",
+									type: "object",
+									title: "Related Content Placeholder",
+									icon: UlistIcon,
+									fields: [
+										RATIO_AND_VERTICAL_ALIGNMENT[0],
+										defineField({
+											name: "byProfiles",
+											type: "boolean",
+											title: "By profiles?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										defineField({
+											name: "byTypes",
+											type: "boolean",
+											title: "By types?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										defineField({
+											name: "bySubjects",
+											type: "boolean",
+											title: "By subjects?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										defineField({
+											name: "byClients",
+											type: "boolean",
+											title: "By clients?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										defineField({
+											name: "byLocations",
+											type: "boolean",
+											title: "By locations?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										defineField({
+											name: "byYear",
+											type: "boolean",
+											title: "By year?",
+											description: "",
+											options: {
+												layout: "checkbox",
+											},
+											initialValue: false,
+										}),
+										RATIO_AND_VERTICAL_ALIGNMENT[1],
+									],
+									preview: {
+										prepare() {
+											return {
+												title: "[Related Content]",
 												subtitle: "Placeholder",
 											};
 										},

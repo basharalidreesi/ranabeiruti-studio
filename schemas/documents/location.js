@@ -56,7 +56,7 @@ export default defineType({
 			} = selection;
 			return {
 				title: [name, locale ? COUNTRIES.find((country) => country.value === locale)?.title : null]?.filter(Boolean)?.join(", "),
-				subtitle: locale,
+				// subtitle: locale,
 			};
 		},
 	},

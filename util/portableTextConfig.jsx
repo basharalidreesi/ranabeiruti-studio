@@ -9,8 +9,8 @@ const portableTextConfig = {
 			value: "normal",
 			title: "Normal",
 		},
-		h3: {
-			value: "h3",
+		h2: {
+			value: "h2",
 			title: "Heading",
 		},
 		blockquote: {
@@ -89,57 +89,6 @@ const portableTextConfig = {
 			type: "link",
 			title: "Link",
 		}),
-	},
-	serializers: {
-		types: {
-			image: ({ value }) => (<>
-				{value.asset
-					? (<>
-						<figure>
-							<img src={imageConfig.buildImage(value)} />
-							{value.caption && value.caption?.length !== 0
-								? (<>
-									<figcaption>
-										<PortableText value={value.caption} components={portableTextConfig.serializers} />
-									</figcaption>
-								</>)
-								: null
-							}
-						</figure>
-					</>)
-					: null
-				}
-			</>),
-			// object TODO
-		},
-		marks: {
-			// strong (default)
-			// em (default)
-			// underline (default)
-			// strike-through (default)
-			sup: ({ children }) => (<sup>{children}</sup>),
-			link: ({ children, value }) => {
-				const type = value?.type;
-				const ref = type === "internal" ? null : (type === "external" ? value?.externalTarget : null) || null;
-				const target = ref?.startsWith("http") ? "_blank" : null;
-				const rel = target && target === "_blank" ? "noindex nofollow" : null;
-				return (
-					<a href={ref} target={target} rel={rel}>
-						{children}
-					</a>
-				);
-			},
-		},
-		block: {
-			// normal (default)
-			// h3 (default)
-			// blockquote (default)
-			note: ({ children }) => (<div className="note">{children}</div>),
-		},
-		list: {
-			// bullet (default)
-			// number (default)
-		},
 	},
 	renderAsPlainText: (blocks) => {
 		if (typeof blocks === "string") { return blocks; };

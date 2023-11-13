@@ -1,5 +1,7 @@
 import { BottleIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
+import slugConfig from "../../util/slugConfig";
+import stringConfig from "../../util/stringConfig";
 
 export const COLLECTION_ICON = BottleIcon;
 
@@ -14,10 +16,24 @@ export default defineType({
 			type: "string",
 			title: "Name",
 			description: "",
-			// initalValue config
-			// hidden config
-			// readOnly config
-			// validation config
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
+		}),
+		defineField({
+			name: "slug",
+			type: "slug",
+			title: "Slug",
+			description: "",
+			options: {
+				source: "name",
+				slugify: slugConfig.customSlugify,
+			},
+			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
+		}),
+		defineField({
+			name: "description",
+			type: "simplePortableText",
+			title: "Blurb",
+			description: "",
 		}),
 	],
 	orderings: [

@@ -63,6 +63,18 @@ const INITIAL_PAGE_BUILDER_VALUE = {
 				...INITIAL_COLUMN_VALUE,
 			],
 		},
+		{
+			_type: "row",
+			columns: [
+				...INITIAL_COLUMN_VALUE,
+				{
+					_type: "relatedContent",
+					ratio: 3,
+					verticalAlignment: "top",
+				},
+				...INITIAL_COLUMN_VALUE,
+			],
+		},
 	],
 };
 
@@ -285,10 +297,8 @@ export default defineType({
 			title: "title",
 			subtitle: "subtitle",
 			description: "description",
-			profile0Name: "profiles.0.name",
-			profile1Name: "profiles.1.name",
-			profile2Name: "profiles.2.name",
 			date: "date",
+			type: "types.0.name",
 			image: "image",
 		},
 		prepare(selection) {
@@ -296,17 +306,15 @@ export default defineType({
 				title,
 				subtitle,
 				description,
-				profile0Name,
-				profile1Name,
-				profile2Name,
 				date,
+				type,
 				image,
 			} = selection;
 			return {
 				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
-				subtitle: [date && date.startDate ? dateConfig.renderComplexDate(date, "short") : "No date", profile0Name || "no profile", profile1Name, profile2Name ? "..." : null]?.filter(Boolean)?.join(", "),
+				subtitle: [type, date && date.startDate ? dateConfig.renderComplexDate(date, "short") : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
-				media: image,
+				media: image && image.asset ? image : null,
 			};
 		},
 	},

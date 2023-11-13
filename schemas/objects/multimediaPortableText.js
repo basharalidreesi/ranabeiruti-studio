@@ -5,7 +5,7 @@ import { EmbedPreview } from "../../components";
 
 const styles = [
 	portableTextConfig.styles.normal,
-	portableTextConfig.styles.h3,
+	portableTextConfig.styles.h2,
 	portableTextConfig.styles.blockquote,
 	portableTextConfig.styles.note,
 ];

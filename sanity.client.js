@@ -6,8 +6,8 @@ export const API_VERSION = "2023-10-01";
 
 export default function useSanityClient() {
 	const client = useClient({
-		USE_CDN,
-		API_VERSION
+		useCdn: USE_CDN,
+		apiVersion: API_VERSION,
 	});
 	return useMemo(() => client, [client]);
 };

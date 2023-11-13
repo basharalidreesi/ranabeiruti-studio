@@ -15,8 +15,8 @@ export default defineType({
 		}),
 	],
 	options: imageConfig.options,
-	// validation: (Rule) => Rule.custom((value) => {
-	// 	if (!value?.asset) { return "Required"; };
-	// 	return true;
-	// }),
+	validation: (Rule) => Rule.custom((value) => {
+		if (!value?.asset) { return "Required"; };
+		return true;
+	}),
 });
