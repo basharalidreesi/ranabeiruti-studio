@@ -27,7 +27,7 @@ export const PortableText = (props) => {
 			},
 		},
 		block: {
-			normal: ({ children }) => children && children.length !== 0 && (children.filter((child) => !child)?.length !== children.length) && (<p>{children}</p>),
+			normal: ({ children }) => children && children?.length !== 0 && (children?.filter((child) => !child)?.length !== children?.length) && (<p>{children}</p>),
 			h2: ({ children }) => (<h2 className="fsl fwb lhn">{children}</h2>),
 			blockquote: ({ children }) => (<blockquote className="ffserif fss">{children}</blockquote>),
 			note: ({ children }) => (<div className="note clt fss">{children}</div>),
@@ -37,7 +37,7 @@ export const PortableText = (props) => {
 			// number (default)
 		},
 	};
-	return props.source && props.source.length !== 0 && (
+	return props.source && props.source?.length !== 0 && (
 		<div className={`rich-text lhxl ${props.small && "fsxs" || ""} ${props.muted && "clt" || ""}`}>
 			<SanityPortableText value={props.source} components={serializers} document={props.document} />
 		</div>
@@ -99,7 +99,7 @@ const PageBuilder = (props) => {
 		</div>
 	);
 	return source?.map((row, index) => {
-		if (row.columns.filter((column) => {
+		if (row.columns?.filter((column) => {
 			switch (column._type) {
 				case "column": return (!column.content || column.content?.length === 0) ? true : false;
 				case "title": return !document.title ? true : false;
@@ -108,7 +108,7 @@ const PageBuilder = (props) => {
 				case "credits": return (!document.credits || document.credits?.length === 0) ? true : false;
 				default: return true;
 			};
-		})?.length === row.columns.length) {
+		})?.length === row.columns?.length) {
 			return null;
 		};
 		return (
@@ -118,7 +118,7 @@ const PageBuilder = (props) => {
 					const verticalAlignment = column.verticalAlignment;
 					switch (column._type) {
 						case "column": {
-							if (column.content && column.content.length !== 0) {
+							if (column.content && column.content?.length !== 0) {
 								return (
 									<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
 										<PortableText source={column.content} document={document} />

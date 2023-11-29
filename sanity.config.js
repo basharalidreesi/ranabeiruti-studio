@@ -3,9 +3,9 @@ import { deskTool } from "sanity/desk";
 import { media } from "sanity-plugin-media";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./schemas";
-import { dataDeskStructure, pageDeskStructure, singletonActions, singletonTypes } from "./structure";
+import { dataDeskStructure, pagesDeskStructure, singletonActions, singletonTypes } from "./structure";
 import { defaultDocumentNode } from "./defaultDocumentNode";
-import { DatabaseIcon, MasterDetailIcon, MoonIcon, SunIcon } from "@sanity/icons";
+import { DatabaseIcon, DocumentsIcon, MoonIcon, SunIcon } from "@sanity/icons";
 import "./style.css";
 
 const PROJECT_ID = "rtlbcvty";
@@ -40,8 +40,8 @@ function createConfig(params = {}) {
 			deskTool({
 				name: "pages",
 				title: "Pages",
-				icon: MasterDetailIcon,
-				structure: pageDeskStructure,
+				icon: DocumentsIcon,
+				structure: pagesDeskStructure,
 				defaultDocumentNode: defaultDocumentNode,
 			}),
 			media(),
@@ -67,13 +67,4 @@ export default defineConfig([
 		subtitle: "Production",
 		icon: SunIcon, 
 	}),
-	// createConfig({
-	// 	name: "staging",
-	// 	projectId: PROJECT_ID,
-	// 	dataset: "staging",
-	// 	basePath: "/staging",
-	// 	title: PROJECT_TITLE,
-	// 	subtitle: "Staging",
-	// 	icon: MoonIcon, 
-	// }),
 ]);

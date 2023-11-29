@@ -23,23 +23,24 @@ const INITIAL_PAGE_BUILDER_VALUE = {
 				...INITIAL_COLUMN_VALUE,
 			],
 		},
-		{
-			_type: "row",
-			columns: [
-				...INITIAL_COLUMN_VALUE,
-				{
-					_type: "image_",
-					ratio: 3,
-					verticalAlignment: "top",
-					captionPlacement: "bottom",
-					imageRatio: 1,
-					captionRatio: 1,
-					captionVerticalAlignment: "top",
-				},
-				...INITIAL_COLUMN_VALUE,
-			],
-		},
+		// {
+		// 	_type: "row",
+		// 	columns: [
+		// 		...INITIAL_COLUMN_VALUE,
+		// 		{
+		// 			_type: "image_",
+		// 			ratio: 3,
+		// 			verticalAlignment: "top",
+		// 			captionPlacement: "bottom",
+		// 			imageRatio: 1,
+		// 			captionRatio: 1,
+		// 			captionVerticalAlignment: "top",
+		// 		},
+		// 		...INITIAL_COLUMN_VALUE,
+		// 	],
+		// },
 	],
+	hasHeaderBodyBorder: true,
 	body: [
 		{
 			_type: "row",
@@ -171,9 +172,6 @@ export default defineType({
 					title: "Type",
 					description: "",
 					to: [{ type: "type_", }],
-					options: {
-						// disableNew: true,
-					},
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1),
@@ -189,12 +187,9 @@ export default defineType({
 					title: "Subject",
 					description: "",
 					to: [{ type: "subject", }],
-					options: {
-						// disableNew: true,
-					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1),
+			// validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "collections",
@@ -207,9 +202,6 @@ export default defineType({
 					title: "Collection",
 					description: "",
 					to: [{ type: "collection", }],
-					options: {
-						// disableNew: true,
-					},
 				}),
 			],
 		}),
@@ -264,6 +256,23 @@ export default defineType({
 			type: "pageBuilder",
 			title: "Page",
 			description: "",
+		}),
+		defineField({
+			name: "relatedProjects",
+			type: "array",
+			title: "Related Projects",
+			description: "",
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Project",
+					description: "",
+					to: [{ type: "project", }],
+					options: {
+						disableNew: true,
+					},
+				}),
+			],
 		}),
 	],
 	initialValue: {

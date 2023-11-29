@@ -227,6 +227,12 @@ export default defineType({
 					title: "Row",
 					icon: BlockElementIcon,
 					fields: [
+						// defineField({
+						// 	name: "gridColumns",
+						// 	type: "number",
+						// 	title: "Column Count",
+						// 	description: "",
+						// }),
 						defineField({
 							name: "columns",
 							type: "array",

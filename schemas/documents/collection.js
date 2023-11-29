@@ -1,9 +1,9 @@
-import { BottleIcon } from "@sanity/icons";
+import { PackageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import slugConfig from "../../util/slugConfig";
 import stringConfig from "../../util/stringConfig";
 
-export const COLLECTION_ICON = BottleIcon;
+export const COLLECTION_ICON = PackageIcon;
 
 export default defineType({
 	name: "collection",

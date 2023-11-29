@@ -1,4 +1,4 @@
-import { FolderIcon } from "@sanity/icons";
+import { DocumentsIcon } from "@sanity/icons";
 import { PROJECT_ICON } from "./schemas/documents/project";
 import { NEWS_ICON } from "./schemas/documents/news";
 import { PRESS_ICON } from "./schemas/documents/press";
@@ -140,7 +140,7 @@ export const dataDeskStructure = (S) => {
 		]);
 };
 
-export const pageDeskStructure = (S) => {
+export const pagesDeskStructure = (S) => {
 	return S.list()
 		.title("Pages")
 		.items([
@@ -150,7 +150,7 @@ export const pageDeskStructure = (S) => {
 			S.divider(),
 			S.listItem()
 				.title("Pages")
-				.icon(FolderIcon)
+				.icon(DocumentsIcon)
 				.child(
 					S.documentTypeList("simplePage")
 						.title("Pages")
