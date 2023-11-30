@@ -14,65 +14,32 @@ const INITIAL_PAGE_BUILDER_VALUE = {
 		{
 			_type: "row",
 			columns: [
-				...INITIAL_COLUMN_VALUE,
 				{
 					_type: "title",
-					ratio: 3,
+					ratio: 1,
 					verticalAlignment: "top",
 				},
-				...INITIAL_COLUMN_VALUE,
 			],
 		},
-		// {
-		// 	_type: "row",
-		// 	columns: [
-		// 		...INITIAL_COLUMN_VALUE,
-		// 		{
-		// 			_type: "image_",
-		// 			ratio: 3,
-		// 			verticalAlignment: "top",
-		// 			captionPlacement: "bottom",
-		// 			imageRatio: 1,
-		// 			captionRatio: 1,
-		// 			captionVerticalAlignment: "top",
-		// 		},
-		// 		...INITIAL_COLUMN_VALUE,
-		// 	],
-		// },
+		{
+			_type: "row",
+			columns: [
+				{
+					_type: "image_",
+					ratio: 1,
+					verticalAlignment: "top",
+					captionPlacement: "bottom",
+					imageRatio: 1,
+					captionRatio: 1,
+					captionVerticalAlignment: "top",
+				},
+			],
+		},
 	],
-	hasHeaderBodyBorder: true,
 	body: [
 		{
 			_type: "row",
 			columns: [
-				...INITIAL_COLUMN_VALUE,
-				...INITIAL_COLUMN_VALUE,
-				...INITIAL_COLUMN_VALUE,
-			],
-		},
-	],
-	footer: [
-		{
-			_type: "row",
-			columns: [
-				...INITIAL_COLUMN_VALUE,
-				{
-					_type: "credits",
-					ratio: 3,
-					verticalAlignment: "top",
-				},
-				...INITIAL_COLUMN_VALUE,
-			],
-		},
-		{
-			_type: "row",
-			columns: [
-				...INITIAL_COLUMN_VALUE,
-				{
-					_type: "relatedContent",
-					ratio: 3,
-					verticalAlignment: "top",
-				},
 				...INITIAL_COLUMN_VALUE,
 			],
 		},
@@ -206,34 +173,6 @@ export default defineType({
 			],
 		}),
 		defineField({
-			name: "news",
-			type: "array",
-			title: "News",
-			description: "",
-			of: [
-				defineArrayMember({
-					type: "reference",
-					title: "News",
-					description: "",
-					to: [{ type: "news", }],
-				}),
-			],
-		}),
-		defineField({
-			name: "press",
-			type: "array",
-			title: "Press",
-			description: "",
-			of: [
-				defineArrayMember({
-					type: "reference",
-					title: "Press",
-					description: "",
-					to: [{ type: "press", }],
-				}),
-			],
-		}),
-		defineField({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
@@ -252,12 +191,6 @@ export default defineType({
 			description: "",
 		}),
 		defineField({
-			name: "page",
-			type: "pageBuilder",
-			title: "Page",
-			description: "",
-		}),
-		defineField({
 			name: "relatedProjects",
 			type: "array",
 			title: "Related Projects",
@@ -273,6 +206,40 @@ export default defineType({
 					},
 				}),
 			],
+		}),
+		defineField({
+			name: "relatedNews",
+			type: "array",
+			title: "Related News",
+			description: "",
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "News Item",
+					description: "",
+					to: [{ type: "news", }],
+				}),
+			],
+		}),
+		defineField({
+			name: "relatedPress",
+			type: "array",
+			title: "Related Press",
+			description: "",
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Press Item",
+					description: "",
+					to: [{ type: "press", }],
+				}),
+			],
+		}),
+		defineField({
+			name: "page",
+			type: "pageBuilder",
+			title: "Page",
+			description: "",
 		}),
 	],
 	initialValue: {
