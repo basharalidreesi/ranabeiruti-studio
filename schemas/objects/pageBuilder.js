@@ -175,6 +175,16 @@ export default defineType({
 							validation: (Rule) => Rule.required().min(1),
 							// components config
 						}),
+						defineField({
+							name: "doesBreakout",
+							type: "boolean",
+							title: "Breakout row?",
+							description: "",
+							options: {
+								layout: "checkbox",
+							},
+							initialValue: false,
+						}),
 					],
 					preview: HOW_MANY_COLUMNS("Header"),
 				}),
@@ -250,6 +260,16 @@ export default defineType({
 							})),
 							validation: (Rule) => Rule.required().min(1),
 							// components config
+						}),
+						defineField({
+							name: "doesBreakout",
+							type: "boolean",
+							title: "Breakout row?",
+							description: "",
+							options: {
+								layout: "checkbox",
+							},
+							initialValue: false,
 						}),
 					],
 					preview: HOW_MANY_COLUMNS("Body"),
