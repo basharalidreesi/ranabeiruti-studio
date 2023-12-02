@@ -198,7 +198,17 @@ export default defineType({
 		defineField({
 			name: "doesIncludeDescription",
 			type: "boolean",
-			title: "Include blurb?",
+			title: "Include project blurb?",
+			description: "",
+			options: {
+				layout: "checkbox",
+			},
+			initialValue: true,
+		}),
+		defineField({
+			name: "doesIncludeCollections",
+			type: "boolean",
+			title: "Include collection blurbs (if applicable)?",
 			description: "",
 			options: {
 				layout: "checkbox",
