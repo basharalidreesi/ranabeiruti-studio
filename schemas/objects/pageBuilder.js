@@ -169,9 +169,9 @@ export default defineType({
 									},
 								}),
 							],
-							initialValue: Array.from({length: DEFAULT_COLUMN_COUNT}, () => ({
-								_type: "column",
-							})),
+							// initialValue: Array.from({length: DEFAULT_COLUMN_COUNT}, () => ({
+							// 	_type: "column",
+							// })),
 							validation: (Rule) => Rule.required().min(1),
 							// components config
 						}),

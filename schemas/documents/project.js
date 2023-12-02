@@ -95,6 +95,20 @@ export default defineType({
 			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
+			name: "clients",
+			type: "array",
+			title: "Clients",
+			description: "",
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Client",
+					description: "",
+					to: [{ type: "client", }],
+				}),
+			],
+		}),
+		defineField({
 			name: "date",
 			type: "complexDate",
 			title: "Date",
@@ -111,20 +125,6 @@ export default defineType({
 					title: "Location",
 					description: "",
 					to: [{ type: "location", }],
-				}),
-			],
-		}),
-		defineField({
-			name: "clients",
-			type: "array",
-			title: "Clients",
-			description: "",
-			of: [
-				defineArrayMember({
-					type: "reference",
-					title: "Client",
-					description: "",
-					to: [{ type: "client", }],
 				}),
 			],
 		}),
