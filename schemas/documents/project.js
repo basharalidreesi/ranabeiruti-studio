@@ -4,43 +4,61 @@ import { DatabaseIcon } from "@sanity/icons";
 
 export const PROJECT_ICON = DatabaseIcon;
 
-const INITIAL_COLUMN_VALUE = [{
-	_type: "column",
-	ratio: 1,
-	verticalAlignment: "top",
-}];
 const INITIAL_PAGE_BUILDER_VALUE = {
-	header: [
-		{
-			_type: "row",
-			columns: [
-				{
-					_type: "title",
-					ratio: 1,
-					verticalAlignment: "top",
-				},
-			],
-		},
-		{
-			_type: "row",
-			columns: [
-				{
-					_type: "image_",
-					ratio: 1,
-					verticalAlignment: "top",
-					captionPlacement: "bottom",
-					imageRatio: 1,
-					captionRatio: 1,
-					captionVerticalAlignment: "top",
-				},
-			],
-		},
-	],
 	body: [
 		{
 			_type: "row",
+			doesBreakout: false,
 			columns: [
-				...INITIAL_COLUMN_VALUE,
+				{
+					_type: "column",
+					ratio: 2,
+					verticalAlignment: "top",
+					content: [
+						{
+							_type: "block",
+							markDefs: [],
+							children: [
+								{
+									_type: "span",
+									text: "",
+								},
+							],
+						},
+						{
+							_type: "title",
+						},
+						{
+							_type: "description",
+							doesInclude: ["projectDescription", "collectionDescriptions"],
+						},
+					],
+				},
+				{
+					_type: "column",
+					ratio: 3,
+					verticalAlignment: "top",
+					content: [
+						{
+							_type: "block",
+							markDefs: [],
+							children: [
+								{
+									_type: "span",
+									text: "",
+								},
+							],
+						},
+						{
+							_type: "image",
+							captionPlacement: "bottom",
+							imageRatio: 1,
+							captionRatio: 1,
+							captionVerticalAlignment: "top",
+							isUsedAsPlaceholder: true,
+						},
+					],
+				},
 			],
 		},
 	],

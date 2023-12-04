@@ -1,6 +1,8 @@
+import { InfoOutlineIcon } from "@sanity/icons";
+import { Card, Flex, Text } from "@sanity/ui";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { embedConfig, imageConfig, portableTextConfig } from "../../util";
-import { CubeIcon, HeartFilledIcon, ImageIcon } from "@sanity/icons";
+import { BoltIcon, CubeIcon, HeartIcon, ImageIcon, StarIcon } from "@sanity/icons";
 import { EmbedPreview } from "../../components";
 
 const styles = [
@@ -123,11 +125,31 @@ export default defineType({
 			components: {
 				input: (props) => {
 					const isUsedAsPlaceholder = props.value?.isUsedAsPlaceholder || false;
-					return props.renderDefault({
-						...props,
-						readOnly: isUsedAsPlaceholder ? true : props.readOnly,
-						members: isUsedAsPlaceholder ? [...props.members?.filter((member) => member.name !== "asset")] : props.members,
-					});
+					return isUsedAsPlaceholder ? (<>
+						<Card
+							padding={3}
+							radius={2}
+							shadow={1}
+							tone="primary"
+							style={{
+								marginBottom: "1rem",
+							}}
+						>
+							<Flex gap={2} align={"center"} justify={"center"}>
+								<Text align={"center"} size={2} muted>
+									<InfoOutlineIcon />
+								</Text>
+								<Text align={"center"} size={2} muted>
+									This is a placeholder.
+								</Text>
+							</Flex>
+						</Card>
+						{props.renderDefault({
+							...props,
+							readOnly: true,
+							members: [...props.members?.filter((member) => member.name !== "asset")],
+						})}
+					</>) : props.renderDefault(props);
 				},
 				preview: (props) => {
 					const {
@@ -139,7 +161,7 @@ export default defineType({
 						...props,
 						title: isUsedAsPlaceholder ? "[Document Image]" : portableTextConfig.renderAsPlainText(caption),
 						subtitle: isUsedAsPlaceholder ? "Placeholder" : "Image",
-						media: isUsedAsPlaceholder ? HeartFilledIcon : (asset ? asset : ImageIcon),
+						media: isUsedAsPlaceholder ? HeartIcon : (asset ? asset : ImageIcon),
 						layout: "block",
 					});
 				},
@@ -205,6 +227,115 @@ export default defineType({
 			},
 			components: {
 				preview: EmbedPreview,
+			},
+		}),
+		defineArrayMember({
+			name: "title",
+			type: "object",
+			title: "Title Placeholder",
+			icon: StarIcon,
+			fields: [
+				defineField({
+					name: "temp",
+					type: "string",
+					title: "Temp",
+				}),
+			],
+			preview: {
+				prepare() {
+					return {
+						title: "[Document Title]",
+						subtitle: "Placeholder",
+					};
+				},
+			},
+			components: {
+				input: () => (
+					<Card
+						padding={3}
+						radius={2}
+						shadow={1}
+						tone="primary"
+					>
+						<Flex gap={2} align={"center"} justify={"center"}>
+							<Text align={"center"} size={2} muted>
+								<InfoOutlineIcon />
+							</Text>
+							<Text align={"center"} size={2} muted>
+								This is a placeholder.
+							</Text>
+						</Flex>
+					</Card>
+				),
+			},
+		}),
+		defineArrayMember({
+			name: "description",
+			type: "object",
+			title: "Blurb Placeholder",
+			icon: BoltIcon,
+			fields: [
+				defineField({
+					name: "doesInclude",
+					type: "array",
+					title: "Include",
+					description: "",
+					of: [
+						{ type: "string", },
+					],
+					options: {
+						list: [
+							{
+								title: "Project blurb?",
+								value: "projectDescription",
+							},
+							{
+								title: "Collection blurbs (if applicable)?",
+								value: "collectionDescriptions",
+							},
+						],
+					},
+					initialValue: ["projectDescription", "collectionDescriptions"],
+					validation: (Rule) => Rule.required(),
+				}),
+			],
+			preview: {
+				select: {
+					doesInclude: "doesInclude",
+				},
+				prepare(selection) {
+					const {
+						doesInclude,
+					} = selection;
+					const doesIncludeMultipleDescription = doesInclude && doesInclude.length > 1 || false;
+					return {
+						title: doesIncludeMultipleDescription ? "[Document Blurbs]" : "[Document Blurb]",
+						subtitle: "Placeholder",
+					};
+				},
+			},
+			components: {
+				input: (props) => (<>
+					<Card
+						padding={3}
+						radius={2}
+						shadow={1}
+						tone="primary"
+						style={{
+							marginBottom: "1rem",
+						}}
+					>
+						<Flex gap={2} align={"center"} justify={"center"}>
+							<Text align={"center"} size={2} muted>
+								<InfoOutlineIcon />
+							</Text>
+							<Text align={"center"} size={2} muted>
+								This is a placeholder.
+							</Text>
+						</Flex>
+					</Card>
+					{props.renderDefault(props)}
+				</>),
 			},
 		}),
 	],

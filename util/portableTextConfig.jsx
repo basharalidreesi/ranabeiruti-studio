@@ -102,6 +102,8 @@ const portableTextConfig = {
 			(block._type === "block" && isValidTextBlock(block))
 			|| block._type === "image"
 			|| block._type === "embed"
+			|| block._type === "title"
+			|| (block._type === "description" && block.doesInclude && block.doesInclude.length !== 0)
 		);
 		if (block?._type === "block") {
 			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
@@ -112,7 +114,7 @@ const portableTextConfig = {
 				return "[Document Image]";
 			};
 			return block.caption ? `[Image] ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
-		}
+		};
 		if (block?._type === "embed") {
 			const resolveEmbedType = (source) => {
 				if (source.type === "url") {
@@ -129,6 +131,16 @@ const portableTextConfig = {
 				};
 			};
 			return resolveEmbedType(block)?.type ? `[${resolveEmbedType(block).type} Object]${resolveEmbedType(block)?.text ? ` ${resolveEmbedType(block)?.text}` : ""}` : "[Object]";
+		};
+		if (block?._type === "title") {
+			return "[Document Title]";
+		};
+		if (block?._type === "description") {
+			const doesIncludeMultipleDescription = block.doesInclude && block.doesInclude.length > 1 || false;
+			if (doesIncludeMultipleDescription) {
+				return "[Document Blurbs]";
+			};
+			return "[Document Blurb]";
 		};
 		return "";
 	},
