@@ -8,8 +8,25 @@ const RESERVED_SLUGS = [
 	"search",
 ];
 
+const INITIAL_PAGE_BUILDER_VALUE = {
+	body: [
+		{
+			_type: "row",
+			doesBreakout: false,
+			columns: [
+				{
+					_type: "column",
+					ratio: 1,
+					verticalAlignment: "top",
+					content: [],
+				},
+			],
+		},
+	],
+};
+
 export default defineType({
-	name: "simplePage",
+	name: "page",
 	type: "document",
 	title: "Page",
 	icon: DocumentIcon,
@@ -38,7 +55,16 @@ export default defineType({
 				return slugConfig.requireSlug(value);
 			}),
 		}),
+		defineField({
+			name: "page",
+			type: "pageBuilder",
+			title: "Page",
+			description: "",
+		}),
 	],
+	initialValue: {
+		page: INITIAL_PAGE_BUILDER_VALUE,
+	},
 	orderings: [
 		{
 			title: "Title",

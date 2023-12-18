@@ -25,7 +25,7 @@ export default defineType({
 					type: "reference",
 					title: "Navigation Item",
 					to: [
-						{ type: "simplePage" },
+						{ type: "page" },
 						{ type: "listing" },
 					],
 				}),

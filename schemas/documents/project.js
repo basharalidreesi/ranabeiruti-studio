@@ -3,6 +3,7 @@ import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../
 import { DatabaseIcon } from "@sanity/icons";
 
 export const PROJECT_ICON = DatabaseIcon;
+export const PROJECT_TITLE = "Project";
 
 const INITIAL_PAGE_BUILDER_VALUE = {
 	body: [
@@ -67,7 +68,7 @@ const INITIAL_PAGE_BUILDER_VALUE = {
 export default defineType({
 	name: "project",
 	type: "document",
-	title: "Project",
+	title: PROJECT_TITLE,
 	icon: PROJECT_ICON,
 	fields: [
 		defineField({

@@ -1,4 +1,4 @@
-import { defineArrayMember, defineType } from "sanity";
+import { defineArrayMember, defineField } from "sanity";
 import { portableTextConfig } from "../../util";
 
 const styles = [
@@ -23,7 +23,7 @@ const annotations = [
 	portableTextConfig.annotations.link,
 ];
 
-export default defineType({
+export default defineField({
 	name: "simplePortableText",
 	type: "array",
 	title: "Simple Portable Text",

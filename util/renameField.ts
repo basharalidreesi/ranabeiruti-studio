@@ -1,4 +1,4 @@
-// sanity exec util/renameField.ts --with-user-token
+// npx sanity exec util/renameField.ts --with-user-token
 
 /* eslint-disable no-console */
 import {getCliClient} from 'sanity/cli'

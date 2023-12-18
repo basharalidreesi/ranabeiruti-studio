@@ -1,13 +1,14 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig, stringConfig } from "../../util";
+import { dateConfig, imageConfig, portableTextConfig, stringConfig } from "../../util";
 
 export const PRESS_ICON = BillIcon;
+export const PRESS_TITLE = "Press";
 
 export default defineType({
 	name: "press",
 	type: "document",
-	title: "Press",
+	title: PRESS_TITLE,
 	icon: PRESS_ICON,
 	fields: [
 		defineField({
@@ -40,6 +41,13 @@ export default defineType({
 				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "image",
+			type: "image",
+			title: "Image",
+			description: "",
+			options: imageConfig.options,
 		}),
 		defineField({
 			name: "description",

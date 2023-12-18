@@ -4,11 +4,12 @@ import collection from "./documents/collection";
 import listing from "./documents/listing";
 import location from "./documents/location";
 import news from "./documents/news";
+import page from "./documents/page";
 import press from "./documents/press";
 import profile from "./documents/profile";
 import project from "./documents/project";
+import publication from "./documents/publication";
 import settings from "./documents/settings";
-import simplePage from "./documents/simplePage";
 import subject from "./documents/subject";
 import type_ from "./documents/type";
 
@@ -16,7 +17,7 @@ import type_ from "./documents/type";
 import complexDate from "./objects/complexDate";
 import link from "./objects/link";
 import mainImage from "./objects/mainImage";
-import multimediaPortableText from "./objects/multimediaPortableText";
+import complexPortableText from "./objects/complexPortableText";
 import pageBuilder from "./objects/pageBuilder";
 import placement from "./objects/placement";
 import ratio from "./objects/ratio";
@@ -33,17 +34,18 @@ export const schemaTypes = [
 		press,
 		profile,
 		project,
+		publication,
 		subject,
 		type_,
 		// pages
 		listing,
+		page,
 		settings,
-		simplePage,
 	// objects
 	complexDate,
 	link,
 	mainImage,
-	multimediaPortableText,
+	complexPortableText,
 	pageBuilder,
 	placement,
 	ratio,

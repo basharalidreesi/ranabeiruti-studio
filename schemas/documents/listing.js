@@ -1,8 +1,10 @@
-import { HomeIcon, UlistIcon } from "@sanity/icons";
+import { HomeIcon, UlistIcon, UnknownIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { imageConfig, slugConfig, stringConfig } from "../../util";
-import { PROJECT_ICON } from "./project";
-import { PRESS_ICON } from "./press";
+import { PROJECT_ICON, PROJECT_TITLE } from "./project";
+import { PRESS_ICON, PRESS_TITLE } from "./press";
+import { PUBLICATION_ICON, PUBLICATION_TITLE } from "./publication";
+import { NEWS_ICON, NEWS_TITLE } from "./news";
 
 export default defineType({
 	name: "listing",
@@ -35,30 +37,57 @@ export default defineType({
 			}),
 		}),
 		defineField({
-			name: "featuredProjects",
+			name: "featuredItems",
 			type: "array",
-			title: "Featured Projects",
+			title: "Featured Items",
 			description: "",
 			of: [
 				defineArrayMember({
-					name: "featuredProject",
+					name: "featuredItem",
 					type: "object",
-					title: "Featured Project",
+					title: "Featured Item",
 					fields: [
 						defineField({
-							name: "project",
+							name: "item",
 							type: "reference",
-							title: "Project",
-							to: [{ type: "project", }],
+							title: "Item",
+							to: [
+								{ type: "project", },
+								{ type: "publication", },
+								{ type: "news", },
+								{ type: "press", },
+							],
 							options: {
 								disableNew: true,
 							},
 							validation: (Rule) => Rule.required(),
 						}),
 						defineField({
-							name: "doesUseProjectImage",
+							name: "displayMode",
+							type: "string",
+							title: "Display Mode",
+							description: "",
+							options: {
+								list: [
+									{
+										value: "expansive",
+										title: "Expansive",
+									},
+									{
+										value: "constrained",
+										title: "Constrained",
+									},
+								],
+								layout: "radio",
+								direction: "horizontal",
+							},
+							initialValue: "expansive",
+							validation: (Rule) => Rule.required(),
+						}),
+						defineField({
+							name: "doesUseDocumentImage",
 							type: "boolean",
-							title: "Use project main image?",
+							title: "Use document main image (if applicable)?",
 							description: "",
 							options: {
 								layout: "checkbox",
@@ -71,33 +100,73 @@ export default defineType({
 							type: "image",
 							title: "Image",
 							options: imageConfig.options,
-							hidden: ({ parent }) => parent.doesUseProjectImage,
+							hidden: ({ parent }) => parent.doesUseDocumentImage,
 							validation: (Rule) => Rule.custom((value, context) => {
-								if (!value?.asset && !context.parent.doesUseProjectImage) { return "Required"; };
+								if (!value?.asset && !context.parent.doesUseDocumentImage) { return "Required"; };
 								return true;
 							}),
 						}),
 					],
 					preview: {
 						select: {
-							title: "project.title",
-							subtitle: "project.subtitle",
-							projectImage: "project.image",
-							doesUseProjectImage: "doesUseProjectImage",
+							documentType: "item._type",
+							documentTitle: "item.title",
+							documentSubtitle: "item.subtitle",
+							documentPublisher: "item.publisher",
+							documentImage: "item.image",
+							displayMode: "displayMode",
+							doesUseDocumentImage: "doesUseDocumentImage",
 							image: "image",
 						},
 						prepare(selection) {
 							const {
-								title,
-								subtitle,
-								projectImage,
-								doesUseProjectImage,
+								documentType,
+								documentTitle,
+								documentSubtitle,
+								documentPublisher,
+								documentImage,
+								displayMode,
+								doesUseDocumentImage,
 								image,
 							} = selection;
+							const resolveTitle = (type) => {
+								switch (type) {
+									case "project": return documentTitle ? [documentTitle, documentSubtitle]?.filter(Boolean)?.join(": ") : null;
+									case "publication": return documentTitle;
+									case "news": return documentTitle;
+									case "press": return documentTitle ? [documentPublisher, documentTitle]?.filter(Boolean)?.join(": ") : null;
+									default: return null;
+								};
+							};
+							const resolveDisplayMode = (mode) => {
+								switch (mode) {
+									case "expansive": return "Expansive";
+									case "constrained": return "Constrained";
+									default: return null;
+								};
+							};
+							const resolveSubtitle = (type) => {
+								switch (type) {
+									case "project": return [PROJECT_TITLE, resolveDisplayMode(displayMode)]?.filter(Boolean)?.join(", ");
+									case "publication": return [PUBLICATION_TITLE, resolveDisplayMode(displayMode)]?.filter(Boolean)?.join(", ");
+									case "news": return [NEWS_TITLE, resolveDisplayMode(displayMode)]?.filter(Boolean)?.join(", ");
+									case "press": return [PRESS_TITLE, resolveDisplayMode(displayMode)]?.filter(Boolean)?.join(", ");
+									default: return null;
+								};
+							};
+							const resolveMedia = (type) => {
+								switch (type) {
+									case "project": return (doesUseDocumentImage ? documentImage : image) || PROJECT_ICON;
+									case "publication": return (doesUseDocumentImage ? documentImage : image) || PUBLICATION_ICON;
+									case "news": return (doesUseDocumentImage ? documentImage : image) || NEWS_ICON;
+									case "press": return (doesUseDocumentImage ? documentImage : image) || PRESS_ICON;
+									default: return UnknownIcon;
+								};
+							};
 							return {
-								title: title,
-								subtitle: subtitle,
-								media: (doesUseProjectImage ? projectImage : image) || PROJECT_ICON,
+								title: resolveTitle(documentType),
+								subtitle: resolveSubtitle(documentType),
+								media: resolveMedia(documentType),
 							};
 						},
 					},
@@ -126,11 +195,13 @@ export default defineType({
 				subtitle:
 					id === "homepage" ? "Homepage"
 					: id === "projectsListing" ? "Projects Listing"
+					: id === "publicationsListing" ? "Publications Listing"
 					: id === "pressListing" ? "Press Listing"
 					: null,
 				media:
 					id === "homepage" ? HomeIcon
 					: id === "projectsListing" ? PROJECT_ICON
+					: id === "publicationsListing" ? PUBLICATION_ICON
 					: id === "pressListing" ? PRESS_ICON
 					: null
 			};

@@ -3,11 +3,12 @@ import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../
 import { BellIcon } from "@sanity/icons";
 
 export const NEWS_ICON = BellIcon;
+export const NEWS_TITLE = "News";
 
 export default defineType({
 	name: "news",
 	type: "document",
-	title: "News",
+	title: NEWS_TITLE,
 	icon: NEWS_ICON,
 	fields: [
 		defineField({
@@ -46,7 +47,7 @@ export default defineType({
 		}),
 		defineField({
 			name: "body",
-			type: "multimediaPortableText",
+			type: "complexPortableText",
 			title: "Body",
 			description: "",
 		}),

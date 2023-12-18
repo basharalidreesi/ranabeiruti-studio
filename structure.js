@@ -8,10 +8,12 @@ import { LOCATION_ICON } from "./schemas/documents/location";
 import { TYPE_ICON } from "./schemas/documents/type";
 import { SUBJECT_ICON } from "./schemas/documents/subject";
 import { COLLECTION_ICON } from "./schemas/documents/collection";
+import { PUBLICATION_ICON } from "./schemas/documents/publication";
 
 const hiddenTypes = new Set([
 	// data
 	"project",
+	"publication",
 	"news",
 	"press",
 	"client",
@@ -22,8 +24,8 @@ const hiddenTypes = new Set([
 	"collection",
 	// pages
 	"listing",
+	"page",
 	"settings",
-	"simplePage",
 	// misc
 	"media.tag",
 ]);
@@ -59,6 +61,15 @@ export const dataDeskStructure = (S) => {
 						.title("Projects")
 						.menuItems(S.documentTypeList("project").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
 						.defaultOrdering([{ field: "date.startDate", direction: "desc" }])
+				),
+			S.listItem()
+				.title("Publications")
+				.icon(PUBLICATION_ICON)
+				.child(
+					S.documentTypeList("publication")
+						.title("Publications")
+						.menuItems(S.documentTypeList("publication").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						// .defaultOrdering([{ field: "date.startDate", direction: "desc" }])
 				),
 			S.divider(),
 			S.listItem()
@@ -146,13 +157,14 @@ export const pagesDeskStructure = (S) => {
 		.items([
 			S.documentListItem().schemaType("listing").id("homepage"),
 			S.documentListItem().schemaType("listing").id("projectsListing"),
+			S.documentListItem().schemaType("listing").id("publicationsListing"),
 			S.documentListItem().schemaType("listing").id("pressListing"),
 			S.divider(),
 			S.listItem()
 				.title("Pages")
 				.icon(DocumentsIcon)
 				.child(
-					S.documentTypeList("simplePage")
+					S.documentTypeList("page")
 						.title("Pages")
 						.menuItems(S.documentTypeList("subject").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
 						.defaultOrdering([{ field: "title", direction: "asc" }])

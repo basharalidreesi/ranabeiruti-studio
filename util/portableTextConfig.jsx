@@ -1,7 +1,5 @@
-import { Text } from "@sanity/ui"
 import { defineField } from "sanity";
-import imageConfig from "./imageConfig";
-import { PortableText } from "@portabletext/react";
+import { Text } from "@sanity/ui"
 
 const portableTextConfig = {
 	styles: {

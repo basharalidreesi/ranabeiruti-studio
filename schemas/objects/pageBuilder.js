@@ -41,7 +41,7 @@ export default defineType({
 										}),
 										defineField({
 											name: "content",
-											type: "multimediaPortableText",
+											type: "complexPortableText",
 											title: "Content",
 											description: "",
 										}),
@@ -111,10 +111,10 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.custom((value) => {
+			validation: (Rule) => Rule.custom((value, context) => {
 				if (!value || value.length === 0) { return "Required"; };
 				const rowsWithTitles = (value || [])?.find((row) => row._type === "row" && row.columns?.find((column) => column._type === "column" && column.content && column.content.find((item) => item._type === "title")));
-				if (!rowsWithTitles) { return "Must include at least one title placeholder"; };
+				if (!rowsWithTitles && context.document._type === "project") { return "Must include at least one title placeholder"; };
 				return true;
 			}),
 		}),
@@ -126,6 +126,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
+			hidden: ({ document }) => document._type !== "project",
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -137,6 +138,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
+			hidden: ({ document }) => document._type !== "project",
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -148,6 +150,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
+			hidden: ({ document }) => document._type !== "project",
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -159,6 +162,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
+			hidden: ({ document }) => document._type !== "project",
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),

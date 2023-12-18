@@ -1,6 +1,6 @@
 import { InfoOutlineIcon } from "@sanity/icons";
 import { Card, Flex, Text } from "@sanity/ui";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineArrayMember, defineField } from "sanity";
 import { embedConfig, imageConfig, portableTextConfig } from "../../util";
 import { BoltIcon, CubeIcon, HeartIcon, ImageIcon, StarIcon } from "@sanity/icons";
 import { EmbedPreview } from "../../components";
@@ -29,10 +29,10 @@ const annotations = [
 	portableTextConfig.annotations.link,
 ];
 
-export default defineType({
-	name: "multimediaPortableText",
+export default defineField({
+	name: "complexPortableText",
 	type: "array",
-	title: "Multimedia Portable Text",
+	title: "Complex Portable Text",
 	description: "",
 	of: [
 		defineArrayMember({
@@ -241,6 +241,7 @@ export default defineType({
 					title: "Temp",
 				}),
 			],
+			hidden: ({ document }) => document._type !== "project",
 			preview: {
 				prepare() {
 					return {
@@ -299,6 +300,7 @@ export default defineType({
 					validation: (Rule) => Rule.required(),
 				}),
 			],
+			hidden: ({ document }) => document._type !== "project",
 			preview: {
 				select: {
 					doesInclude: "doesInclude",
