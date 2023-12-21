@@ -86,26 +86,16 @@ export default defineType({
 					],
 					preview: {
 						select: {
-							col0: "columns.[0]",
-							col1: "columns.[1]",
-							col2: "columns.[2]",
-							col3: "columns.[3]",
-							col4: "columns.[4]",
-							col5: "columns.[5]",
+							columns: "columns",
 						},
 						prepare(selection) {
 							const {
-								col0,
-								col1,
-								col2,
-								col3,
-								col4,
-								col5,
+								columns = [],
 							} = selection;
-							const colCount = [col0, col1, col2, col3, col4]?.filter(Boolean)?.length;
+							const firstColumnWithContent = columns.find((column) => column.content && column.content.length !== 0);
 							return {
-								title: colCount + (col5 ? "+" : "") + " " + (colCount === 1 ? "Column" : "Columns"),
-								subtitle: "Body Row",
+								title: firstColumnWithContent ? portableTextConfig.renderAsPlainText(firstColumnWithContent.content) : null,
+								subtitle: `Row with ${columns.length} ${columns.length === 1 ? "column" : "columns"}`,
 							};
 						},
 					},
@@ -114,7 +104,7 @@ export default defineType({
 			validation: (Rule) => Rule.custom((value, context) => {
 				if (!value || value.length === 0) { return "Required"; };
 				const rowsWithTitles = (value || [])?.find((row) => row._type === "row" && row.columns?.find((column) => column._type === "column" && column.content && column.content.find((item) => item._type === "title")));
-				if (!rowsWithTitles && context.document._type === "project") { return "Must include at least one title placeholder"; };
+				if (!rowsWithTitles && ["project", "publication"].includes(context.document._type)) { return "Must include at least one title placeholder"; };
 				return true;
 			}),
 		}),
@@ -126,7 +116,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => document._type !== "project",
+			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -138,7 +128,19 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => document._type !== "project",
+			hidden: ({ document }) => !["project", "publication"].includes(document._type),
+			validation: (Rule) => Rule.required(),
+			initialValue: true,
+		}),
+		defineField({
+			name: "doesIncludeRelatedPublications",
+			type: "boolean",
+			title: "Include related publications?",
+			description: "",
+			options: {
+				layout: "checkbox",
+			},
+			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -150,7 +152,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => document._type !== "project",
+			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
@@ -162,7 +164,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => document._type !== "project",
+			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),

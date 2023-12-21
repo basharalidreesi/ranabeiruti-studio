@@ -49,7 +49,15 @@ export default defineType({
 				{
 					type: "project",
 				},
-				// other types
+				{
+					type: "publication",
+				},
+				{
+					type: "news",
+				},
+				{
+					type: "press",
+				},
 			],
 			weak: true,
 			options: {

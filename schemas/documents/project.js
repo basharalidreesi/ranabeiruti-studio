@@ -5,7 +5,7 @@ import { DatabaseIcon } from "@sanity/icons";
 export const PROJECT_ICON = DatabaseIcon;
 export const PROJECT_TITLE = "Project";
 
-const INITIAL_PAGE_BUILDER_VALUE = {
+export const INITIAL_PAGE_BUILDER_VALUE = {
 	body: [
 		{
 			_type: "row",
@@ -175,7 +175,6 @@ export default defineType({
 					to: [{ type: "subject", }],
 				}),
 			],
-			// validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: "collections",
@@ -220,6 +219,23 @@ export default defineType({
 					title: "Project",
 					description: "",
 					to: [{ type: "project", }],
+					options: {
+						disableNew: true,
+					},
+				}),
+			],
+		}),
+		defineField({
+			name: "relatedPublications",
+			type: "array",
+			title: "Related Publications",
+			description: "",
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Publication",
+					description: "",
+					to: [{ type: "publication", }],
 					options: {
 						disableNew: true,
 					},

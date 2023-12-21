@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
+import { dateConfig, imageConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { BellIcon } from "@sanity/icons";
 
 export const NEWS_ICON = BellIcon;
@@ -38,6 +38,13 @@ export default defineType({
 				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "image",
+			type: "image",
+			title: "Image",
+			description: "",
+			options: imageConfig.options,
 		}),
 		defineField({
 			name: "description",
@@ -79,18 +86,21 @@ export default defineType({
 		select: {
 			title: "title",
 			date: "date",
+			image: "image",
 			description: "description",
 		},
 		prepare(selection) {
 			const {
 				title,
 				date,
+				image,
 				description,
 			} = selection;
 			return {
 				title: title,
 				subtitle: date ? dateConfig.renderAsString(date, "short") : "No date",
 				description: portableTextConfig.renderAsPlainText(description),
+				media: image && image.asset ? image : null,
 			};
 		},
 	},

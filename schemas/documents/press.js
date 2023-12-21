@@ -91,6 +91,7 @@ export default defineType({
 			title: "title",
 			publisher: "publisher",
 			date: "date",
+			image: "image",
 			description: "description",
 		},
 		prepare(selection) {
@@ -98,12 +99,14 @@ export default defineType({
 				title,
 				publisher,
 				date,
+				image,
 				description,
 			} = selection;
 			return {
 				title: title,
 				subtitle: [publisher, date ? dateConfig.renderAsString(date, "short") : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
+				media: image && image.asset ? image : null,
 			};
 		},
 	},

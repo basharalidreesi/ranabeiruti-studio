@@ -13,14 +13,14 @@ export const PortableText = (props) => {
 			// object TODO
 		},
 		marks: {
-			strong: ({ children }) => (<strong className="fwb">{children}</strong>),
-			em: ({ children }) => (<em className="fsi">{children}</em>),
-			underline: ({ children }) => (<mark className="">{children}</mark>),
-			"strike-through": ({ children }) => (<del className="tdlt">{children}</del>),
+			// strong (default)
+			// em (default)
+			// underline (default)
+			// strike-through (default)
 			sup: ({ children }) => (<sup>{children}</sup>),
 			link: ({ children }) => {
 				return (
-					<a className="ht" href="#">
+					<a className="hover-text" href="#">
 						{children}
 					</a>
 				);
@@ -28,9 +28,9 @@ export const PortableText = (props) => {
 		},
 		block: {
 			normal: ({ children }) => children && children?.length !== 0 && (children?.filter((child) => !child)?.length !== children?.length) && (<p>{children}</p>),
-			h2: ({ children }) => (<h2 className="fsl fwb lhn">{children}</h2>),
-			blockquote: ({ children }) => (<blockquote className="ffserif fss">{children}</blockquote>),
-			note: ({ children }) => (<div className="note clt fss">{children}</div>),
+			h2: ({ children }) => (<h3>{children}</h3>),
+			// blockquote (default)
+			note: ({ children }) => (<div className="note">{children}</div>),
 		},
 		list: {
 			// bullet (default)
@@ -38,7 +38,7 @@ export const PortableText = (props) => {
 		},
 	};
 	return props.source && props.source?.length !== 0 && (
-		<div className={`rich-text lhxl ${props.small && "fsxs" || ""} ${props.muted && "clt" || ""}`}>
+		<div className="rich-text">
 			<SanityPortableText value={props.source} components={serializers} document={props.document} />
 		</div>
 	);
@@ -53,7 +53,7 @@ export const Image = (props) => {
 		<picture style={props.style} >
 			<img loading="lazy" width={width} height={height} src={imageConfig.buildImage(props.source) || ""} alt=""/>
 		</picture>
-	)
+	);
 };
 
 export const Figure = (props) => props.source && props.source.asset && (
@@ -82,7 +82,7 @@ const PageBuilder = (props) => {
 		document,
 	} = props;
 	const Row = (props) => (
-		<div className="row" data-index={props.index}>
+		<div className={`row ${props.doesBreakout === true ? "breakout" : ""}`} data-index={props.index}>
 			{props.children}
 		</div>
 	);
@@ -102,17 +102,13 @@ const PageBuilder = (props) => {
 		if (row.columns?.filter((column) => {
 			switch (column._type) {
 				case "column": return (!column.content || column.content?.length === 0) ? true : false;
-				case "title": return !document.title ? true : false;
-				case "image_": return (!document.image || !document.image?.asset) ? true : false;
-				case "description": return (!document.description || document.description?.length === 0) ? true : false;
-				case "credits": return (!document.credits || document.credits?.length === 0) ? true : false;
 				default: return true;
 			};
 		})?.length === row.columns?.length) {
 			return null;
 		};
 		return (
-			<Row index={index + 1}>
+			<Row index={index + 1} doesBreakout={row.doesBreakout}>
 				{row.columns?.map((column, index) => {
 					const ratio = Math.max(column.ratio, 1) || 1;
 					const verticalAlignment = column.verticalAlignment;
@@ -129,31 +125,6 @@ const PageBuilder = (props) => {
 								<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1} />
 							);
 						};
-						case "title": return (
-							<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
-								{document.title && <div className="title">
-									<h1 className="fwb fsxl lhn">{document.title}</h1>
-								</div>}
-								{document.subtitle && (<div className="subtitle">
-									<p className="fwb fsl clt lhl">{document.subtitle}</p>
-								</div>)}
-							</Column>
-						);
-						case "image_": return (
-							<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
-								<Figure source={document.image} />
-							</Column>
-						);
-						case "description": return (
-							<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
-								<PortableText source={document.description} small={true} muted={true} />
-							</Column>
-						);
-						case "credits": return (
-							<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
-								<PortableText source={document.credits} small={true} muted={true} />
-							</Column>
-						);
 						default: return null;
 					};
 				})}
@@ -172,19 +143,11 @@ export default function ProjectPreview(props) {
 			<PageBuilderCss />
 			<FigureCss />
 			<PortableTextCss />
-			<div className="wrapper">
-				<article className="project">
-					<div className="header" data-has-border={data.page?.hasHeaderBodyBorder?.toString() || "false"}>
-						<PageBuilder source={data.page?.header} document={data} />
-					</div>
-					<div className="body" data-has-border={data.page?.hasBodyFooterBorder?.toString() || "false"}>
-						<PageBuilder source={data.page?.body} document={data} />
-					</div>
-					<div className="footer">
-						<PageBuilder source={data.page?.footer} document={data} />
-					</div>
-				</article>
-			</div>
+			<article className="project">
+				<div className="project-body">
+					<PageBuilder source={data.page?.body} document={data} />
+				</div>
+			</article>
 		</main>
 	);
 };

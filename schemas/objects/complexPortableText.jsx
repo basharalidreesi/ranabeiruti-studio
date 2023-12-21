@@ -241,7 +241,7 @@ export default defineField({
 					title: "Temp",
 				}),
 			],
-			hidden: ({ document }) => document._type !== "project",
+			// hidden: ({ document }) => document?._type !== "project" || document?._type !== "publication",
 			preview: {
 				prepare() {
 					return {
@@ -300,7 +300,7 @@ export default defineField({
 					validation: (Rule) => Rule.required(),
 				}),
 			],
-			hidden: ({ document }) => document._type !== "project",
+			// hidden: ({ document }) => document._type !== "project" || document._type !== "publication",
 			preview: {
 				select: {
 					doesInclude: "doesInclude",

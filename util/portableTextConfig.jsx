@@ -91,7 +91,7 @@ const portableTextConfig = {
 	renderAsPlainText: (blocks) => {
 		if (typeof blocks === "string") { return blocks; };
 		const isValidTextBlock = (source) => {
-			if (source._type === "block" && source.children && source.children?.[0]?.text) {
+			if (source._type === "block" && source.children && source.children?.filter((child) => child.text?.replace(/\s+/g, ""))?.length !== 0) {
 				return true;
 			}
 			return false;
@@ -104,7 +104,8 @@ const portableTextConfig = {
 			|| (block._type === "description" && block.doesInclude && block.doesInclude.length !== 0)
 		);
 		if (block?._type === "block") {
-			return block.children.filter((child) => child._type === "span").map((span) => span.text).join("");
+			console.log(block.children)
+			return block.children.filter((child) => child._type === "span")?.map((span) => span.text)?.join("");
 		};
 		if (block?._type === "image") {
 			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;

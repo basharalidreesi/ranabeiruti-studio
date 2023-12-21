@@ -78,11 +78,11 @@ fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
 }
 
 /** page */
-fieldset[data-testid="field-page"] > div:nth-child(1) {
+/* fieldset[data-testid="field-page"] > div:nth-child(1) {
 	display: none !important;
 }
 fieldset[data-testid="field-page"] > div:nth-child(2) {
 	margin: 0 !important;
 	padding: 0 !important;
 	border: unset !important;
-}
+} */
