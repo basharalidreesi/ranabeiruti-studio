@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@portabletext/react": "^3.0.11",
+    "@sanity/dashboard": "^3.1.6",
     "@sanity/icons": "^2.4.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.15.1",
@@ -23,7 +24,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "sanity": "^3.19.0",
+    "sanity": "3.22.x",
+    "sanity-plugin-dashboard-widget-netlify": "^2.0.1",
     "sanity-plugin-media": "^2.2.2",
     "styled-components": "^5.3.9"
   },

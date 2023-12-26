@@ -103,6 +103,9 @@ export default defineType({
 					title: "Type",
 					description: "",
 					to: [{ type: "type_", }],
+					options: {
+						// filter: `"publication" in applicableToDocumentTypes`,
+					},
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1),

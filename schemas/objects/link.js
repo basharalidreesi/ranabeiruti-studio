@@ -46,18 +46,10 @@ export default defineType({
 			title: "Target",
 			description: "",
 			to: [
-				{
-					type: "project",
-				},
-				{
-					type: "publication",
-				},
-				{
-					type: "news",
-				},
-				{
-					type: "press",
-				},
+				{ type: "project", },
+				{ type: "publication", },
+				{ type: "news", },
+				{ type: "press", },
 			],
 			weak: true,
 			options: {

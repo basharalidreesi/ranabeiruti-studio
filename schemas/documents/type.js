@@ -29,6 +29,29 @@ export default defineType({
 			},
 			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
 		}),
+		defineField({
+			name: "applicableToDocumentTypes",
+			type: "array",
+			title: "Applicable to",
+			description: "",
+			of: [
+				{ type: "string", },
+			],
+			options: {
+				list: [
+					{
+						title: "Projects?",
+						value: "project",
+					},
+					{
+						title: "Publications?",
+						value: "publication",
+					},
+				],
+			},
+			initialValue: ["projects", "publications"],
+			validation: (Rule) => Rule.required(),
+		}),
 	],
 	orderings: [
 		{
@@ -42,13 +65,18 @@ export default defineType({
 	preview: {
 		select: {
 			name: "name",
+			applicableToDocumentTypes: "applicableToDocumentTypes",
 		},
 		prepare(selection) {
 			const {
 				name,
+				applicableToDocumentTypes,
 			} = selection;
+			const isApplicableToProjects = applicableToDocumentTypes && applicableToDocumentTypes.includes("project");
+			const isApplicableToPublications = applicableToDocumentTypes && applicableToDocumentTypes.includes("publication");
 			return {
 				title: name,
+				// subtitle: applicableToDocumentTypes && `Applicable to ${[isApplicableToProjects && "projects", isApplicableToPublications && "publications"]?.filter(Boolean)?.join(" and ")}`,
 			};
 		},
 	},

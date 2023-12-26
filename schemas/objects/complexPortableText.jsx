@@ -1,4 +1,4 @@
-import { InfoOutlineIcon } from "@sanity/icons";
+import { InfoOutlineIcon, PlugIcon } from "@sanity/icons";
 import { Card, Flex, Text } from "@sanity/ui";
 import { defineArrayMember, defineField } from "sanity";
 import { embedConfig, imageConfig, portableTextConfig } from "../../util";
@@ -227,6 +227,46 @@ export default defineField({
 			},
 			components: {
 				preview: EmbedPreview,
+			},
+		}),
+		defineArrayMember({
+			name: "documentReference",
+			type: "object",
+			title: "Reference",
+			icon: PlugIcon,
+			fields: [
+				defineField({
+					name: "reference",
+					type: "reference",
+					title: "Reference",
+					description: "",
+					to: [
+						{ type: "project", },
+						{ type: "publication", },
+						{ type: "news", },
+						{ type: "press", },
+					],
+					options: {
+						disableNew: true,
+					},
+				}),
+			],
+			preview: {
+				select: {
+					referenceTitle: "reference.title",
+					referenceImage: "reference.image",
+				},
+				prepare(selection) {
+					const {
+						referenceTitle,
+						referenceImage,
+					} = selection;
+					return {
+						title: referenceTitle,
+						subtitle: "Reference",
+						media: referenceImage,
+					};
+				},
 			},
 		}),
 		defineArrayMember({
