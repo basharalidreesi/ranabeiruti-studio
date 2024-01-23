@@ -8,6 +8,7 @@ export default defineType({
 	type: "document",
 	title: "Profile",
 	icon: PROFILE_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "name",

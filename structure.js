@@ -9,6 +9,8 @@ import { TYPE_ICON } from "./schemas/documents/type";
 import { SUBJECT_ICON } from "./schemas/documents/subject";
 import { COLLECTION_ICON } from "./schemas/documents/collection";
 import { PUBLICATION_ICON } from "./schemas/documents/publication";
+import { STORY_ICON } from "./schemas/documents/story";
+import { LISTING_ICON } from "./schemas/documents/listing";
 
 const hiddenTypes = new Set([
 	// data
@@ -20,6 +22,7 @@ const hiddenTypes = new Set([
 	"profile",
 	"location",
 	"type_",
+	"story",
 	"subject",
 	"collection",
 	// pages
@@ -69,7 +72,16 @@ export const dataDeskStructure = (S) => {
 					S.documentTypeList("publication")
 						.title("Publications")
 						.menuItems(S.documentTypeList("publication").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
-						// .defaultOrdering([{ field: "date.startDate", direction: "desc" }])
+						.defaultOrdering([{ field: "date", direction: "desc" }])
+				),
+			S.listItem()
+				.title("Stories")
+				.icon(STORY_ICON)
+				.child(
+					S.documentTypeList("story")
+						.title("Stories")
+						.menuItems(S.documentTypeList("story").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
+						.defaultOrdering([{ field: "date.startDate", direction: "desc" }])
 				),
 			S.divider(),
 			S.listItem()
@@ -155,11 +167,19 @@ export const pagesDeskStructure = (S) => {
 	return S.list()
 		.title("Pages")
 		.items([
-			S.documentListItem().schemaType("listing").id("homepage"),
-			S.documentListItem().schemaType("listing").id("projectsListing"),
-			S.documentListItem().schemaType("listing").id("publicationsListing"),
-			S.documentListItem().schemaType("listing").id("pressListing"),
-			S.divider(),
+			S.listItem()
+				.title("Listings")
+				.icon(LISTING_ICON)
+				.child(
+					S.list()
+						.title("Listings")
+						.items([
+							S.documentListItem().schemaType("listing").id("homepage"),
+							S.documentListItem().schemaType("listing").id("projectsListing"),
+							S.documentListItem().schemaType("listing").id("publicationsListing"),
+							S.documentListItem().schemaType("listing").id("pressListing"),
+						]),
+				),
 			S.listItem()
 				.title("Pages")
 				.icon(DocumentsIcon)

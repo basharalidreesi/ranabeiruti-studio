@@ -10,6 +10,7 @@ export default defineType({
 	type: "document",
 	title: NEWS_TITLE,
 	icon: NEWS_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "title",

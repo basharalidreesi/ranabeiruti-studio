@@ -10,6 +10,7 @@ export default defineType({
 	type: "document",
 	title: "Type",
 	icon: TYPE_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "name",

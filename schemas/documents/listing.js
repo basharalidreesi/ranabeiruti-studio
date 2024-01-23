@@ -6,11 +6,14 @@ import { PRESS_ICON, PRESS_TITLE } from "./press";
 import { PUBLICATION_ICON, PUBLICATION_TITLE } from "./publication";
 import { NEWS_ICON, NEWS_TITLE } from "./news";
 
+export const LISTING_ICON = UlistIcon;
+
 export default defineType({
 	name: "listing",
 	type: "document",
 	title: "Listing",
-	icon: UlistIcon,
+	icon: LISTING_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "title",

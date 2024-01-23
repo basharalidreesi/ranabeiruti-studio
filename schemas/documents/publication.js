@@ -11,6 +11,7 @@ export default defineType({
 	type: "document",
 	title: PUBLICATION_TITLE,
 	icon: PUBLICATION_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "title",

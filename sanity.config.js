@@ -1,5 +1,5 @@
 import { defineConfig } from "sanity";
-import { deskTool } from "sanity/desk";
+import { structureTool } from "sanity/structure";
 import { media } from "sanity-plugin-media";
 import { visionTool } from "@sanity/vision";
 import { dashboardTool } from "@sanity/dashboard";
@@ -7,7 +7,7 @@ import { netlifyWidget } from "sanity-plugin-dashboard-widget-netlify";
 import { schemaTypes } from "./schemas";
 import { dataDeskStructure, pagesDeskStructure, singletonActions, singletonTypes } from "./structure";
 import { defaultDocumentNode } from "./defaultDocumentNode";
-import { DatabaseIcon, DocumentsIcon, MoonIcon, SunIcon } from "@sanity/icons";
+import { SunIcon } from "@sanity/icons";
 import "./style.css";
 
 const PROJECT_ID = "rtlbcvty";
@@ -32,17 +32,15 @@ function createConfig(params = {}) {
 		subtitle: subtitle,
 		icon: icon, 
 		plugins: [
-			deskTool({
+			structureTool({
 				name: "data",
 				title: "Data",
-				icon: DatabaseIcon,
 				structure: dataDeskStructure,
 				defaultDocumentNode: defaultDocumentNode,
 			}),
-			deskTool({
+			structureTool({
 				name: "pages",
 				title: "Pages",
-				icon: DocumentsIcon,
 				structure: pagesDeskStructure,
 				defaultDocumentNode: defaultDocumentNode,
 			}),

@@ -1,9 +1,9 @@
-import { InfoOutlineIcon, PlugIcon } from "@sanity/icons";
+import { BlockElementIcon, InfoOutlineIcon, PlugIcon, SparklesIcon } from "@sanity/icons";
 import { Card, Flex, Text } from "@sanity/ui";
 import { defineArrayMember, defineField } from "sanity";
-import { embedConfig, imageConfig, portableTextConfig } from "../../util";
+import { imageConfig, portableTextConfig } from "../../util";
 import { BoltIcon, CubeIcon, HeartIcon, ImageIcon, StarIcon } from "@sanity/icons";
-import { EmbedPreview } from "../../components";
+import { linkBase } from "./link";
 
 const styles = [
 	portableTextConfig.styles.normal,
@@ -136,10 +136,10 @@ export default defineField({
 							}}
 						>
 							<Flex gap={2} align={"center"} justify={"center"}>
-								<Text align={"center"} size={2} muted>
+								<Text align={"center"} size={2}>
 									<InfoOutlineIcon />
 								</Text>
-								<Text align={"center"} size={2} muted>
+								<Text align={"center"} size={2}>
 									This is a placeholder.
 								</Text>
 							</Flex>
@@ -174,59 +174,25 @@ export default defineField({
 			icon: CubeIcon,
 			fields: [
 				defineField({
-					name: "type",
-					type: "string",
-					title: "Type",
-					description: "",
-					options: {
-						list: [
-							{
-								value: "url",
-								title: "URL",
-							},
-							{
-								value: "code",
-								title: "Code",
-							},
-						],
-						layout: "radio",
-						direction: "horizontal",
-					},
-					initialValue: "url",
-					validation: (Rule) => Rule.required(),
-				}),
-				defineField({
-					name: "url",
-					type: "url",
-					title: "URL",
-					description: "",
-					placeholder: `Valid ${embedConfig.listOfSupportedHosts()} link`,
-					hidden: ({ parent }) => parent?.type !== "url",
-					validation: (Rule) => Rule.custom((value, context) => {
-						if (!value && context?.parent?.type === "url") { return "Required"; };
-						// return embedConfig.validateOEmbed(value);
-						return true;
-					}),
-					// components config
-				}),
-				defineField({
 					name: "code",
 					type: "text",
 					title: "Code",
 					description: "",
-					hidden: ({ parent }) => parent?.type !== "code",
-					// components config
 				}),
 			],
 			preview: {
 				select: {
-					type: "type",
-					url: "url",
 					code: "code",
 				},
-			},
-			components: {
-				preview: EmbedPreview,
+				prepare(selection) {
+					const {
+						code,
+					} = selection;
+					return {
+						title: code,
+						subtitle: "Object",
+					};
+				},
 			},
 		}),
 		defineArrayMember({
@@ -270,6 +236,73 @@ export default defineField({
 			},
 		}),
 		defineArrayMember({
+			name: "cta",
+			type: "object",
+			title: "Call to Action",
+			icon: SparklesIcon,
+			fields: [
+				defineField({
+					name: "label",
+					type: "string",
+					title: "Label",
+				}),
+				...linkBase,
+			],
+			preview: {
+				select: {
+					label: "label",
+					type: "type",
+					internalTitle: "internalTarget.title",
+					internalImage: "internalTarget.image",
+					externalTarget: "externalTarget",
+				},
+				prepare(selection) {
+					const {
+						label,
+						type,
+						internalTitle = "",
+						internalImage,
+						externalTarget = "",
+					} = selection;
+					return {
+						title: type === "internal" && label ? `${label}${label && internalTitle ? ": " : ""}${internalTitle}` : type === "external" && label ? `${label}${label && externalTarget ? ": " : ""}${externalTarget}` : null,
+						subtitle: "Call to Action",
+						media: type === "internal" && internalImage ? internalImage : null,
+					};
+				},
+			},
+		}),
+		defineArrayMember({
+			name: "spacer",
+			type: "object",
+			title: "Spacer",
+			icon: BlockElementIcon,
+			fields: [
+				defineField({
+					name: "lineCount",
+					type: "number",
+					title: "Lines",
+					description: "",
+					validation: (Rule) => Rule.required().integer().min(1),
+					initialValue: 1,
+				}),
+			],
+			preview: {
+				select: {
+					lineCount: "lineCount",
+				},
+				prepare(selection) {
+					const {
+						lineCount = 0,
+					} = selection;
+					return {
+						title: `${lineCount} ${lineCount === 1 ? "Line" : "Lines"}`,
+						subtitle: "Spacer",
+					};
+				},
+			},
+		}),
+		defineArrayMember({
 			name: "title",
 			type: "object",
 			title: "Title Placeholder",
@@ -281,7 +314,7 @@ export default defineField({
 					title: "Temp",
 				}),
 			],
-			// hidden: ({ document }) => document?._type !== "project" || document?._type !== "publication",
+			// hidden: ({ document }) => document?._type === "news",
 			preview: {
 				prepare() {
 					return {
@@ -299,10 +332,10 @@ export default defineField({
 						tone="primary"
 					>
 						<Flex gap={2} align={"center"} justify={"center"}>
-							<Text align={"center"} size={2} muted>
+							<Text align={"center"} size={2}>
 								<InfoOutlineIcon />
 							</Text>
-							<Text align={"center"} size={2} muted>
+							<Text align={"center"} size={2}>
 								This is a placeholder.
 							</Text>
 						</Flex>
@@ -340,7 +373,7 @@ export default defineField({
 					validation: (Rule) => Rule.required(),
 				}),
 			],
-			// hidden: ({ document }) => document._type !== "project" || document._type !== "publication",
+			// hidden: ({ document }) => document?._type === "news",
 			preview: {
 				select: {
 					doesInclude: "doesInclude",
@@ -368,10 +401,10 @@ export default defineField({
 						}}
 					>
 						<Flex gap={2} align={"center"} justify={"center"}>
-							<Text align={"center"} size={2} muted>
+							<Text align={"center"} size={2}>
 								<InfoOutlineIcon />
 							</Text>
-							<Text align={"center"} size={2} muted>
+							<Text align={"center"} size={2}>
 								This is a placeholder.
 							</Text>
 						</Flex>

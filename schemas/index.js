@@ -23,6 +23,7 @@ import placement from "./objects/placement";
 import ratio from "./objects/ratio";
 import simplePortableText from "./objects/simplePortableText";
 import verticalAlignment from "./objects/verticalAlignment";
+import story from "./documents/story";
 
 export const schemaTypes = [
 	// documents
@@ -35,6 +36,7 @@ export const schemaTypes = [
 		profile,
 		project,
 		publication,
+		story,
 		subject,
 		type_,
 		// pages

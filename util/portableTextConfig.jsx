@@ -100,11 +100,13 @@ const portableTextConfig = {
 			(block._type === "block" && isValidTextBlock(block))
 			|| block._type === "image"
 			|| block._type === "embed"
+			|| block._type === "documentReference"
+			|| block._type === "cta"
+			// || block._type === "spacer"
 			|| block._type === "title"
 			|| (block._type === "description" && block.doesInclude && block.doesInclude.length !== 0)
 		);
 		if (block?._type === "block") {
-			console.log(block.children)
 			return block.children.filter((child) => child._type === "span")?.map((span) => span.text)?.join("");
 		};
 		if (block?._type === "image") {
@@ -115,22 +117,19 @@ const portableTextConfig = {
 			return block.caption ? `[Image] ${portableTextConfig.renderAsPlainText(block.caption)}` : "[Untitled Image]";
 		};
 		if (block?._type === "embed") {
-			const resolveEmbedType = (source) => {
-				if (source.type === "url") {
-					return {
-						type: "URL",
-						text: source.url ? source.url : null,
-					};
-				};
-				if (source.type === "code") {
-					return {
-						type: "Code",
-						text: source.code ? source.code : null,
-					};
-				};
-			};
-			return resolveEmbedType(block)?.type ? `[${resolveEmbedType(block).type} Object]${resolveEmbedType(block)?.text ? ` ${resolveEmbedType(block)?.text}` : ""}` : "[Object]";
+			return block.code ? `[Object] ${block.code}` : "[Untitled Object]";
 		};
+		if (block?._type === "documentReference") {
+			return block.reference && block.reference._ref ? `[Reference] ${block.reference._ref}` : "[Untitled Reference]";
+		};
+		if (block?._type === "cta") {
+			const label = block.label || null;
+			return block.label ? `[Call to Action] ${label}` : "[Untitled Call to Action]";
+		};
+		// if (block?._type === "spacer") {
+		// 	const lineCount = block.lineCount || 0;
+		// 	return `[Spacer] ${lineCount === 1 ? `1 Line` : `${lineCount} Lines`}`;
+		// };
 		if (block?._type === "title") {
 			return "[Document Title]";
 		};

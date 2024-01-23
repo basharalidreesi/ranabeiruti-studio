@@ -70,6 +70,7 @@ export default defineType({
 	type: "document",
 	title: PROJECT_TITLE,
 	icon: PROJECT_ICON,
+	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "title",

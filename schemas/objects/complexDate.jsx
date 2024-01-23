@@ -101,7 +101,7 @@ export default defineType({
 				if (!context.parent?.startDate) { return true; };
 				const startDate = new Date(context.parent?.startDate).setHours(0, 0, 0, 0);
 				const today = new Date().setHours(0, 0, 0, 0);
-				return startDate > today && value === true ? "A project cannot be ongoing if it starts in the future" : true; 
+				return startDate > today && value === true ? `A ${context.document?._type} cannot be ongoing if it starts in the future` : true; 
 			}),
 		}),
 		defineField({
@@ -127,6 +127,7 @@ export default defineType({
 				layout: "radio",
 				direction: "horizontal",
 			},
+			hidden: ({ document }) => document._type === "story",
 			initialValue: "fullDate",
 			validation: (Rule) => Rule.required(),
 			components: {
