@@ -64,30 +64,3 @@ export const schemaTypes = [
 	// 	}],
 	// },
 ];
-
-// template:
-// name config
-// type config
-// title config
-// icon config
-// description config
-// fieldsets config
-// groups config
-// fields config
-// to config
-// of config
-// weak config
-// styles config
-// lists config
-// marks config
-// placeholder config
-// options config
-// initialValue config
-// hidden config
-// readOnly config
-// validation config
-// orderings config
-// preview config
-// components config
-// fieldset config
-// group config

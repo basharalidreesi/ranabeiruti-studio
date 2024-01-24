@@ -77,7 +77,7 @@ export default defineType({
 			const isApplicableToPublications = applicableToDocumentTypes && applicableToDocumentTypes.includes("publication");
 			return {
 				title: name,
-				// subtitle: applicableToDocumentTypes && `Applicable to ${[isApplicableToProjects && "projects", isApplicableToPublications && "publications"]?.filter(Boolean)?.join(" and ")}`,
+				subtitle: applicableToDocumentTypes && `Applicable to ${[isApplicableToProjects && "projects", isApplicableToPublications && "publications"]?.filter(Boolean)?.join(" and ")}`,
 			};
 		},
 	},

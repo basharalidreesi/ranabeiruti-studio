@@ -2,6 +2,7 @@ import { PackageIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import slugConfig from "../../util/slugConfig";
 import stringConfig from "../../util/stringConfig";
+import { portableTextConfig } from "../../util";
 
 export const COLLECTION_ICON = PackageIcon;
 
@@ -49,13 +50,16 @@ export default defineType({
 	preview: {
 		select: {
 			name: "name",
+			description: "description",
 		},
 		prepare(selection) {
 			const {
 				name,
+				description,
 			} = selection;
 			return {
 				title: name,
+				subtitle: portableTextConfig.renderAsPlainText(description),
 			};
 		},
 	},

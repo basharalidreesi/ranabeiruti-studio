@@ -95,7 +95,6 @@ export default defineType({
 							options: {
 								layout: "checkbox",
 							},
-							validation: (Rule) => Rule.required(),
 							initialValue: true,
 						}),
 						defineField({

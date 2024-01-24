@@ -120,12 +120,12 @@ export const GlobalCss = () => (
 		.boxed-area {
 			border: 1px solid var(--color-4);
 			box-shadow:
-				-0.5rem 0.5rem 0px -1px var(--color-7),
-				-0.5rem 0.5rem var(--color-4),
-				-1rem 1rem 0px -1px var(--color-7),
-				-1rem 1rem var(--color-4);
-			margin-left: 1rem;
-			margin-bottom: 1rem;
+				calc(var(--spacer-50) * -1) var(--spacer-50) 0px -1px var(--color-7),
+				calc(var(--spacer-50) * -1) var(--spacer-50) var(--color-4),
+				calc(var(--spacer-50) * -2) calc(var(--spacer-50) * 2) 0px -1px var(--color-7),
+				calc(var(--spacer-50) * -2) calc(var(--spacer-50) * 2) var(--color-4);
+			margin-left: calc(var(--spacer-50) * 2);
+			margin-bottom: calc(var(--spacer-50) * 2);
 		}
 		.hoverable-area {
 			background: var(--color-7);
@@ -148,13 +148,13 @@ export const MainCss = () => (
 		}
 		body > * {
 			width: 100%;
-			padding-inline: calc(1.5rem + env(safe-area-inset-left, 0px));
+			padding-inline: calc(var(--spacer-400) + env(safe-area-inset-left, 0px));
 		}
 		body > main {
 			flex: 1;
 			display: flex;
 			flex-flow: column nowrap;
-			padding-block: 1.5rem;
+			padding-block: var(--spacer-400);
 		}
 	`}</style>
 );
@@ -171,7 +171,7 @@ export const SlugCss = () => (
 			flex: 1;
 			display: grid;
 			grid-template-columns: [all-start] 10% [content-start] 1fr [content-end] 10% [all-end];
-			column-gap: 1.5rem;
+			column-gap: var(--spacer-400);
 		}
 		.project-body * {
 			min-width: 0;
@@ -199,8 +199,8 @@ export const PageBuilderCss = () => (
 		.row {
 			display: flex;
 			flex-flow: row nowrap;
-			margin-block-end: 1.5rem;
-			gap: 1.5rem;
+			margin-block-end: var(--spacer-400);
+			gap: var(--spacer-400);
 		}
 		@media (max-width: 896px) {
 			.column:empty {
@@ -274,6 +274,7 @@ export const PortableTextBaseCss = () => (
 	<style>{`
 		.rich-text {
 			line-height: 1.3;
+			text-wrap: balance;
 		}
 		.rich-text + .rich-text {
 			margin-block-start: var(--spacer-100);
@@ -323,7 +324,7 @@ export const PortableTextBaseCss = () => (
 			height: 100%;
 		}
 		.rich-text .spacer {
-			height: calc(1rem * 1.3 * var(--line-count));
+			height: calc(1em * 1.3 * var(--line-count));
 		}
 		@media (max-width: 768px) {
 			.rich-text .spacer {
@@ -334,11 +335,6 @@ export const PortableTextBaseCss = () => (
 			display: flex;
 			flex-direction: column;
 			row-gap: var(--spacer-200);
-		}
-		.document-title,
-		.document-date,
-		.document-tags {
-			text-wrap: balance;
 		}
 		.rich-text .document-title-baseline {
 			font-weight: 700;
@@ -356,7 +352,7 @@ export const PortableTextBaseCss = () => (
 		}
 		.rich-text .document-tags li:not(:last-of-type)::after {
 			content: " - ";
-			margin-inline: 0.25rem;
+			margin-inline: var(--spacer-50);
 		}
 		.cta {
 			position: relative;
@@ -394,6 +390,10 @@ export const PortableTextSpacingCss = () => (
 			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-400);
 			}
+		}
+		blockquote + blockquote {
+			margin-block-start: 0 !important;
+			padding-block-start: var(--spacer-100);
 		}
 	`}</style>
 );

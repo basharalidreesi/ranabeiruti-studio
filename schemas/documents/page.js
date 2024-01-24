@@ -13,6 +13,7 @@ const INITIAL_PAGE_BUILDER_VALUE = {
 		{
 			_type: "row",
 			doesBreakout: false,
+			isEnabled: true,
 			columns: [
 				{
 					_type: "column",
@@ -83,16 +84,13 @@ export default defineType({
 	preview: {
 		select: {
 			title: "title",
-			// slug: "slug",
 		},
 		prepare(selection) {
 			const {
 				title,
-				// slug,
 			} = selection;
 			return {
 				title: title,
-				// subtitle: slug && slug.current ? `/${slug.current}/` : null,
 			}
 		},
 	},

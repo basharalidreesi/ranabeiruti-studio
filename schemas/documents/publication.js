@@ -73,7 +73,6 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1),
 			group: "basicInformation",
 		}),
 		defineField({
@@ -129,7 +128,7 @@ export default defineType({
 					description: "",
 					to: [{ type: "type_", }],
 					options: {
-						// filter: `"publication" in applicableToDocumentTypes`,
+						filter: `"publication" in applicableToDocumentTypes`,
 					},
 				}),
 			],
@@ -309,7 +308,7 @@ export default defineType({
 			} = selection;
 			return {
 				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
-				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? `+${Object.keys(types)?.length - 1}` : ""}`, date && date.startDate ? dateConfig.renderComplexDate(date, "short") : null]?.filter(Boolean)?.join(", "),
+				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? ` +${Object.keys(types)?.length - 1}` : ""}`, date ? date.split("-")?.[0] : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 				media: image && image.asset ? image : null,
 			};

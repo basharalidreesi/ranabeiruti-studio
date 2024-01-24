@@ -1,6 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { BlockElementIcon, InlineElementIcon } from "@sanity/icons";
-import { PageBuilderColumnItem } from "../../components";
+import { PageBuilderColumnItem, PageBuilderRowItem } from "../../components";
 import { portableTextConfig } from "../../util";
 
 export default defineType({
@@ -80,24 +80,39 @@ export default defineType({
 							options: {
 								layout: "checkbox",
 							},
-							validation: (Rule) => Rule.required(),
 							initialValue: false,
 						}),
+						defineField({
+							name: "isEnabled",
+							type: "boolean",
+							title: "Enable row?",
+							description: "",
+							options: {
+								layout: "checkbox",
+							},
+							initialValue: true,
+						}),
 					],
+					validation: (Rule) => Rule.custom((value) => value.isEnabled ? true : "This row will not be rendered").warning(),
 					preview: {
 						select: {
 							columns: "columns",
+							isEnabled: "isEnabled",
 						},
 						prepare(selection) {
 							const {
 								columns = [],
+								isEnabled,
 							} = selection;
 							const firstColumnWithContent = columns.find((column) => column.content && column.content.length !== 0);
 							return {
 								title: firstColumnWithContent ? portableTextConfig.renderAsPlainText(firstColumnWithContent.content) : null,
-								subtitle: `Row with ${columns.length} ${columns.length === 1 ? "column" : "columns"}`,
+								subtitle: `${isEnabled ? "Row" : "Hidden row"} with ${columns.length} ${columns.length === 1 ? "column" : "columns"}`,
 							};
 						},
+					},
+					components: {
+						item: PageBuilderRowItem,
 					},
 				}),
 			],

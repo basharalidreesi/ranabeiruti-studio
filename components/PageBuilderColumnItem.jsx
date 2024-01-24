@@ -23,7 +23,7 @@ export default function PageBuilderColumnItem(props) {
 		);
 	}, [value?.ratio, path, onChange]);
 	return (<>
-		<Flex paddingRight={2} align="center" style={{ gap: "0.625rem" }}>
+		<Flex paddingRight={2} align="center" style={{ gap: "0.75rem" }}>
 			<Box flex={1}>{renderDefault(props)}</Box>
 			<TextInput
 				placeholder="Ratio"

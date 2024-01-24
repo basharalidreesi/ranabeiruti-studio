@@ -388,6 +388,7 @@ export const extraFields = [
 						},
 					],
 				},
+				hidden: ({ document }) => !["project", "publication"].includes(document._type),
 				initialValue: ["projectDescription", "collectionDescriptions"],
 				validation: (Rule) => Rule.required(),
 			}),
@@ -414,9 +415,6 @@ export const extraFields = [
 					radius={2}
 					shadow={1}
 					tone="primary"
-					style={{
-						marginBottom: "1rem",
-					}}
 				>
 					<Flex gap={2} align={"center"} justify={"center"}>
 						<Text align={"center"} size={2}>

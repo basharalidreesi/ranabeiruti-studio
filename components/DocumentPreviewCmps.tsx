@@ -34,7 +34,7 @@ const PortableText = (props) => {
 									locale: "",
 								};
 								return (
-									<li>
+									<li key={tagItem._key}>
 										<a className="link hover-text" href="#">
 											{tag?._type === "location" ? `${tag?.name?.trim()}, ${COUNTRIES.find((country) => country?.value === tag?.locale)?.title}` : tag?.name?.trim()}
 										</a>
@@ -54,13 +54,13 @@ const PortableText = (props) => {
 						const collection = referenceConfig.buildReference(collectionItem?._ref) || {
 							description: "",
 						};
-						return collection?.description && collection?.description.length !== 0 && (<PortableText source={collection?.description} />);
+						return collection?.description && collection?.description.length !== 0 && (<PortableText key={collectionItem._key} source={collection?.description} />);
 					})}
 				</div>
 			),
-			documentReference: ({ value }) => value.reference && (
-				<div className="document-reference boxed-area"></div>
-			),
+			// documentReference: ({ value }) => value.reference && (
+			// 	<div className="document-reference boxed-area"></div>
+			// ),
 			cta: ({ value }) => value.label && (
 				<div className="cta boxed-area">
 					<a href="#">
@@ -85,7 +85,7 @@ const PortableText = (props) => {
 			},
 		},
 		block: {
-			normal: ({ node, children }) => node && node.children && !(node.children.length === 1 && !node.children[0].text) && (
+			normal: ({ node, children }) => node && children && node.children && !(node.children.length === 1 && !node.children[0].text) && (
 				<p>
 					{children}
 				</p>
@@ -132,7 +132,7 @@ const Figure = (props) => props.source && props.source.asset && (
 						"bottom": "flex-end",
 				}[props.source.captionVerticalAlignment] || null,
 			}}>
-				<PortableText source={props.source.caption} muted={true} small={true} />
+				<PortableText source={props.source.caption} />
 			</figcaption>
 		)}
 	</figure>
@@ -160,7 +160,7 @@ export const PageBuilder = (props) => {
 			{props.children}
 		</div>
 	);
-	return source?.map((row, index) => {
+	return source?.filter((row) => row.isEnabled !== false)?.map((row, index) => {
 		if (row.columns?.filter((column) => {
 			switch (column._type) {
 				case "column": return (!column.content || column.content?.length === 0) ? true : false;
@@ -170,7 +170,7 @@ export const PageBuilder = (props) => {
 			return null;
 		};
 		return (
-			<Row index={index + 1} doesBreakout={row.doesBreakout}>
+			<Row key={row._key} index={index + 1} doesBreakout={row.doesBreakout}>
 				{row.columns?.map((column, index) => {
 					const ratio = Math.max(column.ratio, 1) || 1;
 					const verticalAlignment = column.verticalAlignment;
@@ -178,7 +178,7 @@ export const PageBuilder = (props) => {
 						case "column": {
 							if (column.content && column.content?.length !== 0) {
 								return (
-									<Column ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
+									<Column key={column._key} ratio={ratio} verticalAlignment={verticalAlignment} index={index + 1}>
 										<PortableText source={column.content} document={document} />
 									</Column>
 								);

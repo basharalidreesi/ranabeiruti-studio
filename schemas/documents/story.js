@@ -10,13 +10,6 @@ export default defineType({
 	title: "Story",
 	icon: STORY_ICON,
 	fields: [
-		// defineField({
-		// 	name: "title",
-		// 	type: "string",
-		// 	title: "Title",
-		// 	description: "",
-		// 	validation: (Rule) => Rule.custom(stringConfig.requireString),
-		// }),
 		defineField({
 			name: "date",
 			type: "complexDate",

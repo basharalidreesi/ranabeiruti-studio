@@ -10,10 +10,11 @@ export const INITIAL_PAGE_BUILDER_VALUE = {
 		{
 			_type: "row",
 			doesBreakout: false,
+			isEnabled: true,
 			columns: [
 				{
 					_type: "column",
-					ratio: 2,
+					ratio: 1,
 					verticalAlignment: "top",
 					content: [
 						{
@@ -37,7 +38,7 @@ export const INITIAL_PAGE_BUILDER_VALUE = {
 				},
 				{
 					_type: "column",
-					ratio: 3,
+					ratio: 1,
 					verticalAlignment: "top",
 					content: [
 						{
@@ -132,7 +133,6 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1),
 			group: "basicInformation",
 		}),
 		defineField({
@@ -184,7 +184,7 @@ export default defineType({
 					description: "",
 					to: [{ type: "type_", }],
 					options: {
-						// filter: `"project" in applicableToDocumentTypes`,
+						filter: `"project" in applicableToDocumentTypes`,
 					},
 				}),
 			],
@@ -364,7 +364,7 @@ export default defineType({
 			} = selection;
 			return {
 				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
-				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? `+${Object.keys(types)?.length - 1}` : ""}`, date && date.startDate ? dateConfig.renderComplexDate(date, "short") : null]?.filter(Boolean)?.join(", "),
+				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? ` +${Object.keys(types)?.length - 1}` : ""}`, date && date.startDate ? dateConfig.renderComplexDate(date, "short") : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 				media: image && image.asset ? image : null,
 			};
