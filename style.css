@@ -76,13 +76,3 @@ fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
 .pt-object-block [data-testid="pte-block-object"][data-image-preview] {
 	padding: 0.25rem !important;
 }
-
-/** page */
-/* fieldset[data-testid="field-page"] > div:nth-child(1) {
-	display: none !important;
-}
-fieldset[data-testid="field-page"] > div:nth-child(2) {
-	margin: 0 !important;
-	padding: 0 !important;
-	border: unset !important;
-} */

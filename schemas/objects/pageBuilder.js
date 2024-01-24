@@ -117,7 +117,6 @@ export default defineType({
 				layout: "checkbox",
 			},
 			hidden: ({ document }) => !["project", "publication"].includes(document._type),
-			// validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
 		defineField({
@@ -129,7 +128,6 @@ export default defineType({
 				layout: "checkbox",
 			},
 			hidden: ({ document }) => !["project", "publication"].includes(document._type),
-			// validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
 		defineField({
@@ -141,7 +139,6 @@ export default defineType({
 				layout: "checkbox",
 			},
 			hidden: ({ document }) => !["project", "publication"].includes(document._type),
-			// validation: (Rule) => Rule.required(),
 			initialValue: true,
 		}),
 		defineField({
@@ -152,8 +149,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => !["project", "publication"].includes(document._type),
-			// validation: (Rule) => Rule.required(),
+			hidden: true,
 			initialValue: true,
 		}),
 		defineField({
@@ -164,8 +160,7 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => !["project", "publication"].includes(document._type),
-			// validation: (Rule) => Rule.required(),
+			hidden: true,
 			initialValue: true,
 		}),
 	],

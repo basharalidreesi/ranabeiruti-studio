@@ -5,7 +5,7 @@ import { visionTool } from "@sanity/vision";
 import { dashboardTool } from "@sanity/dashboard";
 import { netlifyWidget } from "sanity-plugin-dashboard-widget-netlify";
 import { schemaTypes } from "./schemas";
-import { dataDeskStructure, pagesDeskStructure, singletonActions, singletonTypes } from "./structure";
+import { dataStructure, pagesStructure, singletonActions, singletonTypes } from "./structure";
 import { defaultDocumentNode } from "./defaultDocumentNode";
 import { SunIcon } from "@sanity/icons";
 import "./style.css";
@@ -35,13 +35,13 @@ function createConfig(params = {}) {
 			structureTool({
 				name: "data",
 				title: "Data",
-				structure: dataDeskStructure,
+				structure: dataStructure,
 				defaultDocumentNode: defaultDocumentNode,
 			}),
 			structureTool({
 				name: "pages",
 				title: "Pages",
-				structure: pagesDeskStructure,
+				structure: pagesStructure,
 				defaultDocumentNode: defaultDocumentNode,
 			}),
 			dashboardTool({ widgets: [

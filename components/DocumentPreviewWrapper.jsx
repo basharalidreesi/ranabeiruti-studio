@@ -14,7 +14,7 @@ function createBlobUrlFromIframe(iframe) {
 	return URL.createObjectURL(blob);
 };
 
-export default function DocumentPreview(props) {
+export default function DocumentPreviewWrapper(props) {
 	const {
 		document,
 		documentId,
@@ -35,6 +35,7 @@ export default function DocumentPreview(props) {
 	};
 	useEffect(() => {
 		forceUpdate();
+		pauseUpdate();
 	}, []);
 	return (
 		<Card tone="transparent" style={{ height: "100%" }}>
@@ -80,15 +81,17 @@ export default function DocumentPreview(props) {
 						<Divider />
 						<ShortText>
 							{document.displayed.slug?.current
-								? (`Path: ${options.basePath}/${document.displayed.slug?.current}/`)
-								: ("Path not set")
+								? (`Slug: ${document.displayed.slug?.current}`)
+								: ("Slug not set")
 							}
 						</ShortText>
-						{/* <Divider />
-						<ShortText>
+						<Divider />
+						<ShortText style={{
+							marginInlineEnd: "auto",
+						}}>
 							ID: {documentId}
-						</ShortText> */}
-						{/* <Divider /> */}
+						</ShortText>
+						<Divider />
 						<Button
 							padding={2}
 							tone={isUpdatePaused ? "primary" : "default"}
@@ -98,7 +101,6 @@ export default function DocumentPreview(props) {
 							style={{
 								height: "1.6875rem",
 								width: "1.6875rem",
-								marginInlineStart: "auto",
 							}}
 						/>
 						<Button
@@ -186,6 +188,7 @@ const ShortText = (props) => (
 		size={1}
 		style={{
 			minWidth: "0",
+			...props.style
 		}}
 	>
 		<span

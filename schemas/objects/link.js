@@ -46,6 +46,8 @@ export const linkBase = [
 			{ type: "publication", },
 			{ type: "news", },
 			{ type: "press", },
+			{ type: "listing", },
+			{ type: "page", },
 		],
 		weak: true,
 		options: {

@@ -10,7 +10,6 @@ export default defineType({
 	type: "document",
 	title: NEWS_TITLE,
 	icon: NEWS_ICON,
-	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "title",
@@ -55,7 +54,7 @@ export default defineType({
 		}),
 		defineField({
 			name: "body",
-			type: "complexPortableText",
+			type: "lessComplexPortableText",
 			title: "Body",
 			description: "",
 		}),

@@ -1,9 +1,9 @@
 import DocumentPreview from "./DocumentPreview";
+import DocumentPreviewWrapper from "./DocumentPreviewWrapper";
 import PageBuilderColumnItem from "./PageBuilderColumnItem";
-import ProjectPreview from "./ProjectPreview/ProjectPreview";
 
 export {
 	DocumentPreview,
+	DocumentPreviewWrapper,
 	PageBuilderColumnItem,
-	ProjectPreview,
 };

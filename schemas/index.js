@@ -24,6 +24,7 @@ import ratio from "./objects/ratio";
 import simplePortableText from "./objects/simplePortableText";
 import verticalAlignment from "./objects/verticalAlignment";
 import story from "./documents/story";
+import lessComplexPortableText from "./objects/lessComplexPortableText";
 
 export const schemaTypes = [
 	// documents
@@ -48,6 +49,7 @@ export const schemaTypes = [
 	link,
 	mainImage,
 	complexPortableText,
+	lessComplexPortableText,
 	pageBuilder,
 	placement,
 	ratio,

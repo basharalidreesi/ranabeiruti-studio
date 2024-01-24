@@ -52,7 +52,7 @@ export const singletonActions = new Set([
 	"restore",
 ]);
 
-export const dataDeskStructure = (S) => {
+export const dataStructure = (S) => {
 	return S.list()
 		.title("Data")
 		.items([
@@ -163,7 +163,7 @@ export const dataDeskStructure = (S) => {
 		]);
 };
 
-export const pagesDeskStructure = (S) => {
+export const pagesStructure = (S) => {
 	return S.list()
 		.title("Pages")
 		.items([

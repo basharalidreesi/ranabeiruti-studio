@@ -1,6 +1,6 @@
 import React from "react";
 
-export const GlobalCss = () => (
+export const ResetCss = () => (
 	<style>{`
 		html,
 		body {
@@ -9,17 +9,14 @@ export const GlobalCss = () => (
 			left: 0;
 			width: 100%;
 			min-height: 100%;
-			font-size: max(18px, 100%);
+			font-size: max(16px, 100%);
 			font-family: var(--font-family-sans);
-			font-weight: var(--font-weight-medium);
+			font-weight: 400;
 			font-style: normal;
 			line-height: 1.0;
 			color: var(--color-1);
 			scroll-behavior: smooth;
 			background: var(--color-7);
-			@media (max-width: 384px) {
-				font-size: 16px;
-			}
 		}
 		*,
 		*::before,
@@ -49,6 +46,11 @@ export const GlobalCss = () => (
 			overflow-wrap: break-word;
 			touch-action: manipulation;
 		}
+	`}</style>
+);
+
+export const GlobalCss = () => (
+	<style>{`
 		:root {
 			--color-1: #000000;
 			--color-2: #5f6368;
@@ -57,19 +59,18 @@ export const GlobalCss = () => (
 			--color-5: #e8e9eb;
 			--color-6: #f8f8f8;
 			--color-7: #ffffff;
+			--spacer-700: 2rem;
+			--spacer-400: 1.5rem;
+			--spacer-350: 1.25rem;
+			--spacer-300: 1rem;
+			--spacer-200: 0.75rem;
+			--spacer-100: 0.5rem;
+			--spacer-50: 0.25rem;
 			--font-family-sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 			--font-family-serif: "Times", "Times New Roman", serif;
 			--font-family-mono: monospace;
-			--font-weight-bold: 700;
-			--font-weight-medium: 400;
-			--font-weight-light: 300;
-			--font-size-x-large: 1.2222222222rem;
-			--font-size-large: 1rem;
-			--font-size-medium: 0.8888888889rem;
-			--font-size-small: 0.7777777778rem;
-			--line-height-large: 1.3;
-			--line-height-medium: 1.15;
-			--line-height-small: 1;
+			--font-size-700: 1.618rem;
+			--font-size-400: 1rem;
 			--letter-spacing-large: 0.015em;
 			--letter-spacing-medium: normal;
 			--letter-spacing-small: -0.015em;
@@ -116,6 +117,25 @@ export const GlobalCss = () => (
 			outline-offset: 0.175em;
 			z-index: 1;
 		}
+		.boxed-area {
+			border: 1px solid var(--color-4);
+			box-shadow:
+				-0.5rem 0.5rem 0px -1px var(--color-7),
+				-0.5rem 0.5rem var(--color-4),
+				-1rem 1rem 0px -1px var(--color-7),
+				-1rem 1rem var(--color-4);
+			margin-left: 1rem;
+			margin-bottom: 1rem;
+		}
+		.hoverable-area {
+			background: var(--color-7);
+			transition: background-color 0.125s;
+		}
+		@media (any-hover: hover) {
+			.hoverable-area:hover {
+				background: var(--color-6);
+			}
+		}
 	`}</style>
 );
 
@@ -145,7 +165,7 @@ export const SlugCss = () => (
 			flex: 1;
 			display: flex;
 			flex-flow: column nowrap;
-			line-height: var(--line-height-large);
+			line-height: 1.3;
 		}
 		.project-body {
 			flex: 1;
@@ -182,17 +202,18 @@ export const PageBuilderCss = () => (
 			margin-block-end: 1.5rem;
 			gap: 1.5rem;
 		}
+		@media (max-width: 896px) {
+			.column:empty {
+				display: none;
+			}
+		}
 		@media (max-width: 768px) {
 			.row {
 				flex-direction: column;
 			}
-			.row * {
+			.column {
 				flex: unset !important;
-			}
-		}
-		@media (max-width: 896px) {
-			.column:empty {
-				display: none;
+				align-self: unset !important;
 			}
 		}
 	`}</style>
@@ -204,30 +225,39 @@ export const FigureCss = () => (
 			display: flex;
 		}
 		figcaption {
-			font-size: var(--font-size-small);
 			color: var(--color-2)
 		}
 		figure:where([data-caption-placement="left"]) {
 			flex-flow: row-reverse nowrap;
-			gap: 0.75rem;
+			gap: var(--spacer-200);
 		}
 		figure:where([data-caption-placement="top"]) {
 			flex-flow: column-reverse nowrap;
-			gap: calc(0.5rem + 0.15em);
+			gap: calc(var(--spacer-100) + 0.15em);
 		}
 		figure:where([data-caption-placement="right"]) {
 			flex-flow: row nowrap;
-			gap: 0.75rem;
+			gap: var(--spacer-200);
 		}
 		figure:where([data-caption-placement="bottom"]) {
 			flex-flow: column nowrap;
-			gap: calc(0.5rem + 0.15em);
+			gap: calc(var(--spacer-100) + 0.15em);
 		}
 		@media (max-width: 768px) {
 			figure {
 				flex-flow: column nowrap;
-				gap: calc(0.5rem + 0.15em);
+				gap: calc(var(--spacer-100) + 0.15em);
 			}
+			figcaption {
+				flex: unset !important;
+				align-self: unset !important;
+			}
+		}
+		picture {
+			display: block;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: calc(var(--hotspot-x) * 100%) calc(var(--hotspot-y) * 100%);
 		}
 		img {
 			display: block;
@@ -240,29 +270,27 @@ export const FigureCss = () => (
 	`}</style>
 );
 
-export const PortableTextCss = () => (
+export const PortableTextBaseCss = () => (
 	<style>{`
 		.rich-text {
 			line-height: 1.3;
 		}
 		.rich-text + .rich-text {
-			margin-block-start: 0.5rem;
+			margin-block-start: var(--spacer-100);
 		}
 		.rich-text h3 {
-			font-weight: var(--font-weight-bold);
+			font-weight: 700;
 		}
 		.rich-text blockquote {
 			font-family: var(--font-family-serif);
-			font-size: var(--font-size-medium);
-			padding-inline: 1.5rem;
+			padding-inline: var(--spacer-400);
 			border-inline-start: 1px solid var(--color-4);
 		}
 		.rich-text .note {
-			font-size: var(--font-size-small);
 			color: var(--color-2);
 		}
 		.rich-text strong {
-			font-weight: var(--font-weight-bold);
+			font-weight: 700;
 		}
 		.rich-text em {
 			font-style: italic;
@@ -274,25 +302,98 @@ export const PortableTextCss = () => (
 			font-size: 0.61875em;
 		}
 		.rich-text li {
-			padding-inline-start: 0.5rem;
-			margin-inline-start: 1rem;
+			padding-inline-start: calc(var(--spacer-400) - 1rem);
+			margin-inline-start: calc(var(--spacer-400) - 0.5rem);
 		}
 		.rich-text .link {
 			background-image: linear-gradient(to bottom, var(--color-4), var(--color-4));
 			background-size: 1px 2px;
 			background-repeat: repeat-x;
 			background-position: 0 100%;
-			color: var(--color-1);
 		}
-		.rich-text :is(p, h3, blockquote, .note, ul, ol, figure):empty {
+		.rich-text .embed-object {
+			aspect-ratio: var(--aspect-ratio);
+			position: relative;
+			overflow: hidden;
+		}
+		.rich-text .embed-object iframe {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.rich-text .spacer {
+			height: calc(1rem * 1.3 * var(--line-count));
+		}
+		@media (max-width: 768px) {
+			.rich-text .spacer {
+				display: none;
+			}
+		}
+		.rich-text .document-header {
+			display: flex;
+			flex-direction: column;
+			row-gap: var(--spacer-200);
+		}
+		.document-title,
+		.document-date,
+		.document-tags {
+			text-wrap: balance;
+		}
+		.rich-text .document-title-baseline {
+			font-weight: 700;
+		}
+		.rich-text .document-subtitle {
+			margin-block-start: var(--spacer-200);
+		}
+		.rich-text .document-tags ul {
+			list-style: none;
+		}
+		.rich-text .document-tags li {
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
+		.rich-text .document-tags li:not(:last-of-type)::after {
+			content: " - ";
+			margin-inline: 0.25rem;
+		}
+		.cta {
+			position: relative;
+			width: fit-content;
+			padding: var(--spacer-200);
+			font-weight: 700;
+		}
+		.cta a::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+	`}</style>
+);
+
+export const PortableTextSpacingCss = () => (
+	<style>{`
+		.rich-text :is(p, h3, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area):empty {
 			display: none;
 		}
-		.rich-text :is(p, h3, blockquote, .note, ul, ol, figure):not(:empty)
-		+ :is(p, h3, .note, ul, ol, figure):not(:empty) {
-			margin-block-start: 0.5rem;
+		.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+			margin-block-start: var(--spacer-100);
 		}
-		.rich-text blockquote + blockquote {
-			padding-block-start: 0.5rem;
+		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(figure, .embed-object, .document-header, .boxed-area),
+		.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + :is(figure, .embed-object, .document-header, .boxed-area),
+		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+			margin-block-start: var(--spacer-400);
+		}
+		@media (max-width: 768px) {
+			.rich-text .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+				margin-block-start: var(--spacer-100);
+			}
+			.rich-text .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
+			.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
+			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+				margin-block-start: var(--spacer-400);
+			}
 		}
 	`}</style>
 );

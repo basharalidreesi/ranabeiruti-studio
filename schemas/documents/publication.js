@@ -11,7 +11,24 @@ export default defineType({
 	type: "document",
 	title: PUBLICATION_TITLE,
 	icon: PUBLICATION_ICON,
-	__experimental_formPreviewTitle: false,
+	groups: [
+		{
+			name: "basicInformation",
+			title: "Basic Information",
+		},
+		{
+			name: "tags",
+			title: "Tags",
+		},
+		{
+			name: "relations",
+			title: "Relations",
+		},
+		{
+			name: "content",
+			title: "Content",
+		},
+	],
 	fields: [
 		defineField({
 			name: "title",
@@ -19,12 +36,14 @@ export default defineType({
 			title: "Title",
 			description: "",
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "subtitle",
 			type: "string",
 			title: "Subtitle",
 			description: "",
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "slug",
@@ -36,6 +55,7 @@ export default defineType({
 				slugify: slugConfig.customSlugify,
 			},
 			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "profiles",
@@ -54,6 +74,7 @@ export default defineType({
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1),
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "clients",
@@ -68,6 +89,7 @@ export default defineType({
 					to: [{ type: "client", }],
 				}),
 			],
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "date",
@@ -78,6 +100,7 @@ export default defineType({
 				dateFormat: dateConfig.dateFormat,
 			},
 			validation: (Rule) => Rule.required(),
+			group: "basicInformation",
 		}),
 		defineField({
 			name: "locations",
@@ -92,6 +115,7 @@ export default defineType({
 					to: [{ type: "location", }],
 				}),
 			],
+			group: "tags",
 		}),
 		defineField({
 			name: "types",
@@ -110,6 +134,7 @@ export default defineType({
 				}),
 			],
 			validation: (Rule) => Rule.required().min(1),
+			group: "tags",
 		}),
 		defineField({
 			name: "subjects",
@@ -124,6 +149,7 @@ export default defineType({
 					to: [{ type: "subject", }],
 				}),
 			],
+			group: "tags",
 		}),
 		defineField({
 			name: "collections",
@@ -138,24 +164,28 @@ export default defineType({
 					to: [{ type: "collection", }],
 				}),
 			],
+			group: "tags",
 		}),
 		defineField({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
 			description: "",
+			group: "content",
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
 			description: "",
+			group: "content",
 		}),
 		defineField({
 			name: "credits",
 			type: "simplePortableText",
 			title: "Credits",
 			description: "",
+			group: "content",
 		}),
 		defineField({
 			name: "relatedProjects",
@@ -173,6 +203,7 @@ export default defineType({
 					},
 				}),
 			],
+			group: "relations",
 		}),
 		defineField({
 			name: "relatedPublications",
@@ -190,6 +221,7 @@ export default defineType({
 					},
 				}),
 			],
+			group: "relations",
 		}),
 		defineField({
 			name: "relatedNews",
@@ -204,6 +236,7 @@ export default defineType({
 					to: [{ type: "news", }],
 				}),
 			],
+			group: "relations",
 		}),
 		defineField({
 			name: "relatedPress",
@@ -218,12 +251,14 @@ export default defineType({
 					to: [{ type: "press", }],
 				}),
 			],
+			group: "relations",
 		}),
 		defineField({
 			name: "page",
 			type: "pageBuilder",
 			title: "Page",
 			description: "",
+			group: "content",
 		}),
 	],
 	initialValue: {
@@ -258,7 +293,8 @@ export default defineType({
 			subtitle: "subtitle",
 			description: "description",
 			date: "date",
-			type: "types.0.name",
+			types: "types",
+			type0: "types.0.name",
 			image: "image",
 		},
 		prepare(selection) {
@@ -267,12 +303,13 @@ export default defineType({
 				subtitle,
 				description,
 				date,
-				type,
+				types,
+				type0,
 				image,
 			} = selection;
 			return {
 				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
-				subtitle: [type, date ? dateConfig.renderAsString(date, "short") : null]?.filter(Boolean)?.join(", "),
+				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? `+${Object.keys(types)?.length - 1}` : ""}`, date && date.startDate ? dateConfig.renderComplexDate(date, "short") : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 				media: image && image.asset ? image : null,
 			};
