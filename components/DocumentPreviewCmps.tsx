@@ -1,6 +1,6 @@
 import React from "react";
 import { PortableText as SanityPortableText } from "@portabletext/react";
-import { dateConfig, imageConfig, referenceConfig } from "../util";
+import { dateConfig, imageConfig, portableTextConfig, referenceConfig } from "../util";
 import { COUNTRIES } from "../lib/countries";
 
 const PortableText = (props) => {
@@ -14,35 +14,9 @@ const PortableText = (props) => {
 			),
 			title: () => props.document.title && (
 				<div className="document-header">
-					<div className="document-title">
-						<h1 className="document-title-baseline">{props.document.title?.trim()}</h1>
-						{props.document.subtitle && (
-							<p className="document-subtitle">{props.document.subtitle?.trim()}</p>
-						)}
-					</div>
-					{props.document.date && props.document.date.startDate && props.document.date.dateFormat && (
-						<div className="document-date">
-							{dateConfig.renderComplexDate(props.document.date)}
-						</div>
-					)}
-					<div className="document-tags">
-						<ul>
-							{[...(props.document.types || []), ...(props.document.collections || []), ...(props.document.subjects || []), ...(props.document.locations || [])]?.filter(Boolean)?.map((tagItem) => {
-								const tag = referenceConfig.buildReference(tagItem?._ref) || {
-									_type: "",
-									name: "",
-									locale: "",
-								};
-								return (
-									<li key={tagItem._key}>
-										<a className="link hover-text" href="#">
-											{tag?._type === "location" ? `${tag?.name?.trim()}, ${COUNTRIES.find((country) => country?.value === tag?.locale)?.title}` : tag?.name?.trim()}
-										</a>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
+					<RecordTitle source={props.document} />
+					<RecordDate source={props.document} />
+					<RecordTags source={props.document} withLinks={true} />
 				</div>
 			),
 			description: ({ value }) => value.doesInclude && value.doesInclude.length !== 0 && (
@@ -58,11 +32,20 @@ const PortableText = (props) => {
 					})}
 				</div>
 			),
-			// documentReference: ({ value }) => value.reference && (
-			// 	<div className="document-reference boxed-area"></div>
-			// ),
+			documentReference: ({ value }) => {
+				const reference = referenceConfig.buildReference(value.reference?._ref);
+				return value.reference && value.reference._ref && reference && (
+					<div className="document-reference boxed-area hoverable-area">
+						<RecordTitle source={reference} withLink={true} />
+						<RecordDate source={reference} />
+						<RecordDescription source={reference} />
+						<RecordImage source={reference} />
+						<RecordTags source={reference} />
+					</div>
+				);
+			},
 			cta: ({ value }) => value.label && (
-				<div className="cta boxed-area">
+				<div className="cta boxed-area hoverable-area">
 					<a href="#">
 						{value.label}
 					</a>
@@ -101,6 +84,7 @@ const PortableText = (props) => {
 	};
 	return props.source && props.source?.length !== 0 && (
 		<div className="rich-text">
+			{/* @ts-ignore */}
 			<SanityPortableText value={props.source} components={serializers} document={props.document} />
 		</div>
 	);
@@ -138,6 +122,118 @@ const Figure = (props) => props.source && props.source.asset && (
 	</figure>
 );
 
+const RecordTitle = (props) => {
+	const {
+		source,
+		withLink,
+	} = props;
+	if (!source || !source._type || !source.title) { return null; };
+	const recordType = source._type;
+	const recordTitle = source.title?.trim();
+	const recordSubtitle = ((recordType === "project" || recordType === "publication") && source.subtitle?.trim()) || (recordType === "press" && source.publisher?.trim());
+	const separatorsByType = {
+		project: ":&nbsp;",
+		publication: ":&nbsp;",
+		news: ":&nbsp;",
+		press: " →&nbsp;",
+	};
+	const TitleInner = () => (<>
+		<strong className="record-title-baseline">{recordTitle}{recordSubtitle && (<span className="record-title-separator" dangerouslySetInnerHTML={{ __html: separatorsByType[recordType] }}></span>)}</strong>{recordSubtitle && (<span className="record-subtitle">{recordSubtitle}</span>)}
+	</>);
+	return (
+		<div className="record-title">
+			<h4>
+				{withLink
+					? (
+						<a href="#">
+							<TitleInner />
+						</a>
+					)
+					: (<TitleInner />)
+				}
+			</h4>
+		</div>
+	);
+};
+
+const RecordDate = (props) => {
+	const {
+		source,
+	} = props;
+	if (!source || (!source.date && (!source.date.startDate || !source.date.dateFormat))) { return null; };
+	return (
+		<div className="record-date">
+			{
+				source._type === "project" ? (dateConfig.renderComplexDate(source.date))
+				: source._type === "publication" ? (source.date?.split("-")?.[0])
+				: source._type === "news" ? (dateConfig.renderAsString(source.date))
+				: source._type === "press" ? (dateConfig.renderAsString(source.date))
+				: null
+			}
+		</div>
+	);
+};
+
+const RecordDescription = (props) => {
+	const {
+		source,
+	} = props;
+	if (!source || !source.description || source.description.length === 0) { return null; };
+	return (
+		<div className="record-description ellipsis-multiline">
+			<p>
+				{portableTextConfig.renderAsPlainText(source.description)}
+			</p>
+		</div>
+	);
+};
+
+const RecordImage = (props) => {
+	const {
+		source,
+	} = props;
+	if (!source || !source.image || !source.image.asset) { return null; };
+	return (
+		<div className="record-image">
+			<Image source={source.image} />
+		</div>
+	);
+};
+
+const RecordTags = (props) => {
+	const {
+		source,
+		withLinks = false,
+	} = props;
+	const tagArray = [...(source.types || []), ...(source.collections || []), ...(source.subjects || []), ...(source.locations || [])]?.filter(Boolean);
+	if (!source || !tagArray || tagArray.length === 0) { return null; };
+	return (
+		<div className="record-tags">
+			<ul>
+				{tagArray.filter((tagItem) => tagItem._ref)?.map((tagItem) => {
+					const tag = referenceConfig.buildReference(tagItem._ref);
+					const TagInner = () => (<>
+						{/* @ts-ignore */}
+						{tag?._type === "location" ? `${tag?.name?.trim()}, ${COUNTRIES.find((country) => country?.value === tag?.locale)?.title}` : tag?.name?.trim()}
+					</>);
+					return tag && (
+						<li key={tagItem._key}>
+							{withLinks
+								? (
+									<a className="link hover-text" href="#">
+										<TagInner />
+									</a>
+								)
+								: (<TagInner />)
+							}
+						</li>
+					);
+				})}
+			</ul>
+		</div>
+	);
+};
+
 export const PageBuilder = (props) => {
 	const {
 		source,
@@ -160,7 +256,7 @@ export const PageBuilder = (props) => {
 			{props.children}
 		</div>
 	);
-	return source?.filter((row) => row.isEnabled !== false)?.map((row, index) => {
+	return source?.filter((row) => row.isEnabled)?.map((row, index) => {
 		if (row.columns?.filter((column) => {
 			switch (column._type) {
 				case "column": return (!column.content || column.content?.length === 0) ? true : false;

@@ -180,6 +180,17 @@ export default defineType({
 				return true;
 			}),
 		}),
+		defineField({
+			name: "isEnabled",
+			type: "boolean",
+			title: "Enable listing?",
+			description: "",
+			options: {
+				layout: "checkbox",
+			},
+			initialValue: true,
+			hidden: ({ document }) => document?._id?.replace("drafts.", "") === "homepage",
+		}),
 	],
 	preview: {
 		select: {

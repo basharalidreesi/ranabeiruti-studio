@@ -88,6 +88,10 @@ export default defineType({
 			name: "content",
 			title: "Content",
 		},
+		{
+			name: "display",
+			title: "Display",
+		},
 	],
 	fields: [
 		defineField({
@@ -314,6 +318,75 @@ export default defineType({
 			title: "Page",
 			description: "",
 			group: "content",
+		}),
+		defineField({
+			name: "isListed",
+			type: "boolean",
+			title: "Include project in listing?",
+			description: "",
+			options: {
+				layout: "checkbox",
+			},
+			initialValue: true,
+			group: "display",
+		}),
+		defineField({
+			name: "listingDisplaySize",
+			type: "string",
+			title: "Display Size",
+			description: "",
+			options: {
+				list: [
+					{
+						value: "small",
+						title: "Small",
+					},
+					{
+						value: "medium",
+						title: "Medium",
+					},
+					{
+						value: "large",
+						title: "Large",
+					},
+				],
+				layout: "radio",
+				direction: "horizontal",
+			},
+			initialValue: "medium",
+			validation: (Rule) => Rule.required(),
+			group: "display",
+		}),
+		defineField({
+			name: "listingAlignment",
+			type: "string",
+			title: "Display Alignment",
+			description: "",
+			options: {
+				list: [
+					{
+						value: "auto",
+						title: "Auto",
+					},
+					{
+						value: "left",
+						title: "Left",
+					},
+					{
+						value: "middle",
+						title: "Middle",
+					},
+					{
+						value: "right",
+						title: "Right",
+					},
+				],
+				layout: "radio",
+				direction: "horizontal",
+			},
+			initialValue: "auto",
+			validation: (Rule) => Rule.required(),
+			group: "display",
 		}),
 	],
 	initialValue: {

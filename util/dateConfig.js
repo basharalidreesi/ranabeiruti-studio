@@ -44,7 +44,7 @@ const dateConfig = {
 						&& startComponents.month === endComponents.month
 						&& startComponents.day !== endComponents.day
 					) {
-						return `${startComponents.day} – ${endComponents.day} ${formatMonth(startComponents.month)} ${startComponents.year}`;
+						return `${startComponents.day}–${endComponents.day} ${formatMonth(startComponents.month)} ${startComponents.year}`;
 					};
 					if (
 						startComponents.year === endComponents.year

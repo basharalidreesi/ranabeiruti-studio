@@ -28,6 +28,10 @@ export default defineType({
 			name: "content",
 			title: "Content",
 		},
+		{
+			name: "display",
+			title: "Display",
+		},
 	],
 	fields: [
 		defineField({
@@ -258,6 +262,17 @@ export default defineType({
 			title: "Page",
 			description: "",
 			group: "content",
+		}),
+		defineField({
+			name: "isListed",
+			type: "boolean",
+			title: "Include publication in listing?",
+			description: "",
+			options: {
+				layout: "checkbox",
+			},
+			initialValue: true,
+			group: "display",
 		}),
 	],
 	initialValue: {

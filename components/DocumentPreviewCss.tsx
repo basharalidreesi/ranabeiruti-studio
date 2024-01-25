@@ -120,12 +120,12 @@ export const GlobalCss = () => (
 		.boxed-area {
 			border: 1px solid var(--color-4);
 			box-shadow:
-				calc(var(--spacer-50) * -1) var(--spacer-50) 0px -1px var(--color-7),
-				calc(var(--spacer-50) * -1) var(--spacer-50) var(--color-4),
-				calc(var(--spacer-50) * -2) calc(var(--spacer-50) * 2) 0px -1px var(--color-7),
-				calc(var(--spacer-50) * -2) calc(var(--spacer-50) * 2) var(--color-4);
-			margin-left: calc(var(--spacer-50) * 2);
-			margin-bottom: calc(var(--spacer-50) * 2);
+				calc(var(--spacer-100) * -1) var(--spacer-100) 0px -1px var(--color-7),
+				calc(var(--spacer-100) * -1) var(--spacer-100) var(--color-4),
+				calc(var(--spacer-100) * -2) calc(var(--spacer-100) * 2) 0px -1px var(--color-7),
+				calc(var(--spacer-100) * -2) calc(var(--spacer-100) * 2) var(--color-4);
+			margin-left: calc(var(--spacer-100) * 2);
+			margin-bottom: calc(var(--spacer-100) * 2);
 		}
 		.hoverable-area {
 			background: var(--color-7);
@@ -135,6 +135,19 @@ export const GlobalCss = () => (
 			.hoverable-area:hover {
 				background: var(--color-6);
 			}
+		}
+		.ellipsis {
+			overflow: hidden;
+			overflow: clip;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.ellipsis-multiline {
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			overflow: clip;
 		}
 	`}</style>
 );
@@ -274,7 +287,7 @@ export const PortableTextBaseCss = () => (
 	<style>{`
 		.rich-text {
 			line-height: 1.3;
-			text-wrap: balance;
+			text-wrap: pretty;
 		}
 		.rich-text + .rich-text {
 			margin-block-start: var(--spacer-100);
@@ -335,24 +348,59 @@ export const PortableTextBaseCss = () => (
 			display: flex;
 			flex-direction: column;
 			row-gap: var(--spacer-200);
+			text-wrap: balance;
 		}
-		.rich-text .document-title-baseline {
+		.rich-text .document-header .record-title-baseline {
 			font-weight: 700;
 		}
-		.rich-text .document-subtitle {
+		.rich-text .document-header .record-subtitle {
+			display: block;
 			margin-block-start: var(--spacer-200);
 		}
-		.rich-text .document-tags ul {
+		.rich-text .document-header .record-title-separator {
+			position: absolute;
+			opacity: 0;
+			font-size: 0px;
+		}
+		.rich-text .record-tags ul {
 			list-style: none;
 		}
-		.rich-text .document-tags li {
+		.rich-text .record-tags li {
 			display: inline;
 			margin: 0;
 			padding: 0;
 		}
-		.rich-text .document-tags li:not(:last-of-type)::after {
+		.rich-text .record-tags li:not(:last-of-type)::after {
 			content: " - ";
 			margin-inline: var(--spacer-50);
+		}
+		.rich-text .document-reference {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			row-gap: var(--spacer-100);
+			padding: var(--spacer-200);
+		}
+		.rich-text .document-reference .record-image {
+			order: 1;
+		}
+		.rich-text .document-reference .record-title {
+			order: 2;
+			text-wrap: balance;
+		}
+		.rich-text .document-reference .record-title a::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+		.rich-text .document-reference .record-date {
+			order: 3;
+		}
+		.rich-text .document-reference .record-description {
+			order: 4;
+		}
+		.rich-text .document-reference .record-tags {
+			order: 5;
 		}
 		.cta {
 			position: relative;
@@ -390,10 +438,16 @@ export const PortableTextSpacingCss = () => (
 			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-400);
 			}
+			.rich-text .boxed-area + .spacer + .boxed-area {
+				margin-block-start: calc(var(--spacer-400) + (var(--spacer-100) * 2)) !important;
+			}
 		}
 		blockquote + blockquote {
 			margin-block-start: 0 !important;
 			padding-block-start: var(--spacer-100);
+		}
+		.boxed-area + .boxed-area {
+			margin-block-start: calc(var(--spacer-400) + (var(--spacer-100) * 2)) !important;
 		}
 	`}</style>
 );
