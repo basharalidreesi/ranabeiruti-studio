@@ -168,40 +168,53 @@ export const MainCss = () => (
 			display: flex;
 			flex-flow: column nowrap;
 			padding-block: var(--spacer-400);
+			padding-block-end: 0;
 		}
 	`}</style>
 );
 
 export const SlugCss = () => (
 	<style>{`
-		.project {
+		.document {
 			flex: 1;
 			display: flex;
 			flex-flow: column nowrap;
 			line-height: 1.3;
 		}
-		.project-body {
+		.document-body {
 			flex: 1;
 			display: grid;
 			grid-template-columns: [all-start] 10% [content-start] 1fr [content-end] 10% [all-end];
 			column-gap: var(--spacer-400);
 		}
-		.project-body * {
+		.document-body * {
 			min-width: 0;
 			min-height: 0;
 		}
-		.project-body  > * {
+		.document-body  > * {
 			grid-column: content;
 		}
-		.project-body  > *.breakout {
+		.document-body  > *.breakout {
 			grid-column: all;
 		}
+		.document-credits {
+			margin-inline: calc(10% + var(--spacer-400));
+			margin-block-end: var(--spacer-400);
+			padding-block-start: var(--spacer-400);
+			border-block-start: 1px solid var(--color-4);
+		}
+		.document-credits .rich-text {
+			text-wrap: pretty;
+		}
 		@media (max-width: 1024px) {
-			.project-body {
+			.document-body {
 				display: flex;
 				flex-direction: column;
 				column-gap: 0;
 				grid-template-columns: unset;
+			}
+			.document-credits {
+				margin-inline: 0;
 			}
 		}
 	`}</style>

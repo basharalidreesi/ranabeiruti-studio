@@ -3,7 +3,7 @@ import { PortableText as SanityPortableText } from "@portabletext/react";
 import { dateConfig, imageConfig, portableTextConfig, referenceConfig } from "../util";
 import { COUNTRIES } from "../lib/countries";
 
-const PortableText = (props) => {
+export const PortableText = (props) => {
 	const serializers = {
 		types: {
 			image: ({ value }) => value.isUsedAsPlaceholder
@@ -14,7 +14,7 @@ const PortableText = (props) => {
 			),
 			title: () => props.document.title && (
 				<div className="document-header">
-					<RecordTitle source={props.document} />
+					<RecordTitle source={props.document} level={1} />
 					<RecordDate source={props.document} />
 					<RecordTags source={props.document} withLinks={true} />
 				</div>
@@ -36,7 +36,7 @@ const PortableText = (props) => {
 				const reference = referenceConfig.buildReference(value.reference?._ref);
 				return value.reference && value.reference._ref && reference && (
 					<div className="document-reference boxed-area hoverable-area">
-						<RecordTitle source={reference} withLink={true} />
+						<RecordTitle source={reference} withLink={true} level={2} />
 						<RecordDate source={reference} />
 						<RecordDescription source={reference} />
 						<RecordImage source={reference} />
@@ -125,6 +125,7 @@ const Figure = (props) => props.source && props.source.asset && (
 const RecordTitle = (props) => {
 	const {
 		source,
+		level = 2,
 		withLink,
 	} = props;
 	if (!source || !source._type || !source.title) { return null; };
@@ -137,12 +138,13 @@ const RecordTitle = (props) => {
 		news: ":&nbsp;",
 		press: " →&nbsp;",
 	};
+	const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
 	const TitleInner = () => (<>
 		<strong className="record-title-baseline">{recordTitle}{recordSubtitle && (<span className="record-title-separator" dangerouslySetInnerHTML={{ __html: separatorsByType[recordType] }}></span>)}</strong>{recordSubtitle && (<span className="record-subtitle">{recordSubtitle}</span>)}
 	</>);
 	return (
 		<div className="record-title">
-			<h4>
+			<HeadingTag>
 				{withLink
 					? (
 						<a href="#">
@@ -151,7 +153,7 @@ const RecordTitle = (props) => {
 					)
 					: (<TitleInner />)
 				}
-			</h4>
+			</HeadingTag>
 		</div>
 	);
 };
