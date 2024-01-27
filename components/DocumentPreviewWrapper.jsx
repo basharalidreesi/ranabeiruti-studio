@@ -146,20 +146,21 @@ export default function DocumentPreviewWrapper(props) {
 				</iframe>
 				<Badge
 					tone={isUpdatePaused && (documentState.current !== document.displayed) ? "caution" : (document.displayed ? "positive" : "critical")}
-					mode="default"
+					mode="outline"
 					padding={2}
 					size={1}
 					style={{
 						position: "absolute",
 						bottom: "1rem",
 						left: "1rem",
+						borderRadius: "9999px",
 					}}
 				>
 					<span
 						style={{
 							display: "inline-block",
-							width: "0.6rem",
-							height: "0.6rem",
+							width: "0.75em",
+							height: "0.75em",
 							borderRadius: "100%",
 							background: "currentColor",
 							marginInlineEnd: "0.25rem",

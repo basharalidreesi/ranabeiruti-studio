@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useClient } from "sanity";
 
-export const USE_CDN = false;
+export const USE_CDN = true;
 export const API_VERSION = "2023-10-01";
 
 export default function useSanityClient() {
