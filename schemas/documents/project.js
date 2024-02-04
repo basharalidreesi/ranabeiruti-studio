@@ -314,7 +314,7 @@ export default defineType({
 		}),
 		defineField({
 			name: "page",
-			type: "pageBuilder",
+			type: "complexPageBuilder",
 			title: "Page",
 			description: "",
 			group: "content",

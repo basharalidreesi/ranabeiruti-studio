@@ -4,9 +4,9 @@ import { PageBuilderColumnItem, PageBuilderRowItem } from "../../components";
 import { portableTextConfig } from "../../util";
 
 export default defineType({
-	name: "pageBuilder",
+	name: "complexPageBuilder",
 	type: "object",
-	title: "Page Builder",
+	title: "Complex Page Builder",
 	description: "",
 	fields: [
 		defineField({
@@ -116,10 +116,10 @@ export default defineType({
 					},
 				}),
 			],
-			validation: (Rule) => Rule.custom((value, context) => {
+			validation: (Rule) => Rule.custom((value) => {
 				if (!value || value.length === 0) { return "Required"; };
 				const rowsWithTitles = (value || [])?.find((row) => row._type === "row" && row.columns?.find((column) => column._type === "column" && column.content && column.content.find((item) => item._type === "title")));
-				if (!rowsWithTitles && ["project", "publication"].includes(context.document._type)) { return "Must include at least one title placeholder"; };
+				if (!rowsWithTitles) { return "Must include at least one title placeholder"; };
 				return true;
 			}),
 		}),
@@ -131,7 +131,6 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			initialValue: true,
 		}),
 		defineField({
@@ -142,7 +141,6 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			initialValue: true,
 		}),
 		defineField({
@@ -153,7 +151,6 @@ export default defineType({
 			options: {
 				layout: "checkbox",
 			},
-			hidden: ({ document }) => !["project", "publication"].includes(document._type),
 			initialValue: true,
 		}),
 		defineField({

@@ -24,7 +24,7 @@ export const PortableText = (props) => {
 					{value.doesInclude.includes("projectDescription") && props.document.description && props.document.description.length !== 0 && (
 						<PortableText source={props.document.description} />
 					)}
-					{props.document.collections && props.document.collections.length !== 0 && props.document.collections.map((collectionItem) => {
+					{value.doesInclude.includes("collectionDescriptions") && props.document.collections && props.document.collections.length !== 0 && props.document.collections.map((collectionItem) => {
 						const collection = referenceConfig.buildReference(collectionItem?._ref) || {
 							description: "",
 						};
@@ -114,6 +114,7 @@ const Figure = (props) => props.source && props.source.asset && (
 						"top": "flex-start",
 						"middle": "center",
 						"bottom": "flex-end",
+						"baseline": "baseline",
 				}[props.source.captionVerticalAlignment] || null,
 			}}>
 				<PortableText source={props.source.caption} />
@@ -162,7 +163,8 @@ const RecordDate = (props) => {
 	const {
 		source,
 	} = props;
-	if (!source || (!source.date && (!source.date.startDate || !source.date.dateFormat))) { return null; };
+	if (!source || !source.date) { return null; };
+	if (source._type === "project" && (!source.date.startDate || !source.date.dateFormat)) { return null; };
 	return (
 		<div className="record-date">
 			{
@@ -253,6 +255,7 @@ export const PageBuilder = (props) => {
 				"top": "flex-start",
 				"middle": "center",
 				"bottom": "flex-end",
+				"baseline": "baseline",
 			}[props.verticalAlignment] || null,
 		}}>
 			{props.children}

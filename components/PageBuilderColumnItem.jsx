@@ -32,7 +32,7 @@ export default function PageBuilderColumnItem(props) {
 				type="number"
 				min={1}
 				max={Number.MAX_SAFE_INTEGER}
-				step={1}
+				step={"any"}
 				style={{
 					width: "5.5rem",
 				}}

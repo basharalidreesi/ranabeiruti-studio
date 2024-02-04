@@ -82,7 +82,7 @@ export default function DocumentPreviewWrapper(props) {
 						<ShortText>
 							{document.displayed.slug?.current
 								? (`Slug: ${document.displayed.slug?.current}`)
-								: ("Slug not set")
+								: (documentId === "homepage" ? "Slug: /" : "Slug not set")
 							}
 						</ShortText>
 						<Divider />

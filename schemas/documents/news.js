@@ -47,12 +47,6 @@ export default defineType({
 			options: imageConfig.options,
 		}),
 		defineField({
-			name: "description",
-			type: "simplePortableText",
-			title: "Blurb",
-			description: "",
-		}),
-		defineField({
 			name: "body",
 			type: "lessComplexPortableText",
 			title: "Body",

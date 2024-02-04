@@ -446,7 +446,7 @@ export const PortableTextSpacingCss = () => (
 			.rich-text .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-100);
 			}
-			.rich-text .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
+			.rich-text .spacer:not(:first-child) + :is(figure, .embed-object, .document-header, .boxed-area),
 			.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
 			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-400);

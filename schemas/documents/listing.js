@@ -181,15 +181,11 @@ export default defineType({
 			}),
 		}),
 		defineField({
-			name: "isEnabled",
-			type: "boolean",
-			title: "Enable listing?",
+			name: "page",
+			type: "lessComplexPageBuilder",
+			title: "Page",
 			description: "",
-			options: {
-				layout: "checkbox",
-			},
-			initialValue: true,
-			hidden: ({ document }) => document?._id?.replace("drafts.", "") === "homepage",
+			hidden: ({ document }) => document?._id?.replace("drafts.", "") !== "homepage",
 		}),
 	],
 	preview: {

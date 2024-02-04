@@ -19,6 +19,10 @@ export default defineField({
 				value: "bottom",
 				title: "Align to bottom",
 			},
+			{
+				value: "baseline",
+				title: "Align to baseline",
+			},
 		],
 		layout: "radio",
 		direction: "horizontal",

@@ -1,4 +1,4 @@
-import { DocumentsIcon } from "@sanity/icons";
+import { FolderIcon } from "@sanity/icons";
 import { PROJECT_ICON } from "./schemas/documents/project";
 import { NEWS_ICON } from "./schemas/documents/news";
 import { PRESS_ICON } from "./schemas/documents/press";
@@ -10,26 +10,21 @@ import { SUBJECT_ICON } from "./schemas/documents/subject";
 import { COLLECTION_ICON } from "./schemas/documents/collection";
 import { PUBLICATION_ICON } from "./schemas/documents/publication";
 import { STORY_ICON } from "./schemas/documents/story";
-import { LISTING_ICON } from "./schemas/documents/listing";
 
 const hiddenTypes = new Set([
-	// data
-	"project",
-	"publication",
+	"client",
+	"collection",
+	"listing",
+	"location",
 	"news",
 	"press",
-	"client",
 	"profile",
-	"location",
-	"type_",
+	"project",
+	"publication",
+	"settings",
 	"story",
 	"subject",
-	"collection",
-	// pages
-	"listing",
-	"page",
-	"settings",
-	// misc
+	"type_",
 	"media.tag",
 ]);
 
@@ -39,10 +34,8 @@ const hiddenSortItems = new Set([
 ]);
 
 export const singletonTypes = new Set([
-	// pages
 	"listing",
 	"settings",
-	// misc
 	"media.tag",
 ]);
 
@@ -52,9 +45,9 @@ export const singletonActions = new Set([
 	"restore",
 ]);
 
-export const dataStructure = (S) => {
+export const structure = (S) => {
 	return S.list()
-		.title("Data")
+		.title("Content")
 		.items([
 			S.listItem()
 				.title("Projects")
@@ -159,38 +152,21 @@ export const dataStructure = (S) => {
 						.defaultOrdering([{ field: "name", direction: "asc" }])
 				),
 			S.divider(),
-			...S.documentTypeListItems().filter((type) => !hiddenTypes.has(type.spec.id)),
-		]);
-};
-
-export const pagesStructure = (S) => {
-	return S.list()
-		.title("Pages")
-		.items([
 			S.listItem()
-				.title("Listings")
-				.icon(LISTING_ICON)
+				.title("Website")
+				.icon(FolderIcon)
 				.child(
 					S.list()
-						.title("Listings")
+						.title("Website")
 						.items([
 							S.documentListItem().schemaType("listing").id("homepage"),
 							S.documentListItem().schemaType("listing").id("projectsListing"),
 							S.documentListItem().schemaType("listing").id("publicationsListing"),
 							S.documentListItem().schemaType("listing").id("pressListing"),
+							S.documentListItem().title("Settings").schemaType("settings").id("settings"),
 						]),
 				),
-			S.listItem()
-				.title("Pages")
-				.icon(DocumentsIcon)
-				.child(
-					S.documentTypeList("page")
-						.title("Pages")
-						.menuItems(S.documentTypeList("subject").getMenuItems().filter((menuItem) => !hiddenSortItems.has(menuItem.spec.title)))
-						.defaultOrdering([{ field: "title", direction: "asc" }])
-				),
 			S.divider(),
-			S.documentListItem().title("Settings").schemaType("settings").id("settings"),
-			S.divider(),
+			...S.documentTypeListItems().filter((type) => !hiddenTypes.has(type.spec.id)),
 		]);
 };
