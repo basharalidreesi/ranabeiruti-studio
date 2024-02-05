@@ -42,7 +42,7 @@ function createConfig(params = {}) {
 					sites: [
 						{
 							name: "ranabeiruti.com ",
-							title: "Rana Beiruti ",
+							title: "ranabeiruti.com ",
 							apiId: "9b8d59de-d075-40eb-9ceb-eefbc03fb51d",
 							buildHookId: "658a0980e78d192d02c17dae",
 							url: "https://ranabeiruti.com",
