@@ -41,11 +41,11 @@ function createConfig(params = {}) {
 					title: "Netlify Deployments",
 					sites: [
 						{
-							name: "illustrious-griffin-e3f8aa ",
-							// title: "Rana Beiruti ",
+							name: "ranabeiruti.com ",
+							title: "Rana Beiruti ",
 							apiId: "9b8d59de-d075-40eb-9ceb-eefbc03fb51d",
 							buildHookId: "658a0980e78d192d02c17dae",
-							url: "https://illustrious-griffin-e3f8aa.netlify.app/",
+							url: "https://ranabeiruti.com",
 						},
 					],
 				}),
