@@ -49,6 +49,7 @@ export const structure = (S) => {
 	return S.list()
 		.title("Content")
 		.items([
+			S.divider(),
 			S.listItem()
 				.title("Projects")
 				.icon(PROJECT_ICON)

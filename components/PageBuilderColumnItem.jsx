@@ -30,7 +30,7 @@ export default function PageBuilderColumnItem(props) {
 				value={value?.ratio?.toString() || ""}
 				onChange={handleChange}
 				type="number"
-				min={1}
+				min={0}
 				max={Number.MAX_SAFE_INTEGER}
 				step={"any"}
 				style={{
