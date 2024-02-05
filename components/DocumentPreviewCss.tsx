@@ -306,7 +306,7 @@ export const PortableTextBaseCss = () => (
 			margin-block-start: var(--spacer-100);
 		}
 		.rich-text h3 {
-			font-weight: 700;
+			font-size: var(--font-size-700);
 		}
 		.rich-text blockquote {
 			font-family: var(--font-family-serif);

@@ -304,7 +304,6 @@ export default defineType({
 	preview: {
 		select: {
 			title: "title",
-			subtitle: "subtitle",
 			description: "description",
 			date: "date",
 			types: "types",
@@ -314,7 +313,6 @@ export default defineType({
 		prepare(selection) {
 			const {
 				title,
-				subtitle,
 				description,
 				date,
 				types,
@@ -322,7 +320,7 @@ export default defineType({
 				image,
 			} = selection;
 			return {
-				title: [title, title && subtitle ? subtitle : null]?.filter(Boolean)?.join(": "),
+				title: title,
 				subtitle: [type0 && `${type0}${Object.keys(types)?.length > 1 ? ` +${Object.keys(types)?.length - 1}` : ""}`, date ? date.split("-")?.[0] : null]?.filter(Boolean)?.join(", "),
 				description: portableTextConfig.renderAsPlainText(description),
 				media: image && image.asset ? image : null,

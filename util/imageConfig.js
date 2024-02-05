@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { mediaAssetSource } from "sanity-plugin-media";
 import useSanityClient from "../sanity.client";
 import imageUrlBuilder from "@sanity/image-url";
+
+export const imageSources = [mediaAssetSource];
 
 const imageConfig = {
 	options: {
 		hotspot: true,
 		storeOriginalFilename: false,
-		sources: [mediaAssetSource],
+		sources: imageSources,
 	},
 	buildImage: (imageObject) => {
 		const [data, setData] = useState(null);
