@@ -443,7 +443,7 @@ export const PortableTextSpacingCss = () => (
 			margin-block-start: var(--spacer-400);
 		}
 		@media (max-width: 768px) {
-			.rich-text .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+			.rich-text .spacer:not(:first-child) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-100);
 			}
 			.rich-text .spacer:not(:first-child) + :is(figure, .embed-object, .document-header, .boxed-area),
