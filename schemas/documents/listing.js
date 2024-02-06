@@ -1,6 +1,6 @@
 import { HomeIcon, UlistIcon, UnknownIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { imageConfig, slugConfig, stringConfig } from "../../util";
+import { imageConfig, referenceConfig, slugConfig, stringConfig } from "../../util";
 import { PROJECT_ICON, PROJECT_TITLE } from "./project";
 import { PRESS_ICON, PRESS_TITLE } from "./press";
 import { PUBLICATION_ICON, PUBLICATION_TITLE } from "./publication";
@@ -98,15 +98,33 @@ export default defineType({
 							initialValue: true,
 						}),
 						defineField({
+							name: "doesUseDocumentSubtitle",
+							type: "boolean",
+							title: "Use document subtitle (if applicable)?",
+							description: "Doesn't work for press and news types",
+							options: {
+								layout: "checkbox",
+							},
+							initialValue: true,
+						}),
+						defineField({
 							name: "image",
 							type: "image",
 							title: "Image",
+							description: "",
 							options: imageConfig.options,
 							hidden: ({ parent }) => parent.doesUseDocumentImage,
 							validation: (Rule) => Rule.custom((value, context) => {
 								if (!value?.asset && !context.parent.doesUseDocumentImage) { return "Required"; };
 								return true;
 							}),
+						}),
+						defineField({
+							name: "subtitle",
+							type: "string",
+							title: "Subtitle",
+							description: "",
+							hidden: ({ parent }) => parent.doesUseDocumentSubtitle,
 						}),
 					],
 					preview: {
@@ -118,7 +136,9 @@ export default defineType({
 							documentImage: "item.image",
 							displayMode: "displayMode",
 							doesUseDocumentImage: "doesUseDocumentImage",
+							doesUseDocumentSubtitle: "doesUseDocumentSubtitle",
 							image: "image",
+							subtitle: "subtitle",
 						},
 						prepare(selection) {
 							const {
@@ -129,12 +149,14 @@ export default defineType({
 								documentImage,
 								displayMode,
 								doesUseDocumentImage,
+								doesUseDocumentSubtitle,
 								image,
+								subtitle,
 							} = selection;
 							const resolveTitle = (type) => {
 								switch (type) {
-									case "project": return documentTitle ? [documentTitle, documentSubtitle]?.filter(Boolean)?.join(": ") : null;
-									case "publication": return documentTitle;
+									case "project": return documentTitle ? [documentTitle, !doesUseDocumentSubtitle && subtitle || documentSubtitle]?.filter(Boolean)?.join(" — ") : null;
+									case "publication": return documentTitle ? [documentTitle, !doesUseDocumentSubtitle && subtitle || documentSubtitle]?.filter(Boolean)?.join(" — ") : null;
 									case "news": return documentTitle;
 									case "press": return documentTitle ? [documentPublisher, documentTitle]?.filter(Boolean)?.join(": ") : null;
 									default: return null;
