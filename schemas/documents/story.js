@@ -1,8 +1,8 @@
-import { IceCreamIcon } from "@sanity/icons";
+import { CommentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig, stringConfig } from "../../util";
+import { dateConfig, portableTextConfig } from "../../util";
 
-export const STORY_ICON = IceCreamIcon;
+export const STORY_ICON = CommentIcon;
 
 export default defineType({
 	name: "story",
