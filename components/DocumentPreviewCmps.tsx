@@ -7,7 +7,13 @@ export const PortableText = (props) => {
 	const serializers = {
 		types: {
 			image: ({ value }) => value.isUsedAsPlaceholder
-				? (<Figure source={props.document.image} />)
+				? (<Figure source={{
+					...props.document.image,
+					captionPlacement: value.captionPlacement,
+					captionVerticalAlignment: value.captionVerticalAlignment,
+					imageRatio: value.imageRatio,
+					captionRatio: value.captionRatio,
+				}} />)
 				: (<Figure source={value} />),
 			embed: ({value}) => value.code && (
 				<div className="embed-object" data-type="code" dangerouslySetInnerHTML={{ __html: value.code }} style={{ "--aspect-ratio": value.doesConstrainAspectRatio && value.aspectRatio } as React.CSSProperties} />

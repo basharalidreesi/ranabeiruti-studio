@@ -1,7 +1,7 @@
 import { Box, Flex, TextInput } from "@sanity/ui";
 import { useCallback } from "react";
 import { PatchEvent, set, unset } from "sanity";
-import { useDocumentPane } from "sanity/desk";
+import { useDocumentPane } from "sanity/structure";
 
 export default function PageBuilderColumnItem(props) {
 	const {
@@ -30,7 +30,7 @@ export default function PageBuilderColumnItem(props) {
 				value={value?.ratio?.toString() || ""}
 				onChange={handleChange}
 				type="number"
-				min={0}
+				min={1}
 				max={Number.MAX_SAFE_INTEGER}
 				step={"any"}
 				style={{

@@ -2,7 +2,7 @@ import { EyeClosedIcon, EyeOpenIcon } from "@sanity/icons";
 import { Box, Button, Flex } from "@sanity/ui";
 import { useCallback } from "react";
 import { PatchEvent, set } from "sanity";
-import { useDocumentPane } from "sanity/desk";
+import { useDocumentPane } from "sanity/structure";
 
 export default function PageBuilderRowItem(props) {
 	const {
