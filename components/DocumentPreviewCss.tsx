@@ -53,11 +53,11 @@ export const GlobalCss = () => (
 	<style>{`
 		:root {
 			--color-1: #000000;
-			--color-2: #5f6368;
-			--color-3: #94979b;
-			--color-4: #dadce0;
-			--color-5: #e8e9eb;
-			--color-6: #f8f8f8;
+			--color-2: #767676;
+			--color-3: #a7a7a7;
+			--color-4: #e0e0e0;
+			--color-5: #efefef;
+			--color-6: #fafafa;
 			--color-7: #ffffff;
 			--spacer-700: 2rem;
 			--spacer-400: 1.5rem;
@@ -69,14 +69,31 @@ export const GlobalCss = () => (
 			--font-family-sans: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 			--font-family-serif: "Times", "Times New Roman", serif;
 			--font-family-mono: monospace;
-			--font-size-700: 1.618rem;
+			--font-size-700: 1.309rem;
 			--font-size-400: 1rem;
+			--line-height-large: 1.3;
+			--line-height-medium: 1.15;
+			--line-height-small: 1;
 			--letter-spacing-large: 0.015em;
 			--letter-spacing-medium: normal;
 			--letter-spacing-small: -0.015em;
 		}
+		@media (max-width: 512px) {
+			:root {
+				--spacer-400: var(--spacer-350);
+				--font-size-700: 1.2rem;
+			}
+		}
+		@media (max-width: 384px) {
+			:root {
+				--spacer-400: var(--spacer-300);
+				--spacer-350: var(--spacer-300);
+			}
+		}
+
+
 		.display-none, [hidden] {
-			display: none;
+			display: none !important;
 		}
 		.display-hidden {
 			clip: rect(0 0 0 0);
@@ -111,7 +128,7 @@ export const GlobalCss = () => (
 			background-position: 0 100%;
 		}
 		a:focus-visible,
-		button:focus-visible,
+		button:focus-visible + svg,
 		input:focus-visible + label {
 			outline: red auto 5px;
 			outline-offset: 0.175em;
@@ -126,6 +143,16 @@ export const GlobalCss = () => (
 				calc(var(--spacer-100) * -2) calc(var(--spacer-100) * 2) var(--color-4);
 			margin-left: calc(var(--spacer-100) * 2);
 			margin-bottom: calc(var(--spacer-100) * 2);
+		}
+		@media (min-width: 1025px) {
+			.column:first-of-type .boxed-area {
+				margin-left: 0;
+			}
+		}
+		@media (max-width: 768px) {
+			.boxed-area {
+				max-width: 80%;
+			}
 		}
 		.hoverable-area {
 			background: var(--color-7);
@@ -149,6 +176,14 @@ export const GlobalCss = () => (
 			overflow: hidden;
 			overflow: clip;
 		}
+		.no-scrollbar {
+			scrollbar-width: none;
+			-ms-overflow-style: none;
+		}
+		.no-scrollbar::-webkit-scrollbar {
+			width: 0;
+			height: 0;
+		}
 	`}</style>
 );
 
@@ -158,10 +193,12 @@ export const MainCss = () => (
 			display: flex;
 			flex-flow: column nowrap;
 			min-height: 100vh;
+			min-height: 100dvh;
+			--body-inline-spacing: calc(var(--spacer-400) + env(safe-area-inset-left, 0px));
 		}
 		body > * {
 			width: 100%;
-			padding-inline: calc(var(--spacer-400) + env(safe-area-inset-left, 0px));
+			padding-inline: var(--body-inline-spacing);
 		}
 		body > main {
 			flex: 1;
@@ -201,10 +238,11 @@ export const SlugCss = () => (
 			margin-inline: calc(10% + var(--spacer-400));
 			margin-block-end: var(--spacer-400);
 			padding-block-start: var(--spacer-400);
-			border-block-start: 1px solid var(--color-4);
+			border-block-start: 1px solid var(--color-5);
 		}
 		.document-credits .rich-text {
 			text-wrap: pretty;
+			text-wrap: balance;
 		}
 		@media (max-width: 1024px) {
 			.document-body {
@@ -301,11 +339,12 @@ export const PortableTextBaseCss = () => (
 		.rich-text {
 			line-height: 1.3;
 			text-wrap: pretty;
+			text-wrap: balance;
 		}
 		.rich-text + .rich-text {
 			margin-block-start: var(--spacer-100);
 		}
-		.rich-text h3 {
+		.rich-text .heading {
 			font-size: var(--font-size-700);
 		}
 		.rich-text blockquote {
@@ -329,8 +368,8 @@ export const PortableTextBaseCss = () => (
 			font-size: 0.61875em;
 		}
 		.rich-text li {
-			padding-inline-start: calc(var(--spacer-400) - 1rem);
-			margin-inline-start: calc(var(--spacer-400) - 0.5rem);
+			padding-inline-start: calc(var(--spacer-400) - 1em);
+			margin-inline-start: calc(var(--spacer-400) - 0.5em);
 		}
 		.rich-text .link {
 			background-image: linear-gradient(to bottom, var(--color-4), var(--color-4));
@@ -360,7 +399,8 @@ export const PortableTextBaseCss = () => (
 		.rich-text .document-header {
 			display: flex;
 			flex-direction: column;
-			row-gap: var(--spacer-200);
+			row-gap: var(--spacer-100);
+			text-wrap: pretty;
 			text-wrap: balance;
 		}
 		.rich-text .document-header .record-title-baseline {
@@ -368,38 +408,49 @@ export const PortableTextBaseCss = () => (
 		}
 		.rich-text .document-header .record-subtitle {
 			display: block;
-			margin-block-start: var(--spacer-200);
+			margin-block-start: var(--spacer-100);
 		}
 		.rich-text .document-header .record-title-separator {
 			position: absolute;
 			opacity: 0;
 			font-size: 0px;
 		}
-		.rich-text .record-tags ul {
+		.rich-text .document-header .record-tags ul {
 			list-style: none;
+			display: flex;
+			flex-flow: row wrap;
+			column-gap: var(--spacer-100);
+			row-gap: var(--spacer-100);
 		}
-		.rich-text .record-tags li {
+		.rich-text .document-header .record-tags li {
 			display: inline;
 			margin: 0;
 			padding: 0;
-		}
-		.rich-text .record-tags li:not(:last-of-type)::after {
-			content: " - ";
-			margin-inline: var(--spacer-50);
 		}
 		.rich-text .document-reference {
 			position: relative;
 			display: flex;
 			flex-direction: column;
-			row-gap: var(--spacer-100);
+			row-gap: var(--record-inner-spacing);
 			padding: var(--spacer-200);
+			--record-inner-spacing: var(--spacer-100);
+		}
+		@media (max-width: 640px) {
+			.rich-text .document-reference {
+				--record-inner-spacing: var(--spacer-50);
+			}
 		}
 		.rich-text .document-reference .record-image {
 			order: 1;
+			margin-block-end: 0.15em;
 		}
 		.rich-text .document-reference .record-title {
 			order: 2;
+			text-wrap: pretty;
 			text-wrap: balance;
+		}
+		.rich-text .document-reference .record-title-baseline {
+			font-weight: 700;
 		}
 		.rich-text .document-reference .record-title a::after {
 			content: "";
@@ -409,11 +460,33 @@ export const PortableTextBaseCss = () => (
 		.rich-text .document-reference .record-date {
 			order: 3;
 		}
+		.rich-text .document-reference[data-type="news"] .record-date,
+		.rich-text .document-reference[data-type="press"] .record-date {
+			order: 1;
+			color: var(--color-2);
+		}
 		.rich-text .document-reference .record-description {
 			order: 4;
+			color: var(--color-2);
 		}
 		.rich-text .document-reference .record-tags {
 			order: 5;
+		}
+		.rich-text .document-reference .record-tags ul {
+			list-style: none;
+			display: flex;
+			flex-flow: row wrap;
+			column-gap: calc(var(--record-inner-spacing) * 1.6);
+			row-gap: var(--record-inner-spacing);
+		}
+		.rich-text .document-reference .record-tags li {
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
+		.rich-text .document-reference[data-type="news"] .record-body {
+			order: 6;
+			color: var(--color-2);
 		}
 		.cta {
 			position: relative;
@@ -431,35 +504,35 @@ export const PortableTextBaseCss = () => (
 
 export const PortableTextSpacingCss = () => (
 	<style>{`
-		.rich-text :is(p, h3, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area):empty {
+		.rich-text :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area):empty {
 			display: none;
 		}
-		.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+		.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 			margin-block-start: var(--spacer-100);
 		}
 		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(figure, .embed-object, .document-header, .boxed-area),
-		.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + :is(figure, .embed-object, .document-header, .boxed-area),
-		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+		.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + :is(figure, .embed-object, .document-header, .boxed-area),
+		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 			margin-block-start: var(--spacer-400);
 		}
 		@media (max-width: 768px) {
-			.rich-text .spacer:not(:first-child) + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+			.rich-text .spacer:not(:first-child) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-100);
 			}
 			.rich-text .spacer:not(:first-child) + :is(figure, .embed-object, .document-header, .boxed-area),
-			.rich-text :is(p, h3, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
-			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, h3, blockquote, .note, ul, ol, .document-description) {
+			.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
+			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-400);
 			}
 			.rich-text .boxed-area + .spacer + .boxed-area {
 				margin-block-start: calc(var(--spacer-400) + (var(--spacer-100) * 2)) !important;
 			}
 		}
-		blockquote + blockquote {
+		.rich-text blockquote + blockquote {
 			margin-block-start: 0 !important;
 			padding-block-start: var(--spacer-100);
 		}
-		.boxed-area + .boxed-area {
+		.rich-text .boxed-area + :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area) {
 			margin-block-start: calc(var(--spacer-400) + (var(--spacer-100) * 2)) !important;
 		}
 	`}</style>

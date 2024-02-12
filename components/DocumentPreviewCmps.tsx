@@ -41,10 +41,12 @@ export const PortableText = (props) => {
 			documentReference: ({ value }) => {
 				const reference = referenceConfig.buildReference(value.reference?._ref);
 				return value.reference && value.reference._ref && reference && (
-					<div className="document-reference boxed-area hoverable-area">
+					/** @ts-ignore */
+					<div className="document-reference boxed-area hoverable-area" data-type={reference._type}>
 						<RecordTitle source={reference} withLink={true} level={2} />
 						<RecordDate source={reference} />
 						<RecordDescription source={reference} />
+						<RecordBody source={reference} />
 						<RecordImage source={reference} />
 						<RecordTags source={reference} />
 					</div>
@@ -79,7 +81,7 @@ export const PortableText = (props) => {
 					{children}
 				</p>
 			),
-			h2: ({ children }) => (<h3>{children}</h3>),
+			h2: ({ children }) => (<h3 className="heading">{children}</h3>),
 			// blockquote (default)
 			note: ({ children }) => (<div className="note">{children}</div>),
 		},
@@ -193,6 +195,20 @@ const RecordDescription = (props) => {
 		<div className="record-description ellipsis-multiline">
 			<p>
 				{portableTextConfig.renderAsPlainText(source.description)}
+			</p>
+		</div>
+	);
+};
+
+const RecordBody = (props) => {
+	const {
+		source,
+	} = props;
+	if (!source || !source.body || source.body.length === 0) { return null; };
+	return (
+		<div className="record-body ellipsis-multiline">
+			<p>
+				{portableTextConfig.renderAsPlainText(source.body)}
 			</p>
 		</div>
 	);
