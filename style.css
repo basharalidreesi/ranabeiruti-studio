@@ -1,3 +1,11 @@
+/** boolean  */
+div[data-testid="boolean-input"] div[data-ui="Stack"] {
+	gap: 0.5em !important;
+}
+div[data-testid="boolean-input"] div[data-ui="Text"][id^="desc_"] {
+	margin-block-end: 0.25em !important;
+}
+
 /** complexDate */
 fieldset[data-testid="field-date"] > *:first-child {
 	display: none !important;
@@ -5,10 +13,17 @@ fieldset[data-testid="field-date"] > *:first-child {
 fieldset[data-testid="field-date"] > *:last-child {
 	border: 1px solid var(--card-border-color);
 	padding: 0.75rem !important;
-	padding-top: 0.25rem !important;
+	padding-top: 0 !important;
 }
-fieldset[data-testid="field-date"] div[data-testid="field-date.dateFormat"] {
-	margin-top: -0.5rem;
+fieldset[data-testid="field-date"] > *:last-child > *:last-child > *:last-child > div[data-ui="Grid"] > * {
+	display: contents;
+}
+
+/** pageBuilder */
+fieldset[data-testid="field-page"] > *:last-child {
+	border: 1px solid var(--card-border-color);
+	padding: 0.75rem !important;
+	padding-top: 0.5rem !important;
 }
 
 /** portableText */

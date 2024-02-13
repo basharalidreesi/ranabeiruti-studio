@@ -5,12 +5,12 @@ export default defineType({
 	name: "mainImage",
 	type: "image",
 	title: "Main Image",
-	description: "",
 	fields: [
 		defineField({
 			name: "caption",
 			type: "simplePortableText",
 			title: "Caption",
+			description: "An optional caption for the main image.",
 			hidden: ({ parent }) => !parent?.asset,
 		}),
 	],

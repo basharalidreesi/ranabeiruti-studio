@@ -7,13 +7,11 @@ export default defineType({
 	name: "complexDate",
 	type: "object",
 	title: "Complex Date",
-	description: "",
 	fields: [
 		defineField({
 			name: "startDate",
 			type: "date",
 			title: "Start Date",
-			description: "",
 			options: {
 				dateFormat: dateConfig.dateFormat,
 			},
@@ -21,6 +19,7 @@ export default defineType({
 			components: {
 				field: (props) => {
 					const hasDuration = useFormValue([...props.path?.slice(0, -1), "hasDuration"]) || false;
+					const documentType = useFormValue(["_type"]);
 					return (
 						<div style={{
 							gridColumn: hasDuration ? "auto" : "1/-1",
@@ -28,6 +27,7 @@ export default defineType({
 							{props.renderDefault({
 								...props,
 								title: hasDuration ? props?.title : "Date",
+								description: `The ${hasDuration ? "start date" : "date"} of this ${documentType?.charAt(0).toUpperCase()}${documentType?.slice(1)}.`,
 							})}
 						</div>
 					);
@@ -38,7 +38,6 @@ export default defineType({
 			name: "endDate",
 			type: "date",
 			title: "End Date",
-			description: "",
 			options: {
 				dateFormat: dateConfig.dateFormat,
 			},
@@ -55,6 +54,13 @@ export default defineType({
 				return "The end date cannot be earlier than the start date";
 			}),
 			components: {
+				field: (props) => {
+					const documentType = useFormValue(["_type"]);
+					return props.renderDefault({
+						...props,
+						description: `The end date of this ${documentType?.charAt(0).toUpperCase()}${documentType?.slice(1)}.`,
+					})
+				},
 				input: (props) => {
 					const isOngoing = useFormValue([...props.path?.slice(0, -1), "isOngoing"]) || false;
 					return props.renderDefault({
@@ -68,7 +74,7 @@ export default defineType({
 			name: "hasDuration",
 			type: "boolean",
 			title: "Duration?",
-			description: "",
+			description: "Specifies whether this date is a duration.",
 			options: {
 				layout: "checkbox",
 			},
@@ -91,7 +97,7 @@ export default defineType({
 			name: "isOngoing",
 			type: "boolean",
 			title: "Ongoing?",
-			description: "",
+			description: "Specifies whether this date is ongoing.",
 			options: {
 				layout: "checkbox",
 			},
@@ -108,7 +114,7 @@ export default defineType({
 			name: "dateFormat",
 			type: "string",
 			title: "Format",
-			description: "",
+			description: "The desired presentation format for this date.",
 			options: {
 				list: [
 					{
@@ -160,8 +166,8 @@ export default defineType({
 						shadow={1}
 						tone={"caution"}
 						style={{
-							marginTop: "0.5rem",
-							marginBottom: "-1.45rem",
+							marginTop: "0.75rem",
+							marginBottom: "-1rem",
 						}}
 					>
 						<Flex gap={2} align={"center"} justify={"center"}>

@@ -7,13 +7,12 @@ export default defineType({
 	name: "complexPageBuilder",
 	type: "object",
 	title: "Complex Page Builder",
-	description: "",
 	fields: [
 		defineField({
 			name: "body",
 			type: "array",
 			title: "Body",
-			description: "",
+			description: "An array representing the body of the page. Allows for the creation of complex page layouts consisting of multiple rows, each containing one or more columns of differing width ratios. Each row can be enabled or disabled, and breakout (full-width) rows can be specified. This field is required. At least one row is required, and at least one title placeholder must be included.",
 			of: [
 				defineArrayMember({
 					name: "row",
@@ -25,7 +24,7 @@ export default defineType({
 							name: "columns",
 							type: "array",
 							title: "Columns",
-							description: "",
+							description: "An array representing the columns within this row, each with a defined width ratio and vertical alignment. The content within each column can include various elements such as text, images, and other components. This field is required. At least one column must be added.",
 							of: [
 								defineArrayMember({
 									name: "column",
@@ -37,19 +36,19 @@ export default defineType({
 											name: "ratio",
 											type: "ratio",
 											title: "Ratio",
-											description: "",
+											description: "Specifies the width ratio of this column relative to others in the same row. This field is required and has a minimum value of 1. Fraction values are allowed.",
 										}),
 										defineField({
 											name: "content",
 											type: "complexPortableText",
 											title: "Content",
-											description: "",
+											description: "The content of this column. This can include text, images, code objects (such as video embeds), callouts, buttons, vertical spacers, and title and blurb placeholders. This field is optional.",
 										}),
 										defineField({
 											name: "verticalAlignment",
 											type: "verticalAlignment",
 											title: "Vertical Alignment",
-											description: "",
+											description: "Specifies the vertical alignment of this column relative to others in the same row. This field is required. Default value: Top",
 										}),
 									],
 									preview: {
@@ -76,7 +75,7 @@ export default defineType({
 							name: "doesBreakout",
 							type: "boolean",
 							title: "Breakout row?",
-							description: "",
+							description: "Specifies whether this row should break out of the regular layout constraints and occupy the full width of the page. This field is required. Default state: False.",
 							options: {
 								layout: "checkbox",
 							},
@@ -86,7 +85,7 @@ export default defineType({
 							name: "isEnabled",
 							type: "boolean",
 							title: "Enable row?",
-							description: "",
+							description: "Specifies whether this row should be enabled or disabled. Disabled rows will not appear on the page. This field is required. Default state: True.",
 							options: {
 								layout: "checkbox",
 							},
@@ -127,7 +126,7 @@ export default defineType({
 			name: "doesIncludeCredits",
 			type: "boolean",
 			title: "Include credits?",
-			description: "",
+			description: "Specifies whether to include credits in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -137,7 +136,7 @@ export default defineType({
 			name: "doesIncludeRelatedProjects",
 			type: "boolean",
 			title: "Include related projects?",
-			description: "",
+			description: "Specifies whether to include this Project's related Projects in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -147,7 +146,7 @@ export default defineType({
 			name: "doesIncludeRelatedPublications",
 			type: "boolean",
 			title: "Include related publications?",
-			description: "",
+			description: "Specifies whether to include this Project's related Publications in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -157,7 +156,7 @@ export default defineType({
 			name: "doesIncludeRelatedNews",
 			type: "boolean",
 			title: "Include related news?",
-			description: "",
+			description: "Specifies whether to include this Project's related News items in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -168,7 +167,7 @@ export default defineType({
 			name: "doesIncludeRelatedPress",
 			type: "boolean",
 			title: "Include related press?",
-			description: "",
+			description: "Specifies whether to include this Project's related Press items in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
