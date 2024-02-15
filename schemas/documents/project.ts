@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
+import { dateConfig, descriptionConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { DatabaseIcon } from "@sanity/icons";
 
 export const PROJECT_ICON = DatabaseIcon;
@@ -98,7 +98,7 @@ export default defineType({
 			name: "title",
 			type: "string",
 			title: "Title",
-			description: "The title of this Project. This field is required.",
+			description: descriptionConfig.title("Project", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 			group: "basicInformation",
 		}),
@@ -106,14 +106,14 @@ export default defineType({
 			name: "subtitle",
 			type: "string",
 			title: "Subtitle",
-			description: "The subtitle of this Project. This field is optional.",
+			description: descriptionConfig.subtitle("Project", "optional"),
 			group: "basicInformation",
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "The URL-friendly identifier for this Project, generated from its title. Click on \"Generate\" to create a slug from the title. Changing the slug after the project is published and circulated could lead to broken links and cause accessibility issues for users who have bookmarked or shared the previous URL. This field is required.",
+			description: descriptionConfig.slug("Project", "required"),
 			options: {
 				source: "title",
 				slugify: slugConfig.customSlugify,
@@ -125,14 +125,14 @@ export default defineType({
 			name: "date",
 			type: "complexDate",
 			title: "Date",
-			description: "",
+			description: descriptionConfig.complexDate("Project", "Projects Listing", "required"),
 			group: "basicInformation",
 		}),
 		defineField({
 			name: "profiles",
 			type: "array",
 			title: "Profiles",
-			description: "Profiles associated with this Project. This field is optional.",
+			description: descriptionConfig.profiles("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -150,7 +150,7 @@ export default defineType({
 			name: "clients",
 			type: "array",
 			title: "Clients",
-			description: "Clients associated with this Project. This field is optional, and is currently not displayed anywhere on the website.",
+			description: descriptionConfig.clients("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -164,7 +164,7 @@ export default defineType({
 			name: "locations",
 			type: "array",
 			title: "Locations",
-			description: "Locations associated with this Project. Will appear as tags in various places and be used for filtering within the Projects Listing. This field is optional.",
+			description: descriptionConfig.locations("Project", "Projects Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -178,7 +178,7 @@ export default defineType({
 			name: "types",
 			type: "array",
 			title: "Types",
-			description: "Types associated with this Project. Will appear as tags in various places and be used for filtering within the Projects Listing. This field is required. At least one type must be selected.",
+			description: descriptionConfig.locations("Project", "Projects Listing", "required"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -196,7 +196,7 @@ export default defineType({
 			name: "subjects",
 			type: "array",
 			title: "Subjects",
-			description: "Subjects associated with this Project. Will appear as tags in various places and be used for filtering within the Projects Listing. This field is optional.",
+			description: descriptionConfig.subjects("Project", "Projects Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -210,7 +210,7 @@ export default defineType({
 			name: "collections",
 			type: "array",
 			title: "Collections",
-			description: "Collections associated with this Project. Will appear as tags in various places and be used for filtering within the Projects Listing. This field is optional.",
+			description: descriptionConfig.collections("Project", "Projects Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -224,28 +224,28 @@ export default defineType({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
-			description: "The main image associated with this Project. Will appear in the card generated for this Project in the Projects Listing, in callouts, and in social media shares. Selecting an image is required, whereas adding a caption is optional. Click on the crop icon located in the top right corner of the image to adjust its composition or define its focal point.",
+			description: descriptionConfig.mainImage("Project", "Projects Listing", "required, whereas adding a caption is optional"),
 			group: "content",
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
-			description: "A brief description or summary of this Project. Will appear in the card generated for this Project in the Projects Listing, in callouts, and in social media shares and Google results. This field is optional, but its completion is highly encouraged. A good blurb is typically concise yet informative. Aim for around 1 to 2 sentences, providing enough information to give readers a brief overview of the project without overwhelming them with details.",
+			description: descriptionConfig.description("Project", "Projects Listing", "optional, but its completion is highly encouraged"),
 			group: "content",
 		}),
 		defineField({
 			name: "credits",
 			type: "simplePortableText",
 			title: "Credits",
-			description: "Credits associated with this Project. This field is optional.",
+			description: descriptionConfig.credits("Project", "optional"),
 			group: "content",
 		}),
 		defineField({
 			name: "relatedProjects",
 			type: "array",
 			title: "Related Projects",
-			description: "Other Projects related to this Project. This field is optional.",
+			description: descriptionConfig.relatedProjects("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -262,7 +262,7 @@ export default defineType({
 			name: "relatedPublications",
 			type: "array",
 			title: "Related Publications",
-			description: "Publications related to this Project. This field is optional.",
+			description: descriptionConfig.relatedPublications("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -279,7 +279,7 @@ export default defineType({
 			name: "relatedNews",
 			type: "array",
 			title: "Related News",
-			description: "News items related to this Project. This field is optional.",
+			description: descriptionConfig.relatedNews("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -293,7 +293,7 @@ export default defineType({
 			name: "relatedPress",
 			type: "array",
 			title: "Related Press",
-			description: "Press items related to this Project. This field is optional.",
+			description: descriptionConfig.relatedPress("Project", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
@@ -307,14 +307,14 @@ export default defineType({
 			name: "page",
 			type: "complexPageBuilder",
 			title: "Page",
-			description: "The page builder for this Project.",
+			description: descriptionConfig.page("Project"),
 			group: "content",
 		}),
 		defineField({
 			name: "isListed",
 			type: "boolean",
 			title: "Include project in listing?",
-			description: "Specifies whether this Project can appear in the Projects Listing. This field is required. Default state: True",
+			description: descriptionConfig.isListed("Project", "Projects Listing", "required", "True"),
 			options: {
 				layout: "checkbox",
 			},
@@ -325,7 +325,7 @@ export default defineType({
 			name: "listingDisplaySize",
 			type: "string",
 			title: "Display Size",
-			description: "The size of the card generated for this Project in the Projects Listing. This field is required. Default value: Medium.",
+			description: descriptionConfig.listingDisplaySize("Project", "Projects Listing", "required", "Medium"),
 			options: {
 				list: [
 					{
@@ -352,7 +352,7 @@ export default defineType({
 			name: "listingAlignment",
 			type: "string",
 			title: "Display Alignment",
-			description: "The alignment of the card generated for this Project in the Projects Listing. This field is required. Default value: Auto.",
+			description: descriptionConfig.listingAlignment("Project", "Projects Listing", "required", "Auto"),
 			options: {
 				list: [
 					{

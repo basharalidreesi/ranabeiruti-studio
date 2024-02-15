@@ -1,6 +1,6 @@
 import { CommentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig } from "../../util";
+import { dateConfig, descriptionConfig, portableTextConfig } from "../../util";
 
 export const STORY_ICON = CommentIcon;
 
@@ -14,13 +14,13 @@ export default defineType({
 			name: "date",
 			type: "complexDate",
 			title: "Date",
-			description: "",
+			description: descriptionConfig.date("Story", "Projects Listing", "required"),
 		}),
 		defineField({
 			name: "body",
 			type: "simplePortableText",
 			title: "Body",
-			description: "",
+			description: descriptionConfig.body("Story", "required", "Aim for around 1 to 2 sentences."),
 			validation: (Rule) => Rule.required(),
 		}),
 	],

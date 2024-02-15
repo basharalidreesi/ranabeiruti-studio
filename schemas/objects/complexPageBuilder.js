@@ -136,7 +136,7 @@ export default defineType({
 			name: "doesIncludeRelatedProjects",
 			type: "boolean",
 			title: "Include related projects?",
-			description: "Specifies whether to include this Project's related Projects in the page layout. This field is required. Default state: True.",
+			description: "Specifies whether to include related Projects in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -146,7 +146,7 @@ export default defineType({
 			name: "doesIncludeRelatedPublications",
 			type: "boolean",
 			title: "Include related publications?",
-			description: "Specifies whether to include this Project's related Publications in the page layout. This field is required. Default state: True.",
+			description: "Specifies whether to include related Publications in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -156,7 +156,7 @@ export default defineType({
 			name: "doesIncludeRelatedNews",
 			type: "boolean",
 			title: "Include related news?",
-			description: "Specifies whether to include this Project's related News items in the page layout. This field is required. Default state: True.",
+			description: "Specifies whether to include related News items in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},
@@ -167,7 +167,7 @@ export default defineType({
 			name: "doesIncludeRelatedPress",
 			type: "boolean",
 			title: "Include related press?",
-			description: "Specifies whether to include this Project's related Press items in the page layout. This field is required. Default state: True.",
+			description: "Specifies whether to include related Press items in the page layout. This field is required. Default state: True.",
 			options: {
 				layout: "checkbox",
 			},

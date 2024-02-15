@@ -1,4 +1,5 @@
 const dateConfig = {
+	dateStandard: "ISO 8601",
 	dateFormat: "YYYY-MM-DD",
 	renderAsString: (date, length = "long") => {
 		return new Date(date).toLocaleDateString("en-gb", {

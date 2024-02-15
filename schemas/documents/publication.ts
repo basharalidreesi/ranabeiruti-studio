@@ -1,6 +1,6 @@
 import { BookIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { dateConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
+import { dateConfig, descriptionConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { INITIAL_PAGE_BUILDER_VALUE } from "./project";
 
 export const PUBLICATION_ICON = BookIcon;
@@ -38,7 +38,7 @@ export default defineType({
 			name: "title",
 			type: "string",
 			title: "Title",
-			description: "",
+			description: descriptionConfig.title("Publication", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 			group: "basicInformation",
 		}),
@@ -46,14 +46,14 @@ export default defineType({
 			name: "subtitle",
 			type: "string",
 			title: "Subtitle",
-			description: "",
+			description: descriptionConfig.subtitle("Publication", "optional"),
 			group: "basicInformation",
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug("Publication", "required"),
 			options: {
 				source: "title",
 				slugify: slugConfig.customSlugify,
@@ -62,43 +62,10 @@ export default defineType({
 			group: "basicInformation",
 		}),
 		defineField({
-			name: "profiles",
-			type: "array",
-			title: "Profiles",
-			description: "",
-			of: [
-				defineArrayMember({
-					type: "reference",
-					title: "Profile",
-					description: "",
-					to: [{ type: "profile", }],
-					options: {
-						disableNew: true,
-					},
-				}),
-			],
-			group: "basicInformation",
-		}),
-		defineField({
-			name: "clients",
-			type: "array",
-			title: "Clients",
-			description: "",
-			of: [
-				defineArrayMember({
-					type: "reference",
-					title: "Client",
-					description: "",
-					to: [{ type: "client", }],
-				}),
-			],
-			group: "basicInformation",
-		}),
-		defineField({
 			name: "date",
 			type: "date",
 			title: "Date",
-			description: "",
+			description: descriptionConfig.date("Publication", "Publications Listing", "required", "Will appear in year-only format."),
 			options: {
 				dateFormat: dateConfig.dateFormat,
 			},
@@ -106,15 +73,46 @@ export default defineType({
 			group: "basicInformation",
 		}),
 		defineField({
+			name: "profiles",
+			type: "array",
+			title: "Profiles",
+			description: descriptionConfig.profiles("Publication", "optional"),
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Profile",
+					to: [{ type: "profile", }],
+					options: {
+						disableNew: true,
+					},
+				}),
+			],
+			hidden: true,
+			group: "basicInformation",
+		}),
+		defineField({
+			name: "clients",
+			type: "array",
+			title: "Clients",
+			description: descriptionConfig.clients("Publication", "optional"),
+			of: [
+				defineArrayMember({
+					type: "reference",
+					title: "Client",
+					to: [{ type: "client", }],
+				}),
+			],
+			group: "basicInformation",
+		}),
+		defineField({
 			name: "locations",
 			type: "array",
 			title: "Locations",
-			description: "",
+			description: descriptionConfig.locations("Publication", "Publications Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Location",
-					description: "",
 					to: [{ type: "location", }],
 				}),
 			],
@@ -124,12 +122,11 @@ export default defineType({
 			name: "types",
 			type: "array",
 			title: "Types",
-			description: "",
+			description: descriptionConfig.locations("Publication", "Publications Listing", "required"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Type",
-					description: "",
 					to: [{ type: "type_", }],
 					options: {
 						filter: `"publication" in applicableToDocumentTypes`,
@@ -143,12 +140,11 @@ export default defineType({
 			name: "subjects",
 			type: "array",
 			title: "Subjects",
-			description: "",
+			description: descriptionConfig.subjects("Publication", "Publications Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Subject",
-					description: "",
 					to: [{ type: "subject", }],
 				}),
 			],
@@ -158,12 +154,11 @@ export default defineType({
 			name: "collections",
 			type: "array",
 			title: "Collections",
-			description: "",
+			description: descriptionConfig.collections("Publication", "Publications Listing", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Collection",
-					description: "",
 					to: [{ type: "collection", }],
 				}),
 			],
@@ -173,33 +168,32 @@ export default defineType({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
-			description: "",
+			description: descriptionConfig.mainImage("Publication", "Publications Listing", "required, whereas adding a caption is optional", "Will be displayed in ISO 216 aspect ratio (e.g. A4, A3, ...) in portrait orientation."),
 			group: "content",
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
-			description: "",
+			description: descriptionConfig.description("Publication", "Publications Listing", "optional, but its completion is highly encouraged"),
 			group: "content",
 		}),
 		defineField({
 			name: "credits",
 			type: "simplePortableText",
 			title: "Credits",
-			description: "",
+			description: descriptionConfig.credits("Publication", "optional"),
 			group: "content",
 		}),
 		defineField({
 			name: "relatedProjects",
 			type: "array",
 			title: "Related Projects",
-			description: "",
+			description: descriptionConfig.relatedProjects("Publication", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Project",
-					description: "",
 					to: [{ type: "project", }],
 					options: {
 						disableNew: true,
@@ -212,12 +206,11 @@ export default defineType({
 			name: "relatedPublications",
 			type: "array",
 			title: "Related Publications",
-			description: "",
+			description: descriptionConfig.relatedPublications("Publication", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Publication",
-					description: "",
 					to: [{ type: "publication", }],
 					options: {
 						disableNew: true,
@@ -230,12 +223,11 @@ export default defineType({
 			name: "relatedNews",
 			type: "array",
 			title: "Related News",
-			description: "",
+			description: descriptionConfig.relatedNews("Publication", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "News Item",
-					description: "",
 					to: [{ type: "news", }],
 				}),
 			],
@@ -245,12 +237,11 @@ export default defineType({
 			name: "relatedPress",
 			type: "array",
 			title: "Related Press",
-			description: "",
+			description: descriptionConfig.relatedPress("Publication", "optional"),
 			of: [
 				defineArrayMember({
 					type: "reference",
 					title: "Press Item",
-					description: "",
 					to: [{ type: "press", }],
 				}),
 			],
@@ -260,14 +251,14 @@ export default defineType({
 			name: "page",
 			type: "complexPageBuilder",
 			title: "Page",
-			description: "",
+			description: descriptionConfig.page("Publication"),
 			group: "content",
 		}),
 		defineField({
 			name: "isListed",
 			type: "boolean",
 			title: "Include publication in listing?",
-			description: "",
+			description: descriptionConfig.isListed("Publication", "Publications Listing", "required", "True"),
 			options: {
 				layout: "checkbox",
 			},

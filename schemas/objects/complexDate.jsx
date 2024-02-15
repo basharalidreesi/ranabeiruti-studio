@@ -19,16 +19,11 @@ export default defineType({
 			components: {
 				field: (props) => {
 					const hasDuration = useFormValue([...props.path?.slice(0, -1), "hasDuration"]) || false;
-					const documentType = useFormValue(["_type"]);
 					return (
 						<div style={{
 							gridColumn: hasDuration ? "auto" : "1/-1",
 						}}>
-							{props.renderDefault({
-								...props,
-								title: hasDuration ? props?.title : "Date",
-								description: `The ${hasDuration ? "start date" : "date"} of this ${documentType?.charAt(0).toUpperCase()}${documentType?.slice(1)}.`,
-							})}
+							{props.renderDefault(props)}
 						</div>
 					);
 				},
@@ -54,13 +49,6 @@ export default defineType({
 				return "The end date cannot be earlier than the start date";
 			}),
 			components: {
-				field: (props) => {
-					const documentType = useFormValue(["_type"]);
-					return props.renderDefault({
-						...props,
-						description: `The end date of this ${documentType?.charAt(0).toUpperCase()}${documentType?.slice(1)}.`,
-					})
-				},
 				input: (props) => {
 					const isOngoing = useFormValue([...props.path?.slice(0, -1), "isOngoing"]) || false;
 					return props.renderDefault({
@@ -74,7 +62,7 @@ export default defineType({
 			name: "hasDuration",
 			type: "boolean",
 			title: "Duration?",
-			description: "Specifies whether this date is a duration.",
+			description: "Marks this field as representing a duration.",
 			options: {
 				layout: "checkbox",
 			},
@@ -97,7 +85,7 @@ export default defineType({
 			name: "isOngoing",
 			type: "boolean",
 			title: "Ongoing?",
-			description: "Specifies whether this date is ongoing.",
+			description: "Marks the end date as being ongoing.",
 			options: {
 				layout: "checkbox",
 			},
