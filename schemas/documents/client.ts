@@ -1,41 +1,35 @@
-import { PackageIcon } from "@sanity/icons";
+import { CaseIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import slugConfig from "../../util/slugConfig";
 import stringConfig from "../../util/stringConfig";
-import { portableTextConfig } from "../../util";
+import descriptionConfig from "../../util/descriptionConfig";
 
-export const COLLECTION_ICON = PackageIcon;
+export const CLIENT_ICON = CaseIcon;
 
 export default defineType({
-	name: "collection",
+	name: "client",
 	type: "document",
-	title: "Collection",
-	icon: COLLECTION_ICON,
+	title: "Client",
+	icon: CLIENT_ICON,
 	__experimental_formPreviewTitle: false,
 	fields: [
 		defineField({
 			name: "name",
 			type: "string",
 			title: "Name",
-			description: "",
+			description: descriptionConfig.name("Client", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug2("Client", "required"),
 			options: {
 				source: "name",
 				slugify: slugConfig.customSlugify,
 			},
 			validation: (Rule) => Rule.custom(slugConfig.requireSlug),
-		}),
-		defineField({
-			name: "description",
-			type: "simplePortableText",
-			title: "Blurb",
-			description: "",
 		}),
 	],
 	orderings: [
@@ -50,16 +44,13 @@ export default defineType({
 	preview: {
 		select: {
 			name: "name",
-			description: "description",
 		},
 		prepare(selection) {
 			const {
 				name,
-				description,
 			} = selection;
 			return {
 				title: name,
-				subtitle: portableTextConfig.renderAsPlainText(description),
 			};
 		},
 	},

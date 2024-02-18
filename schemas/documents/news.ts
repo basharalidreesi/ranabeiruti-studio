@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { dateConfig, imageConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
+import { dateConfig, descriptionConfig, imageConfig, portableTextConfig, slugConfig, stringConfig } from "../../util";
 import { BellIcon } from "@sanity/icons";
 
 export const NEWS_ICON = BellIcon;
@@ -15,14 +15,14 @@ export default defineType({
 			name: "title",
 			type: "string",
 			title: "Title",
-			description: "",
+			description: descriptionConfig.title("News item", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug("News item", "required"),
 			options: {
 				source: "title",
 				slugify: slugConfig.customSlugify,
@@ -33,7 +33,7 @@ export default defineType({
 			name: "date",
 			type: "date",
 			title: "Date",
-			description: "",
+			description: descriptionConfig.date("News item", "Press Listing", "required"),
 			options: {
 				dateFormat: dateConfig.dateFormat,
 			},
@@ -43,14 +43,15 @@ export default defineType({
 			name: "image",
 			type: "image",
 			title: "Image",
-			description: "",
+			description: descriptionConfig.mainImage("News item", "Press Listing", "optional", false),
 			options: imageConfig.options,
 		}),
 		defineField({
 			name: "body",
 			type: "lessComplexPortableText",
 			title: "Body",
-			description: "",
+			description: descriptionConfig.body("News item", "required"),
+			validation: (Rule) => Rule.required(),
 		}),
 	],
 	orderings: [

@@ -15,12 +15,19 @@ const PROJECT_TITLE = "Rana Beiruti";
 
 function createConfig(params = {}) {
 	const {
+		/** @ts-ignore */
 		name,
+		/** @ts-ignore */
 		projectId,
+		/** @ts-ignore */
 		dataset,
+		/** @ts-ignore */
 		basePath,
+		/** @ts-ignore */
 		title,
+		/** @ts-ignore */
 		subtitle,
+		/** @ts-ignore */
 		icon,
 	} = params;
 	return {
@@ -34,6 +41,7 @@ function createConfig(params = {}) {
 		plugins: [
 			structureTool({
 				structure: structure,
+				/** @ts-ignore */
 				defaultDocumentNode: defaultDocumentNode,
 			}),
 			dashboardTool({ widgets: [

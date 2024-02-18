@@ -2,6 +2,7 @@ import { Box, Flex, TextInput } from "@sanity/ui";
 import { useCallback } from "react";
 import { PatchEvent, set, unset } from "sanity";
 import { useDocumentPane } from "sanity/structure";
+import React from "react";
 
 export default function PageBuilderColumnItem(props) {
 	const {

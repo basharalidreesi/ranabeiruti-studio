@@ -2,6 +2,7 @@ import { BulbOutlineIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import slugConfig from "../../util/slugConfig";
 import stringConfig from "../../util/stringConfig";
+import { descriptionConfig } from "../../util";
 
 export const SUBJECT_ICON = BulbOutlineIcon;
 
@@ -16,14 +17,14 @@ export default defineType({
 			name: "name",
 			type: "string",
 			title: "Name",
-			description: "",
+			description: descriptionConfig.name("Subject", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug2("Subject", "required"),
 			options: {
 				source: "name",
 				slugify: slugConfig.customSlugify,

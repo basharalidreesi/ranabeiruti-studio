@@ -3,6 +3,7 @@ import { Box, Button, Flex } from "@sanity/ui";
 import { useCallback } from "react";
 import { PatchEvent, set } from "sanity";
 import { useDocumentPane } from "sanity/structure";
+import React from "react";
 
 export default function PageBuilderRowItem(props) {
 	const {

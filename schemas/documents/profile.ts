@@ -1,6 +1,6 @@
 import { UserIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { stringConfig } from "../../util";
+import { descriptionConfig, stringConfig } from "../../util";
 
 export const PROFILE_ICON = UserIcon;
 
@@ -15,7 +15,7 @@ export default defineType({
 			name: "name",
 			type: "string",
 			title: "Name",
-			description: "",
+			description: descriptionConfig.name("Profile", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 	],

@@ -27,7 +27,6 @@ export default defineField({
 	name: "simplePortableText",
 	type: "array",
 	title: "Simple Portable Text",
-	description: "",
 	of: [
 		defineArrayMember({
 			type: "block",

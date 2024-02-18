@@ -2,6 +2,7 @@ import { TagIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import slugConfig from "../../util/slugConfig";
 import stringConfig from "../../util/stringConfig";
+import { descriptionConfig } from "../../util";
 
 export const TYPE_ICON = TagIcon;
 
@@ -16,14 +17,14 @@ export default defineType({
 			name: "name",
 			type: "string",
 			title: "Name",
-			description: "",
+			description: descriptionConfig.name("Type", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug2("Type", "required"),
 			options: {
 				source: "name",
 				slugify: slugConfig.customSlugify,
@@ -34,7 +35,7 @@ export default defineType({
 			name: "applicableToDocumentTypes",
 			type: "array",
 			title: "Applicable to",
-			description: "",
+			description: "Specifies whether this Type should be available to Projects, Publications, or both. This field is required.",
 			of: [
 				{ type: "string", },
 			],

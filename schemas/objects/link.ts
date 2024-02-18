@@ -1,11 +1,11 @@
-import { defineField, defineType } from "sanity";
+import { ValidationContext, defineField, defineType } from "sanity";
 
 export const linkBase = [
 	defineField({
 		name: "type",
 		type: "string",
 		title: "Type",
-		description: "",
+		description: "Specifies whether the target of this link is internal or external. This field is required.",
 		options: {
 			list: [
 				{
@@ -27,9 +27,9 @@ export const linkBase = [
 		name: "externalTarget",
 		type: "url",
 		title: "Target",
-		description: "",
+		description: "The external target of this link. This field is required.",
 		hidden: ({ parent }) => parent?.type !== "external",
-		validation: (Rule) => Rule.custom((value, context) => {
+		validation: (Rule) => Rule.custom((value, context: ValidationContext & { parent?: any; }) => {
 			if (!value && context?.parent?.type === "external") { return "Required"; };
 			return true;
 		}).uri({
@@ -40,7 +40,7 @@ export const linkBase = [
 		name: "internalTarget",
 		type: "reference",
 		title: "Target",
-		description: "",
+		description: "The internal target of this link. This field is required.",
 		to: [
 			{ type: "project", },
 			{ type: "publication", },
@@ -53,7 +53,7 @@ export const linkBase = [
 			disableNew: true,
 		},
 		hidden: ({ parent }) => parent?.type !== "internal",
-		validation: (Rule) => Rule.custom((value, context) => {
+		validation: (Rule) => Rule.custom((value, context: ValidationContext & { parent?: any; }) => {
 			if (!value && context?.parent?.type === "internal") { return "Required"; };
 			return true;
 		}),

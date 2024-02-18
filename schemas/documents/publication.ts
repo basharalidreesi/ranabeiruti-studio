@@ -168,14 +168,14 @@ export default defineType({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
-			description: descriptionConfig.mainImage("Publication", "Publications Listing", "required, whereas adding a caption is optional", "Will be displayed in ISO 216 aspect ratio (e.g. A4, A3, ...) in portrait orientation."),
+			description: descriptionConfig.mainImage("Publication", "Publications Listing", "required, whereas adding a caption is optional", true, "Will be displayed in ISO 216 aspect ratio (e.g. A4, A3, ...) in portrait orientation."),
 			group: "content",
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
-			description: descriptionConfig.description("Publication", "Publications Listing", "optional, but its completion is highly encouraged"),
+			description: descriptionConfig.description("Publication", "Publications Listing", "optional, but its completion is highly encouraged", true),
 			group: "content",
 		}),
 		defineField({

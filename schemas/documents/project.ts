@@ -224,14 +224,14 @@ export default defineType({
 			name: "image",
 			type: "mainImage",
 			title: "Main Image",
-			description: descriptionConfig.mainImage("Project", "Projects Listing", "required, whereas adding a caption is optional"),
+			description: descriptionConfig.mainImage("Project", "Projects Listing", "required, whereas adding a caption is optional", true),
 			group: "content",
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
-			description: descriptionConfig.description("Project", "Projects Listing", "optional, but its completion is highly encouraged"),
+			description: descriptionConfig.description("Project", "Projects Listing", "optional, but its completion is highly encouraged", true),
 			group: "content",
 		}),
 		defineField({

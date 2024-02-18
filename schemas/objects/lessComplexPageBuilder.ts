@@ -1,7 +1,7 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { BlockElementIcon, InlineElementIcon } from "@sanity/icons";
 import { PageBuilderColumnItem, PageBuilderRowItem } from "../../components";
 import { portableTextConfig } from "../../util";
+import { BODY_DESCRIPTION, COLUMNS_DESCRIPTION, COLUMN_ICON, DOES_BREAKOUT_DESCRIPTION, IS_ENABLED_DESCRIPTION, RATIO_DESCRIPTION, ROW_ICON, VERTICAL_ALIGNMENT_DESCRIPTION } from "./complexPageBuilder";
 
 export default defineType({
 	name: "lessComplexPageBuilder",
@@ -13,43 +13,43 @@ export default defineType({
 			name: "body",
 			type: "array",
 			title: "Body",
-			description: "",
+			description: BODY_DESCRIPTION,
 			of: [
 				defineArrayMember({
 					name: "row",
 					type: "object",
 					title: "Row",
-					icon: BlockElementIcon,
+					icon: ROW_ICON,
 					fields: [
 						defineField({
 							name: "columns",
 							type: "array",
 							title: "Columns",
-							description: "",
+							description: COLUMNS_DESCRIPTION,
 							of: [
 								defineArrayMember({
 									name: "column",
 									type: "object",
 									title: "Column",
-									icon: InlineElementIcon,
+									icon: COLUMN_ICON,
 									fields: [
 										defineField({
 											name: "ratio",
 											type: "ratio",
 											title: "Ratio",
-											description: "",
+											description: RATIO_DESCRIPTION,
 										}),
 										defineField({
 											name: "content",
 											type: "lessComplexPortableText",
 											title: "Content",
-											description: "",
+											description: "The content of this column. This can include text, images, code objects (such as video embeds), callouts, buttons, and vertical spacers. This field is optional.",
 										}),
 										defineField({
 											name: "verticalAlignment",
 											type: "verticalAlignment",
 											title: "Vertical Alignment",
-											description: "",
+											description: VERTICAL_ALIGNMENT_DESCRIPTION,
 										}),
 									],
 									preview: {
@@ -70,13 +70,14 @@ export default defineType({
 								}),
 							],
 							initialValue: [{ _type: "column", }],
+							/** @ts-ignore */
 							validation: (Rule) => Rule.required().min(1),
 						}),
 						defineField({
 							name: "doesBreakout",
 							type: "boolean",
 							title: "Breakout row?",
-							description: "",
+							description: DOES_BREAKOUT_DESCRIPTION,
 							options: {
 								layout: "checkbox",
 							},
@@ -86,14 +87,14 @@ export default defineType({
 							name: "isEnabled",
 							type: "boolean",
 							title: "Enable row?",
-							description: "",
+							description: IS_ENABLED_DESCRIPTION,
 							options: {
 								layout: "checkbox",
 							},
 							initialValue: true,
 						}),
 					],
-					validation: (Rule) => Rule.custom((value) => value.isEnabled ? true : "This row will not be rendered").warning(),
+					validation: (Rule) => Rule.custom((value) => value?.isEnabled ? true : "This row will not be rendered").warning(),
 					preview: {
 						select: {
 							columns: "columns",
@@ -116,6 +117,7 @@ export default defineType({
 					},
 				}),
 			],
+			/** @ts-ignore */
 			validation: (Rule) => Rule.custom((value) => {
 				if (!value || value.length === 0) { return "Required"; };
 				return true;

@@ -1,6 +1,6 @@
 import { BillIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
-import { dateConfig, imageConfig, portableTextConfig, stringConfig } from "../../util";
+import { dateConfig, descriptionConfig, imageConfig, portableTextConfig, stringConfig } from "../../util";
 
 export const PRESS_ICON = BillIcon;
 export const PRESS_TITLE = "Press";
@@ -15,28 +15,28 @@ export default defineType({
 			name: "title",
 			type: "string",
 			title: "Title",
-			description: "",
+			description: descriptionConfig.title("Press item", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "url",
 			type: "url",
 			title: "URL",
-			description: "",
+			description: descriptionConfig.slug("Press item", "required"),
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
 			name: "publisher",
 			type: "string",
 			title: "Publisher",
-			description: "",
+			description: descriptionConfig.publisher("Press item", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "date",
 			type: "date",
 			title: "Date",
-			description: "",
+			description: descriptionConfig.date("Press item", "Press Listing", "required"),
 			options: {
 				dateFormat: dateConfig.dateFormat,
 			},
@@ -46,14 +46,14 @@ export default defineType({
 			name: "image",
 			type: "image",
 			title: "Image",
-			description: "",
+			description: descriptionConfig.mainImage("Press item", "Press Listing", "optional", false),
 			options: imageConfig.options,
 		}),
 		defineField({
 			name: "description",
 			type: "simplePortableText",
 			title: "Blurb",
-			description: "",
+			description: descriptionConfig.description("Press item", "Press Listing", "optional", false),
 		}),
 	],
 	orderings: [

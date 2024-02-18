@@ -1,6 +1,7 @@
 import { RocketIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 import { COUNTRIES } from "../../lib/countries";
+import { descriptionConfig } from "../../util";
 
 export const LOCATION_ICON = RocketIcon;
 
@@ -15,13 +16,13 @@ export default defineType({
 			name: "name",
 			type: "string",
 			title: "Name",
-			description: "",
+			description: descriptionConfig.name("Location", "optional"),
 		}),
 		defineField({
 			name: "locale",
 			type: "string",
 			title: "Locale",
-			description: "",
+			description: descriptionConfig.locale("Location", "required"),
 			options: {
 				list: COUNTRIES,
 			},

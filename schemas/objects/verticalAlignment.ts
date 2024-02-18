@@ -1,32 +1,31 @@
 import { defineField } from "sanity";
 
 export default defineField({
-	name: "placement",
+	name: "verticalAlignment",
 	type: "string",
-	title: "Placement",
-	description: "",
+	title: "Vertical Alignment",
 	options: {
 		list: [
 			{
-				value: "left",
-				title: "Place left",
-			},
-			{
 				value: "top",
-				title: "Place above",
+				title: "Align to top",
 			},
 			{
-				value: "right",
-				title: "Place right",
+				value: "middle",
+				title: "Align with middle",
 			},
 			{
 				value: "bottom",
-				title: "Place below",
+				title: "Align to bottom",
+			},
+			{
+				value: "baseline",
+				title: "Align to baseline",
 			},
 		],
 		layout: "radio",
 		direction: "horizontal",
 	},
-	initialValue: "bottom",
+	initialValue: "top",
 	validation: (Rule) => Rule.required(),
 });

@@ -51,8 +51,8 @@ export default defineType({
 				body,
 			} = selection;
 			return {
-				title: portableTextConfig.renderAsPlainText(body)?.substring(0, 75) + (portableTextConfig.renderAsPlainText(body)?.length > 75 ? "..." : ""),
-				subtitle: dateConfig.renderComplexDate(date, "short"),
+				title: portableTextConfig.renderAsPlainText(body)?.substring(0, 75) + (portableTextConfig.renderAsPlainText(body)?.length > 75 ? "..." : "") || undefined,
+				subtitle: dateConfig.renderComplexDate(date, "short") || undefined,
 			};
 		},
 	},

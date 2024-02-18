@@ -1,7 +1,8 @@
 import { InfoOutlineIcon } from "@sanity/icons";
 import { Card, Flex, Text } from "@sanity/ui";
-import { defineField, defineType, useFormValue } from "sanity";
+import { ValidationContext, defineField, defineType, useFormValue } from "sanity";
 import { dateConfig } from "../../util";
+import React from "react";
 
 export default defineType({
 	name: "complexDate",
@@ -38,7 +39,7 @@ export default defineType({
 			},
 			hidden: ({ parent }) => !parent?.hasDuration,
 			readOnly: ({ parent }) => parent?.isOngoing,
-			validation: (Rule) => Rule.custom((value, context) => {
+			validation: (Rule) => Rule.custom((value, context: ValidationContext & { parent? : any; }) => {
 				if (!value) { return true; };
 				const startDate = new Date(context?.parent?.startDate) || null;
 				const hasDuration = context?.parent?.hasDuration;
@@ -91,7 +92,7 @@ export default defineType({
 			},
 			initialValue: false,
 			hidden: ({ parent }) => !parent?.hasDuration,
-			validation: (Rule) => Rule.required().custom((value, context) => {
+			validation: (Rule) => Rule.required().custom((value, context: ValidationContext & { parent?: any; }) => {
 				if (!context.parent?.startDate) { return true; };
 				const startDate = new Date(context.parent?.startDate).setHours(0, 0, 0, 0);
 				const today = new Date().setHours(0, 0, 0, 0);
@@ -121,7 +122,7 @@ export default defineType({
 				layout: "radio",
 				direction: "horizontal",
 			},
-			hidden: ({ document }) => document._type === "story",
+			hidden: ({ document }) => document?._type === "story",
 			initialValue: "fullDate",
 			validation: (Rule) => Rule.required(),
 			components: {

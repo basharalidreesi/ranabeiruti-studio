@@ -3,6 +3,15 @@ import { BlockElementIcon, InlineElementIcon } from "@sanity/icons";
 import { PageBuilderColumnItem, PageBuilderRowItem } from "../../components";
 import { portableTextConfig } from "../../util";
 
+export const BODY_DESCRIPTION = "An array representing the body of the page. Allows for the creation of complex page layouts consisting of multiple rows, each containing one or more columns of differing width ratios. Each row can be enabled or disabled, and breakout (full-width) rows can be specified. This field is required. At least one row is required, and at least one title placeholder must be included.";
+export const ROW_ICON = BlockElementIcon;
+export const COLUMNS_DESCRIPTION = "An array representing the columns within this row, each with a defined width ratio and vertical alignment. The content within each column can include various elements such as text, images, and other components. This field is required. At least one column must be added.";
+export const COLUMN_ICON = InlineElementIcon;
+export const RATIO_DESCRIPTION = "The width ratio of this column relative to others in the same row. This field is required and has a minimum value of 1. Fraction values are allowed.";
+export const VERTICAL_ALIGNMENT_DESCRIPTION = "The vertical alignment of this column relative to others in the same row. This field is required. Default value: Top.";
+export const DOES_BREAKOUT_DESCRIPTION = "Specifies whether this row should break out of the regular layout constraints and occupy the full width of the page. This field is required. Default state: False.";
+export const IS_ENABLED_DESCRIPTION = "Specifies whether this row should be enabled or disabled. Disabled rows will not appear on the page. This field is required. Default state: True.";
+
 export default defineType({
 	name: "complexPageBuilder",
 	type: "object",
@@ -12,31 +21,31 @@ export default defineType({
 			name: "body",
 			type: "array",
 			title: "Body",
-			description: "An array representing the body of the page. Allows for the creation of complex page layouts consisting of multiple rows, each containing one or more columns of differing width ratios. Each row can be enabled or disabled, and breakout (full-width) rows can be specified. This field is required. At least one row is required, and at least one title placeholder must be included.",
+			description: BODY_DESCRIPTION,
 			of: [
 				defineArrayMember({
 					name: "row",
 					type: "object",
 					title: "Row",
-					icon: BlockElementIcon,
+					icon: ROW_ICON,
 					fields: [
 						defineField({
 							name: "columns",
 							type: "array",
 							title: "Columns",
-							description: "An array representing the columns within this row, each with a defined width ratio and vertical alignment. The content within each column can include various elements such as text, images, and other components. This field is required. At least one column must be added.",
+							description: COLUMNS_DESCRIPTION,
 							of: [
 								defineArrayMember({
 									name: "column",
 									type: "object",
 									title: "Column",
-									icon: InlineElementIcon,
+									icon: COLUMN_ICON,
 									fields: [
 										defineField({
 											name: "ratio",
 											type: "ratio",
 											title: "Ratio",
-											description: "Specifies the width ratio of this column relative to others in the same row. This field is required and has a minimum value of 1. Fraction values are allowed.",
+											description: RATIO_DESCRIPTION,
 										}),
 										defineField({
 											name: "content",
@@ -48,7 +57,7 @@ export default defineType({
 											name: "verticalAlignment",
 											type: "verticalAlignment",
 											title: "Vertical Alignment",
-											description: "Specifies the vertical alignment of this column relative to others in the same row. This field is required. Default value: Top",
+											description: VERTICAL_ALIGNMENT_DESCRIPTION,
 										}),
 									],
 									preview: {
@@ -75,7 +84,7 @@ export default defineType({
 							name: "doesBreakout",
 							type: "boolean",
 							title: "Breakout row?",
-							description: "Specifies whether this row should break out of the regular layout constraints and occupy the full width of the page. This field is required. Default state: False.",
+							description: DOES_BREAKOUT_DESCRIPTION,
 							options: {
 								layout: "checkbox",
 							},
@@ -85,14 +94,14 @@ export default defineType({
 							name: "isEnabled",
 							type: "boolean",
 							title: "Enable row?",
-							description: "Specifies whether this row should be enabled or disabled. Disabled rows will not appear on the page. This field is required. Default state: True.",
+							description: IS_ENABLED_DESCRIPTION,
 							options: {
 								layout: "checkbox",
 							},
 							initialValue: true,
 						}),
 					],
-					validation: (Rule) => Rule.custom((value) => value.isEnabled ? true : "This row will not be rendered").warning(),
+					validation: (Rule) => Rule.custom((value) => value?.isEnabled ? true : "This row will not be rendered").warning(),
 					preview: {
 						select: {
 							columns: "columns",
@@ -115,9 +124,10 @@ export default defineType({
 					},
 				}),
 			],
+			/** @ts-ignore */
 			validation: (Rule) => Rule.custom((value) => {
 				if (!value || value.length === 0) { return "Required"; };
-				const rowsWithTitles = (value || [])?.find((row) => row._type === "row" && row.columns?.find((column) => column._type === "column" && column.content && column.content.find((item) => item._type === "title")));
+				const rowsWithTitles = (value || [])?.find((row: any) => row._type === "row" && row.columns?.find((column) => column._type === "column" && column.content && column.content.find((item) => item._type === "title")));
 				if (!rowsWithTitles) { return "Must include at least one title placeholder"; };
 				return true;
 			}),

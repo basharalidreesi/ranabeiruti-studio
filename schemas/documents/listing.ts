@@ -1,6 +1,6 @@
 import { HomeIcon, UlistIcon, UnknownIcon } from "@sanity/icons";
-import { defineArrayMember, defineField, defineType } from "sanity";
-import { imageConfig, referenceConfig, slugConfig, stringConfig } from "../../util";
+import { ValidationContext, defineArrayMember, defineField, defineType } from "sanity";
+import { descriptionConfig, imageConfig, referenceConfig, slugConfig, stringConfig } from "../../util";
 import { PROJECT_ICON, PROJECT_TITLE } from "./project";
 import { PRESS_ICON, PRESS_TITLE } from "./press";
 import { PUBLICATION_ICON, PUBLICATION_TITLE } from "./publication";
@@ -19,14 +19,14 @@ export default defineType({
 			name: "title",
 			type: "string",
 			title: "Title",
-			description: "",
+			description: descriptionConfig.title("Listing", "required"),
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
 			name: "slug",
 			type: "slug",
 			title: "Slug",
-			description: "",
+			description: descriptionConfig.slug("Listing", "required"),
 			options: {
 				source: "title",
 				slugify: slugConfig.customSlugify,
@@ -43,7 +43,7 @@ export default defineType({
 			name: "featuredItems",
 			type: "array",
 			title: "Featured Items",
-			description: "",
+			description: "Projects, Publications, Press items, or News items to be featured on the Homepage. This field is required.",
 			of: [
 				defineArrayMember({
 					name: "featuredItem",
@@ -54,6 +54,7 @@ export default defineType({
 							name: "item",
 							type: "reference",
 							title: "Item",
+							description: "The Project, Publication, Press item, or News item featured in this slide. This field is required.",
 							to: [
 								{ type: "project", },
 								{ type: "publication", },
@@ -69,7 +70,7 @@ export default defineType({
 							name: "displayMode",
 							type: "string",
 							title: "Display Mode",
-							description: "",
+							description: "Specifies the display mode for the image (if any) featured in this slide. Choose \"Expansive\" for a full-bleed (cropped) image, and \"Constrained\" for one that preserves its intrinsic aspect ratio. This setting has no effect on slides without images. Default value: Expansive.",
 							options: {
 								list: [
 									{
@@ -91,7 +92,7 @@ export default defineType({
 							name: "doesUseDocumentImage",
 							type: "boolean",
 							title: "Use document main image (if applicable)?",
-							description: "",
+							description: "Specifies whether to use the main image (if any) of the item featured in this slide, or to override it with a custom one. Default state: True.",
 							options: {
 								layout: "checkbox",
 							},
@@ -101,7 +102,7 @@ export default defineType({
 							name: "doesUseDocumentSubtitle",
 							type: "boolean",
 							title: "Use document subtitle (if applicable)?",
-							description: "Doesn't work for press and news types",
+							description: "Specifies whether to use the subtitle of the item featured in this slide, or to override it with a custom one. This setting has no effect on slides with News or Press items. Default state: True.",
 							options: {
 								layout: "checkbox",
 							},
@@ -111,11 +112,11 @@ export default defineType({
 							name: "image",
 							type: "image",
 							title: "Image",
-							description: "",
+							description: "The custom image for the item featured in this slide. This field is required. Click on the crop icon located in the top right corner of the image to adjust its composition or define its focal point.",
 							options: imageConfig.options,
 							hidden: ({ parent }) => parent.doesUseDocumentImage,
-							validation: (Rule) => Rule.custom((value, context) => {
-								if (!value?.asset && !context.parent.doesUseDocumentImage) { return "Required"; };
+							validation: (Rule) => Rule.custom((value, context: ValidationContext & { parent?: any }) => {
+								if (!value?.asset && !context.parent?.doesUseDocumentImage) { return "Required"; };
 								return true;
 							}),
 						}),
@@ -123,7 +124,7 @@ export default defineType({
 							name: "subtitle",
 							type: "string",
 							title: "Subtitle",
-							description: "",
+							description: "The custom subtitle for the item featured in this slide. This field is required.",
 							hidden: ({ parent }) => parent.doesUseDocumentSubtitle,
 						}),
 					],
@@ -188,15 +189,16 @@ export default defineType({
 								};
 							};
 							return {
-								title: resolveTitle(documentType),
-								subtitle: resolveSubtitle(documentType),
-								media: resolveMedia(documentType),
+								title: resolveTitle(documentType) || undefined,
+								subtitle: resolveSubtitle(documentType) || undefined,
+								media: resolveMedia(documentType) || undefined,
 							};
 						},
 					},
 				}),
 			],
 			hidden: ({ document }) => document?._id?.replace("drafts.", "") !== "homepage",
+			/** @ts-ignore */
 			validation: (Rule) => Rule.custom((value, context) => {
 				if ((!value || value.length === 0) && context.document?._id?.replace("drafts.", "") === "homepage") { return "Required"; };
 				return true;
@@ -206,7 +208,7 @@ export default defineType({
 			name: "page",
 			type: "lessComplexPageBuilder",
 			title: "Page",
-			description: "",
+			description: descriptionConfig.page("Listing"),
 			hidden: ({ document }) => document?._id?.replace("drafts.", "") !== "homepage",
 		}),
 	],
@@ -222,19 +224,19 @@ export default defineType({
 			} = selection;
 			const id = _id.replace("drafts.", "");
 			return {
-				title: title,
+				title: title || undefined,
 				subtitle:
 					id === "homepage" ? "Homepage"
 					: id === "projectsListing" ? "Projects Listing"
 					: id === "publicationsListing" ? "Publications Listing"
 					: id === "pressListing" ? "Press Listing"
-					: null,
+					: undefined,
 				media:
 					id === "homepage" ? HomeIcon
 					: id === "projectsListing" ? PROJECT_ICON
 					: id === "publicationsListing" ? PUBLICATION_ICON
 					: id === "pressListing" ? PRESS_ICON
-					: null
+					: undefined
 			};
 		},
 	},

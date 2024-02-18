@@ -4,6 +4,7 @@ const dateConfig = {
 	renderAsString: (date, length = "long") => {
 		return new Date(date).toLocaleDateString("en-gb", {
 			day: "numeric",
+			/** @ts-ignore */
 			month: length,
 			year: "numeric",
 		});
@@ -29,7 +30,7 @@ const dateConfig = {
 			return length === "short" ? shortMonthNames[monthIndex] : longMonthNames[monthIndex];
 		};
 		const startComponents = getDateComponents(startDate);
-		const endComponents = endDate ? getDateComponents(endDate) : null;
+		const endComponents = endDate && getDateComponents(endDate);
 		switch (dateFormat) {
 			case "fullDate":
 				if (hasDuration && endDate && !isOngoing) {

@@ -4,7 +4,6 @@ export default defineField({
 	name: "ratio",
 	type: "number",
 	title: "Ratio",
-	description: "",
 	initialValue: 1,
 	validation: (Rule) => Rule.custom((value) => {
 		if (value && value < 1) { return "Must be greater than one"; };

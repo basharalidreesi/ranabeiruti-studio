@@ -18,6 +18,7 @@ const imageConfig = {
 		useEffect(() => {
 			async function getData() {
 				const data = imageBuilder.image(imageObject).width(1500);
+				/** @ts-ignore */
 				setData(data);
 			};
 			getData();

@@ -1,4 +1,5 @@
 import { DocumentPreviewWrapper, DocumentPreview } from "./components";
+import React from "react";
 
 export const defaultDocumentNode = (S, { documentId, schemaType }) => {
 	switch (schemaType) {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useSanityClient from "../sanity.client";
 
 const referenceConfig = {
-	buildReference: (ref) => {
+	buildReference: (ref: string) => {
 		const [data, setData] = useState(null);
 		const client = useSanityClient();
 		useEffect(() => {

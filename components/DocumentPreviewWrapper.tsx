@@ -2,6 +2,7 @@ import { Badge, Button, Card, Flex, Text } from "@sanity/ui";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LaunchIcon, MobileDeviceIcon, PauseIcon, SyncIcon } from "@sanity/icons";
 import { createPortal } from "react-dom";
+import React from "react";
 
 function useForceUpdate(){
 	const [_, setValue] = useState(0);
@@ -23,6 +24,7 @@ export default function DocumentPreviewWrapper(props) {
 	const [contentRef, setContentRef] = useState(null);
 	const [isMobileMode, setIsMobileMode] = useState(false);
 	const [isUpdatePaused, setIsUpdatePaused] = useState(false);
+	/** @ts-ignore */
 	const mountNode = contentRef?.contentWindow?.document?.body;
 	const documentState = useRef(document.displayed);
 	const oldDocumentState = useMemo(() => {
@@ -49,6 +51,7 @@ export default function DocumentPreviewWrapper(props) {
 				}}
 			>
 				<Card
+					/** @ts-ignore */
 					borderBottom={1}
 					style={{
 						position: "sticky",
@@ -60,6 +63,7 @@ export default function DocumentPreviewWrapper(props) {
 					}}
 				>
 					<Flex
+						/** @ts-ignore */
 						space={2}
 						style={{
 							flexFlow: "row nowrap",
@@ -128,6 +132,7 @@ export default function DocumentPreviewWrapper(props) {
 					</Flex>
 				</Card>
 				<iframe
+					/** @ts-ignore */
 					ref={setContentRef}
 					style={{
 						appearance: "none",
