@@ -1,6 +1,8 @@
-import { defineField } from "sanity";
+import { defineArrayMember, defineField } from "sanity";
 import { Text } from "@sanity/ui";
 import React from "react";
+import { EnvelopeIcon } from "@sanity/icons";
+import stringConfig from "./stringConfig";
 
 const portableTextConfig = {
 	styles: {
@@ -89,6 +91,36 @@ const portableTextConfig = {
 			title: "Link",
 		}),
 	},
+	of: [
+		defineArrayMember({
+			name: "emailAddress",
+			type: "object",
+			title: "E-Mail",
+			icon: EnvelopeIcon,
+			fields: [
+				defineField({
+					name: "emailAddress",
+					type: "string",
+					title: "E-Mail",
+					description: "",
+					validation: (Rule) => Rule.custom(stringConfig.requireString),
+				}),
+			],
+			preview: {
+				select: {
+					emailAddress: "emailAddress",
+				},
+				prepare(selection) {
+					const {
+						emailAddress,
+					} = selection;
+					return {
+						title: emailAddress,
+					};
+				},
+			},
+		}),
+	],
 	renderAsPlainText: (blocks) => {
 		if (typeof blocks === "string") { return blocks; };
 		const isValidTextBlock = (source) => {
@@ -108,7 +140,7 @@ const portableTextConfig = {
 			|| (block._type === "description" && block.doesInclude && block.doesInclude.length !== 0)
 		);
 		if (block?._type === "block") {
-			return block.children.filter((child) => child._type === "span")?.map((span) => span.text)?.join("");
+			return block.children.filter((child) => child._type === "span" || child._type === "emailAddress")?.map((child) => child.text || child.emailAddress)?.join("");
 		};
 		if (block?._type === "image") {
 			const isUsedAsPlaceholder = block.isUsedAsPlaceholder || false;

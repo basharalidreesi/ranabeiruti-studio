@@ -36,6 +36,7 @@ export default defineField({
 				decorators: decorators,
 				annotations: annotations,
 			},
+			of: portableTextConfig.of,
 		}),
 	],
 });

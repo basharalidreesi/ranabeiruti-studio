@@ -242,7 +242,7 @@ export const SlugCss = () => (
 		}
 		.document-credits .rich-text {
 			text-wrap: pretty;
-			text-wrap: balance;
+			// text-wrap: balance;
 		}
 		@media (max-width: 1024px) {
 			.document-body {
@@ -339,7 +339,7 @@ export const PortableTextBaseCss = () => (
 		.rich-text {
 			line-height: 1.3;
 			text-wrap: pretty;
-			text-wrap: balance;
+			// text-wrap: balance;
 		}
 		.rich-text + .rich-text {
 			margin-block-start: var(--spacer-100);
@@ -401,7 +401,7 @@ export const PortableTextBaseCss = () => (
 			flex-direction: column;
 			row-gap: var(--spacer-100);
 			text-wrap: pretty;
-			text-wrap: balance;
+			// text-wrap: balance;
 		}
 		.rich-text .document-header .record-title-baseline {
 			font-weight: 700;
@@ -419,7 +419,7 @@ export const PortableTextBaseCss = () => (
 			list-style: none;
 			display: flex;
 			flex-flow: row wrap;
-			column-gap: var(--spacer-100);
+			column-gap: var(--spacer-200);
 			row-gap: var(--spacer-100);
 		}
 		.rich-text .document-header .record-tags li {
@@ -432,13 +432,22 @@ export const PortableTextBaseCss = () => (
 			display: flex;
 			flex-direction: column;
 			row-gap: var(--record-inner-spacing);
-			padding: var(--spacer-200);
+			padding: var(--spacer-300);
+			background: var(--color-6);
+			box-shadow: 0 0 0 1px var(--color-5);
 			--record-inner-spacing: var(--spacer-100);
 		}
 		@media (max-width: 640px) {
 			.rich-text .document-reference {
-				--record-inner-spacing: var(--spacer-50);
+				// --record-inner-spacing: var(--spacer-50);
 			}
+		}
+		.rich-text .document-reference-label {
+			order: 0;
+			font-weight: 700;
+		}
+		.rich-text .document-reference-label + .record-image {
+			margin-block-start: 0.15em;
 		}
 		.rich-text .document-reference .record-image {
 			order: 1;
@@ -447,7 +456,7 @@ export const PortableTextBaseCss = () => (
 		.rich-text .document-reference .record-title {
 			order: 2;
 			text-wrap: pretty;
-			text-wrap: balance;
+			// text-wrap: balance;
 		}
 		.rich-text .document-reference .record-title-baseline {
 			font-weight: 700;
@@ -491,37 +500,44 @@ export const PortableTextBaseCss = () => (
 		.cta {
 			position: relative;
 			width: fit-content;
-			padding: var(--spacer-200);
+			padding: var(--spacer-300);
 			font-weight: 700;
+			background: var(--color-6);
+			box-shadow: 0 0 0 1px var(--color-5);
 		}
 		.cta a::after {
 			content: "";
 			position: absolute;
 			inset: 0;
 		}
+		@media (max-width: 896px) {
+			.document-reference, .cta {
+				max-width: 50ch;
+			}
+		}
 	`}</style>
 );
 
 export const PortableTextSpacingCss = () => (
 	<style>{`
-		.rich-text :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area):empty {
+		.rich-text :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .document-reference, .cta, .boxed-area):empty {
 			display: none;
 		}
 		.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 			margin-block-start: var(--spacer-100);
 		}
-		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(figure, .embed-object, .document-header, .boxed-area),
-		.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + :is(figure, .embed-object, .document-header, .boxed-area),
-		.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
+		.rich-text :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area) + :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area),
+		.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area),
+		.rich-text :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 			margin-block-start: var(--spacer-400);
 		}
 		@media (max-width: 768px) {
 			.rich-text .spacer:not(:first-child) + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-100);
 			}
-			.rich-text .spacer:not(:first-child) + :is(figure, .embed-object, .document-header, .boxed-area),
-			.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .boxed-area),
-			.rich-text :is(figure, .embed-object, .document-header, .boxed-area) + .spacer + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
+			.rich-text .spacer:not(:first-child) + :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area),
+			.rich-text :is(p, .heading, blockquote, .note, ul, ol, .document-description) + .spacer + :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area),
+			.rich-text :is(figure, .embed-object, .document-header, .document-reference, .cta, .boxed-area) + .spacer + :is(p, .heading, blockquote, .note, ul, ol, .document-description) {
 				margin-block-start: var(--spacer-400);
 			}
 			.rich-text .boxed-area + .spacer + .boxed-area {
@@ -532,7 +548,7 @@ export const PortableTextSpacingCss = () => (
 			margin-block-start: 0 !important;
 			padding-block-start: var(--spacer-100);
 		}
-		.rich-text .boxed-area + :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .boxed-area) {
+		.rich-text .boxed-area + :is(p, .heading, blockquote, .note, ul, ol, figure, .embed-object, .document-header, .document-description, .document-reference, .cta, .boxed-area) {
 			margin-block-start: calc(var(--spacer-400) + (var(--spacer-100) * 2)) !important;
 		}
 	`}</style>

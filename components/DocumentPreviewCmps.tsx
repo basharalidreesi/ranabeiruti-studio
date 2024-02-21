@@ -42,24 +42,30 @@ export const PortableText = (props) => {
 				const reference = referenceConfig.buildReference(value.reference?._ref);
 				return value.reference && value.reference._ref && reference && (
 					/** @ts-ignore */
-					<div className="document-reference boxed-area hoverable-area" data-type={reference._type}>
+					<div className="document-reference" data-type={reference._type}>
+						{value.label && (
+							<div className="document-reference-label">
+								{value.label}
+							</div>
+						)}
 						<RecordTitle source={reference} withLink={true} level={2} />
 						<RecordDate source={reference} />
 						<RecordDescription source={reference} />
 						<RecordBody source={reference} />
 						<RecordImage source={reference} />
-						<RecordTags source={reference} />
+						{/* <RecordTags source={reference} /> */}
 					</div>
 				);
 			},
 			cta: ({ value }) => value.label && (
-				<div className="cta boxed-area hoverable-area">
+				<div className="cta hover-text">
 					<a href="#">
 						{value.label}
 					</a>
 				</div>
 			),
 			spacer: ({ value }) => (<div className="spacer" style={{ "--line-count": value.lineCount, } as React.CSSProperties}></div>),
+			emailAddress: ({ value }) => value.emailAddress && (<a href="#" className="link hover-text">{value.emailAddress}</a>),
 		},
 		marks: {
 			// strong (default)
@@ -123,7 +129,7 @@ const Figure = (props) => props.source && props.source.asset && (
 						"middle": "center",
 						"bottom": "flex-end",
 						"baseline": "baseline",
-				}[props.source.captionVerticalAlignment] || null,
+				}[["right", "left"].includes(props.source.captionPlacement) && props.source.captionVerticalAlignment] || null,
 			}}>
 				<PortableText source={props.source.caption} />
 			</figcaption>

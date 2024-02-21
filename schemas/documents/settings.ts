@@ -17,6 +17,27 @@ export default defineType({
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
 		}),
 		defineField({
+			name: "author",
+			type: "string",
+			title: "Author",
+			description: "The name of the person to whom this Website and its content are attributed. This field is required.",
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
+		}),
+		defineField({
+			name: "social",
+			type: "url",
+			title: "Social Media Link",
+			description: "The URL linking to the social media account associated with this Website. This field is required.",
+			validation: (Rule) => Rule.required(),
+		}),
+		defineField({
+			name: "email",
+			type: "string",
+			title: "Contact E-Mail",
+			description: "The email address associated with this Website. This field is required.",
+			validation: (Rule) => Rule.custom(stringConfig.requireString),
+		}),
+		defineField({
 			name: "description",
 			type: "text",
 			title: "Website Description",

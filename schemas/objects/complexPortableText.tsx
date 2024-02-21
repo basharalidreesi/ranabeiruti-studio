@@ -1,9 +1,10 @@
 import { BlockElementIcon, InfoOutlineIcon, PlugIcon, SparklesIcon } from "@sanity/icons";
 import { Card, Flex, Text } from "@sanity/ui";
-import { defineArrayMember, defineField } from "sanity";
+import { PreviewProps, defineArrayMember, defineField } from "sanity";
 import { imageConfig, portableTextConfig } from "../../util";
 import { BoltIcon, CubeIcon, HeartIcon, ImageIcon, StarIcon } from "@sanity/icons";
 import { linkBase } from "./link";
+import React from "react";
 
 const styles = [
 	portableTextConfig.styles.normal,
@@ -38,6 +39,7 @@ export const basicFields = [
 			decorators: decorators,
 			annotations: annotations,
 		},
+		of: portableTextConfig.of,
 	}),
 	defineArrayMember({
 		name: "image",
@@ -142,11 +144,12 @@ export const basicFields = [
 					{props.renderDefault({
 						...props,
 						readOnly: true,
+						/** @ts-ignore */
 						members: [...props.members?.filter((member) => member.name !== "asset")],
 					})}
 				</>) : props.renderDefault(props);
 			},
-			preview: (props) => {
+			preview: (props: PreviewProps & { asset?: any; caption?: any; isUsedAsPlaceholder?: any; }) => {
 				const {
 					asset,
 					caption,
@@ -234,6 +237,12 @@ export const basicFields = [
 					disableNew: true,
 				},
 			}),
+			defineField({
+				name: "label",
+				type: "string",
+				title: "Label",
+				description: "",
+			}),
 		],
 		preview: {
 			select: {
@@ -274,6 +283,7 @@ export const basicFields = [
 				internalImage: "internalTarget.image",
 				externalTarget: "externalTarget",
 			},
+			/** @ts-ignore */
 			prepare(selection) {
 				const {
 					label,
@@ -389,7 +399,8 @@ export const extraFields = [
 						},
 					],
 				},
-				hidden: ({ document }) => !["project", "publication"].includes(document._type),
+				/** @ts-ignore */
+				hidden: ({ document }) => !["project", "publication"].includes(document?._type),
 				initialValue: ["projectDescription", "collectionDescriptions"],
 				validation: (Rule) => Rule.required(),
 			}),
