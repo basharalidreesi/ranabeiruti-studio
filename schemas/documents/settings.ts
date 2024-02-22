@@ -29,6 +29,7 @@ export default defineType({
 			title: "Social Media Link",
 			description: "The URL linking to the social media account associated with this Website. This field is required.",
 			validation: (Rule) => Rule.required(),
+			hidden: true,
 		}),
 		defineField({
 			name: "email",
@@ -36,6 +37,7 @@ export default defineType({
 			title: "Contact E-Mail",
 			description: "The email address associated with this Website. This field is required.",
 			validation: (Rule) => Rule.custom(stringConfig.requireString),
+			hidden: true,
 		}),
 		defineField({
 			name: "description",
