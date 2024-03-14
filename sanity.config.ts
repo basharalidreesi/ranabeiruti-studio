@@ -51,8 +51,8 @@ function createConfig(params = {}) {
 						{
 							name: "ranabeiruti ",
 							title: "ranabeiruti.com ",
-							apiId: "9b8d59de-d075-40eb-9ceb-eefbc03fb51d",
-							buildHookId: "658a0980e78d192d02c17dae",
+							apiId: "9290590f-0b50-40ff-85cf-74738365fd32",
+							buildHookId: "65f2c1159af916a35fcd122f",
 							url: "https://ranabeiruti.com",
 						},
 					],
